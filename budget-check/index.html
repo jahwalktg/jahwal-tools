@@ -178,7 +178,7 @@ body.big .bar{margin-top:28px;height:24px}
 .time-in{min-height:46px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
 
 /* 계산기 공통: 입력 줄, 결과 칸, 표, 인쇄 */
-.pos-link{background:none;border:0;padding:4px 6px;margin:-4px -6px;border-radius:8px;text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
+.pos-link{background:none;border:0;padding:4px 6px;margin:-4px 0;max-width:100%;white-space:normal;text-align:left;overflow-wrap:anywhere;border-radius:8px;text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
 .pos-link:hover{background:var(--blue-bg);color:var(--text)}
 .ex-note{margin:0 0 12px;padding:8px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:15px}
 .ex-note strong{color:var(--amber)}
@@ -195,7 +195,7 @@ body.big .bar{margin-top:28px;height:24px}
 .lbl{font-size:15px;color:var(--muted);margin:0 0 4px}
 .chips.small .chip-btn{min-height:40px;padding:0 10px;font-size:15px}
 .result{margin-top:16px;display:grid;gap:8px}
-.r-line{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface)}
+.r-line{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface)}
 .r-line .k{color:var(--muted);font-size:16px}
 .r-line .v{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 .r-line.big{background:var(--blue-bg);border-color:var(--blue)}
@@ -218,13 +218,14 @@ body.big .bar{margin-top:28px;height:24px}
 .tbl tr.sum td{font-weight:800;background:var(--blue-bg)}
 .tbl td.bad{color:var(--red)}
 .tbl .icon-btn{width:auto;padding:0 8px}
-.paste{width:100%;min-height:90px;padding:10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);font-size:15px;font-family:inherit}
+.paste{width:100%;max-width:100%;box-sizing:border-box;min-height:90px;padding:10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);font-size:15px;font-family:inherit}
 .help{margin:6px 0 0;font-size:14px;color:var(--muted);line-height:1.5}
 .rule{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--bg);border:1.5px solid var(--line);font-size:14px;color:var(--muted);line-height:1.5}
 .rule strong{color:var(--text)}
 .saved{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
 .saved li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px}
 .saved .s-name{font-weight:700;overflow-wrap:anywhere}
+.saved .s-name.pos-link{margin:0;padding:2px 0;max-width:100%}
 .saved .s-sub{font-size:14px;color:var(--muted)}
 .saved .s-val{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
 .saved .row-tools{display:flex;gap:4px;flex-wrap:wrap;grid-column:1/-1}
@@ -262,6 +263,7 @@ body.big .bar{margin-top:28px;height:24px}
 .tbl.in td.ok{color:#2E9E6B}.tbl.in td.over{color:var(--red);font-weight:700}.tbl.in td.near{color:var(--amber)}
 .tbl.in td.dim{color:var(--muted)}
 .r-line .v.small{font-size:16px;white-space:normal;text-align:right}
+.tbl.in td:first-child,.tbl.in th:first-child{white-space:nowrap} /* 좁은 폭에서 "10월"이 글자별로 쪼개지지 않게 */
 </style>
 </head>
 <body>
