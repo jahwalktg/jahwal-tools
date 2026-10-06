@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>참여자교육 시간 계산기 | 지역자활센터 업무 도구</title>
+<title>개인정보 가리기 | 지역자활센터 업무 도구</title>
 <style>
 :root{
   box-sizing:border-box;
@@ -252,39 +252,65 @@ body.big .bar{margin-top:28px;height:24px}
   .sheet .small{font-size:10pt;color:#333}
 }
 
+/* AI 주문서 페이지 공통: 단계 안내, 주문서 상자, 주의 띠 */
+.intro{margin:0 0 14px;font-size:16px;line-height:1.6;max-width:80ch}
+.sec-title{margin:20px 0 8px;font-size:18px}
+.sec-title small,.lbl small{font-weight:400;color:var(--muted);font-size:14px;margin-left:6px}
+.howto{display:grid;gap:4px;margin:0 0 10px;padding:10px 14px;border:1.5px dashed var(--line);border-radius:12px;background:var(--bg);font-size:15px;line-height:1.55}
+.howto p{margin:0}
+.howto b{color:var(--blue)}
+.before{margin-top:14px;padding:10px 14px;border-radius:12px;background:var(--amber-bg);border:1.5px solid var(--amber-line)}
+.before h3{margin:0 0 6px;font-size:16px}
+.before ul{margin:0;padding-left:20px;font-size:15px;line-height:1.55}
+.paste.src{min-height:140px}
+.prompt{width:100%;min-height:260px;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px;line-height:1.55;font-family:inherit;white-space:pre-wrap}
+.howlist{margin:8px 0 0;padding-left:22px;font-size:15px;line-height:1.6}
+.howlist li{margin:4px 0}
+code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var(--line);font-size:14px}
+.steps{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.step{padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:6px}
+.step h3{margin:0;font-size:17px}
+.step p{margin:0;font-size:15px;color:var(--muted);line-height:1.5;flex:1}
+.step .btn{align-self:flex-start;text-decoration:none;display:inline-flex;align-items:center}
+.step-no{font-size:13px;font-weight:800;color:var(--blue)}
+.step.s1{border-color:var(--blue)}.step.s2{border-color:var(--navy)}
+.links{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:8px}
+.links a{display:block;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);text-decoration:none;color:var(--text)}
+.links a b{display:block;color:var(--blue);margin-bottom:2px}
+.links a small{color:var(--muted);font-size:14px;line-height:1.4}
+.ai-link{display:inline-flex;align-items:center;min-height:40px;padding:0 12px;border-radius:10px;border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;font-weight:700;font-size:14px;background:var(--surface)}
+.ai-link::before{content:"✦ ";margin-right:2px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ai-link{border-color:var(--blue);color:var(--blue)}}
+:root[data-theme="dark"] .ai-link{border-color:var(--blue);color:var(--blue)}
+
 .sec-title{margin:18px 0 8px;font-size:18px}
-.sec-title small,.r-line .k small{font-weight:400;color:var(--muted);font-size:14px;margin-left:4px}
-.lbl small{font-weight:400;margin-left:4px}
+.sec-title small{font-weight:400;color:var(--muted);font-size:14px;margin-left:4px}
 .privacy{margin:0 0 12px;padding:8px 12px;border-radius:10px;background:var(--blue-bg);border:1.5px solid var(--blue);font-size:15px}
-.files{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:12px}
-.filebox{padding:12px;border:1.5px dashed var(--line);border-radius:12px;background:var(--bg)}
-.filebox h4{margin:0 0 6px;font-size:16px}
-.filebox .fstat{margin:8px 0 0;font-size:14px;color:var(--muted);line-height:1.5;min-height:1.5em}
-.filebox .fstat.ok{color:var(--text)}
-.filebox .fstat.bad{color:var(--red)}
+.filebox{padding:12px;border:1.5px dashed var(--line);border-radius:12px;background:var(--bg);margin-bottom:12px}
 .filebox .acts{display:flex;flex-wrap:wrap;gap:6px}
+.filebox .fstat{margin:8px 0 0;font-size:14px;color:var(--muted);min-height:1.5em}
+.filebox .fstat.bad{color:var(--red)}
 .filebox details{margin-top:8px;font-size:14px}
 .filebox details summary{cursor:pointer;color:var(--muted)}
 .filebox .paste{min-height:70px;margin-top:6px}
-.sum{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:12px}
-.sum .r-line{flex-direction:column;align-items:flex-start;gap:2px}
-.sum .r-line .v{font-size:22px;white-space:normal}
-.sum .r-line .v b{font-size:14px;font-weight:600;color:var(--muted);margin-left:6px}
-.tbl.edu{min-width:900px;font-size:15px}
-.tbl.edu th,.tbl.edu td{padding:6px 8px}
-.tbl.edu td.lack{color:var(--red);font-weight:700}
-.tbl.edu td.ok{color:#2E9E6B;font-weight:700}
-.tbl.edu td.dim{color:var(--muted)}
-.tbl.edu td.amb{color:var(--amber);font-weight:700}
-.tbl.edu tr.ex td{color:var(--muted)}
-.tbl.edu td:nth-child(2),.tbl.edu th:nth-child(2),.tbl.edu td:nth-child(3),.tbl.edu th:nth-child(3){text-align:left;white-space:nowrap}
-.req{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
-.req th,.req td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:center}
-.req th{font-size:13px;color:var(--muted);font-weight:600}
-.req td:first-child{text-align:left;white-space:nowrap}
-.req input{width:64px;min-height:36px;padding:2px 6px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);text-align:right}
-.req input.bad{border-color:var(--red);background:var(--red-bg)}
-.r-line .v.small{font-size:16px;white-space:normal;text-align:right}
+.cols{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.colcard{padding:10px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);display:grid;gap:6px}
+.colcard.on{border-color:var(--blue);background:var(--blue-bg)}
+.colcard.drop{opacity:.6}
+.colcard h4{margin:0;font-size:16px;display:flex;justify-content:space-between;gap:6px}
+.colcard h4 small{font-weight:400;color:var(--muted);font-size:13px}
+.colcard .sample{font-size:14px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.colcard .sample b{color:var(--text);font-weight:600}
+.colcard select{min-height:40px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);font-size:15px;font-family:inherit;color:var(--text)}
+.tbl.mask{min-width:560px;font-size:14px}
+.tbl.mask th,.tbl.mask td{text-align:left;white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;padding:6px 8px}
+.tbl.mask td.changed{color:var(--blue);font-weight:600}
+.tbl.mask th.drop,.tbl.mask td.drop{text-decoration:line-through;color:var(--muted)}
+/* 그림 */
+.imgwrap{position:relative;margin-top:8px;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:#888;touch-action:none;user-select:none}
+.imgwrap canvas{display:block;width:100%;height:auto;cursor:crosshair}
+.imgwrap.empty{min-height:160px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;background:var(--bg);color:var(--muted)}
+.hint{font-size:14px;color:var(--muted);margin:6px 0 0}
 .unsupported{margin:8px 0;padding:8px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px}
 </style>
 </head>
@@ -293,8 +319,8 @@ body.big .bar{margin-top:28px;height:24px}
 
   <header class="top">
     <div>
-      <p class="crumb"><a href="../index.html">지역자활센터 업무 도구</a> &rsaquo; <a href="../index.html#calc">자활계산기</a></p>
-      <h1>참여자교육 시간 계산기</h1>
+      <p class="crumb"><a href="../index.html">지역자활센터 업무 도구</a> &rsaquo; <a href="../index.html#docs">문서·명단 도구</a></p>
+      <h1>개인정보 가리기</h1>
     </div>
   </header>
 
@@ -306,100 +332,69 @@ body.big .bar{margin-top:28px;height:24px}
   </section>
 
   <main class="wrap one">
-    <section class="stage" id="stage" data-tone="ready" aria-label="참여자 교육 시간 계산">
+    <section class="stage" id="stage" data-tone="ready" aria-label="개인정보 가리기">
       <div class="stage-head">
-        <span class="status" id="status">계산</span>
+        <span class="status" id="status">가리기</span>
         <button class="pos pos-link" id="pos" type="button"></button>
         <span class="head-right">
           <span class="now" id="now" aria-label="오늘 날짜와 현재 시각"><span class="now-date" id="nowDate"></span> <span id="nowTime"></span></span>
         </span>
       </div>
 
-      <p class="privacy"><strong>올린 파일과 이름은 저장하지 않습니다.</strong> 파일은 이 PC의 브라우저 안에서만 읽고, 창을 닫으면 사라집니다. 인터넷으로 보내지 않습니다. 저장되는 것은 평가 연도와 기준표 같은 설정뿐입니다.</p>
+      <p class="privacy"><strong>올린 파일과 내용은 저장하지 않습니다.</strong> 이 PC의 브라우저 안에서만 바꾸고, 인터넷으로 보내지 않습니다. 저장되는 것은 "어느 열을 어떻게 가릴지" 설정뿐입니다. AI 주문서에 붙일 명단은 꼭 여기서 가린 뒤 쓰세요.</p>
 
-      <div class="chips" id="tabRow" role="tablist"></div>
+      <div class="chips" id="tabRow"></div>
 
-      <h3 class="sec-title">1. 평가 기준</h3>
-      <div class="frow">
-        <label class="field"><span>평가 연도 <small>이 해 1월 1일부터 센 참여일수</small></span><input class="num-in" id="vYear" type="text" inputmode="numeric"></label>
-        <div><p class="lbl">참여일수를 세는 끝 날</p><div class="chips small" id="basisRow"></div></div>
-        <label class="field" id="basisDateField"><span>직접 고른 날</span><input class="text-in sm" id="vBasisDate" type="date"></label>
-      </div>
-      <p class="lbl">세는 방식</p>
-      <div class="chips small" id="optRow"></div>
-      <p class="help" id="optHelp"></p>
-
-      <details class="explain" id="reqBox">
-        <summary>참여기간별 필요 교육시간 기준표 <span id="reqYear"></span></summary>
-        <p class="help">2025~2026년 지역자활센터 성과평가 안내서 38·40쪽의 표입니다. 안내서가 바뀌면 여기서 고치세요. 60일 미만은 평가에서 빠집니다.</p>
-        <div class="tbl-wrap" style="border:0"><table class="req" id="reqTable"></table></div>
-        <div class="controls-sub"><button class="btn btn-small" id="btnReqReset" type="button">안내서 기본값으로</button></div>
-      </details>
-
-      <!-- 파일로 일괄 -->
-      <div id="paneBatch">
-        <h3 class="sec-title">2. 파일 올리기 <small>자활정보시스템에서 내려받은 엑셀 그대로</small></h3>
-        <p class="unsupported" id="noInflate">이 브라우저는 엑셀 파일을 바로 읽지 못합니다. 엑셀에서 "다른 이름으로 저장 → CSV"로 저장해 올리거나, 표를 복사해 아래 "붙여넣기" 칸에 넣으세요.</p>
-        <div class="files">
-          <div class="filebox">
-            <h4>① 참여자현황 <small>(필수)</small></h4>
-            <p class="help">참여자 조회 화면에서 내려받은 파일. 참여자이름·생년월일·참여시작일·참여종료일·사업단유형 열을 읽습니다.</p>
-            <div class="acts"><button class="btn btn-small" id="btnRoster" type="button">파일 고르기</button><button class="btn btn-small" id="btnRosterClear" type="button">비우기</button></div>
-            <input type="file" id="rosterInput" accept=".xlsx,.csv,.txt,text/csv,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
-            <details><summary>또는 표를 복사해 붙여넣기</summary><textarea class="paste" id="rosterPaste" placeholder="엑셀에서 머리글 줄부터 끝까지 선택해 복사한 뒤 여기에 붙여 넣으세요"></textarea></details>
-            <p class="fstat" id="rosterStat"></p>
-          </div>
-          <div class="filebox">
-            <h4>② 교육이수집계 <small>(있으면 부족 시간까지)</small></h4>
-            <p class="help">자활정보시스템(교육훈련) 교육이수현황에서 내려받은 파일. 이름·생년월일(가린 것)과 직무·소양·법정의무교육의 분·횟수를 읽습니다.</p>
-            <div class="acts"><button class="btn btn-small" id="btnEdu" type="button">파일 고르기</button><button class="btn btn-small" id="btnEduClear" type="button">비우기</button></div>
-            <input type="file" id="eduInput" accept=".xlsx,.csv,.txt,text/csv,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
-            <details><summary>또는 표를 복사해 붙여넣기</summary><textarea class="paste" id="eduPaste" placeholder="머리글 줄부터 복사해 붙여 넣으세요"></textarea></details>
-            <p class="fstat" id="eduStat"></p>
-          </div>
+      <!-- 표 -->
+      <div id="paneTable">
+        <h3 class="sec-title">1. 표 올리기 <small>엑셀(.xlsx)·CSV, 또는 복사해 붙여넣기</small></h3>
+        <p class="unsupported" id="noInflate" hidden>이 브라우저는 엑셀 파일을 바로 읽지 못합니다. CSV로 저장해 올리거나 표를 복사해 붙여 넣으세요.</p>
+        <div class="filebox">
+          <div class="acts"><button class="btn btn-small" id="btnFile" type="button">파일 고르기</button><button class="btn btn-small" id="btnClear" type="button">비우기</button><button class="btn btn-small" id="btnExample" type="button">예시 표로 보기</button></div>
+          <input type="file" id="fileInput" accept=".xlsx,.csv,.txt,text/csv,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+          <details><summary>또는 표를 복사해 붙여넣기</summary><textarea class="paste" id="pasteBox" placeholder="엑셀에서 머리글 줄부터 선택해 복사한 뒤 여기에 붙여 넣으세요"></textarea></details>
+          <p class="fstat" id="fileStat">아직 없음</p>
         </div>
-        <div class="controls-sub"><button class="btn btn-small" id="btnExample" type="button">예시 자료로 보기</button></div>
-        <p class="note" id="fileNote" role="status"></p>
+        <p class="help">PDF나 한글 문서는 표를 복사해 붙여 넣거나, 화면을 캡처해 "그림 가리기"로 가리세요. 이 사이트는 PDF를 직접 읽지 않습니다.</p>
 
-        <h3 class="sec-title">3. 결과</h3>
-        <div class="sum" id="sumBox"></div>
-        <p class="help" id="sumHelp"></p>
-        <p class="lbl" style="margin-top:12px">보기</p>
-        <div class="chips small" id="filterRow"></div>
-        <div class="tbl-wrap"><table class="tbl edu" id="resTable"></table></div>
+        <div id="colsWrap" hidden>
+          <h3 class="sec-title">2. 열마다 어떻게 가릴지 확인 <small>자동으로 고른 방식을 바꿀 수 있습니다</small></h3>
+          <div class="chips small" id="optRow"></div>
+          <div class="cols" id="cols" style="margin-top:10px"></div>
+
+          <h3 class="sec-title">3. 가린 결과 <small id="prevCount"></small></h3>
+          <div class="tbl-wrap"><table class="tbl mask" id="prevTable"></table></div>
+          <div class="controls-sub">
+            <button class="btn" id="btnXlsx" type="button">엑셀(.xlsx)로 내려받기</button>
+            <button class="btn btn-small" id="btnCsv" type="button">CSV 내려받기</button>
+            <button class="btn btn-small" id="btnCopy" type="button">표 복사 (AI에 붙이기)</button>
+          </div>
+          <p class="note" id="copyNote" role="status"></p>
+        </div>
+      </div>
+
+      <!-- 그림 -->
+      <div id="paneImage" hidden>
+        <h3 class="sec-title">1. 그림 올리기 <small>캡처·사진·스캔(PNG·JPG)</small></h3>
+        <div class="filebox">
+          <div class="acts"><button class="btn btn-small" id="btnImg" type="button">그림 고르기</button><button class="btn btn-small" id="btnImgClear" type="button">비우기</button></div>
+          <input type="file" id="imgInput" accept="image/*" hidden>
+          <p class="fstat" id="imgStat">아직 없음. PDF는 화면을 캡처(윈도우 키 + Shift + S)해서 올리세요.</p>
+        </div>
+        <h3 class="sec-title">2. 가릴 자리를 끌어서 표시</h3>
+        <p class="lbl">가리는 방법</p>
+        <div class="chips small" id="styleRow"></div>
+        <div class="imgwrap empty" id="imgWrap"><canvas id="imgCanvas" hidden></canvas><span id="imgEmpty">그림을 올리면 여기에 보입니다</span></div>
+        <p class="hint">마우스(손가락)로 네모를 그리면 바로 가려집니다. 잘못 그렸으면 "하나 되돌리기".</p>
         <div class="controls-sub">
-          <button class="btn btn-small" id="btnCsv" type="button">표 CSV 내려받기</button>
-          <button class="btn btn-small" id="btnCopy" type="button">요약 글 복사</button>
+          <button class="btn btn-small" id="btnUndo" type="button">하나 되돌리기</button>
+          <button class="btn btn-small" id="btnRectClear" type="button">모두 지우기</button>
+          <button class="btn" id="btnPng" type="button">가린 그림 내려받기 (PNG)</button>
         </div>
-        <p class="note" id="copyNote" role="status"></p>
+        <p class="note" id="imgNote" role="status"></p>
       </div>
 
-      <!-- 한 사람 -->
-      <div id="paneOne" hidden>
-        <h3 class="sec-title">2. 한 사람 참여기간 <small>이름은 적지 않습니다</small></h3>
-        <div class="frow">
-          <label class="field"><span>참여 시작일</span><input class="text-in sm" id="vOneStart" type="date"></label>
-          <label class="field"><span>참여 종료일 <small>계속 참여 중이면 비움</small></span><input class="text-in sm" id="vOneEnd" type="date"></label>
-          <div><p class="lbl">근무 형태</p><div class="chips small" id="onePartRow"></div></div>
-        </div>
-        <h3 class="sec-title">3. 지금까지 이수한 교육 <small>자활정보시스템 집계 기준, 비우면 0</small></h3>
-        <div class="frow">
-          <label class="field"><span>직무교육 <small>시간</small></span><input class="num-in" id="vOneJob" type="text" inputmode="decimal" placeholder="0"></label>
-          <label class="field"><span>소양교육 <small>시간</small></span><input class="num-in" id="vOneBasic" type="text" inputmode="decimal" placeholder="0"></label>
-          <label class="field"><span>소양교육 <small>횟수</small></span><input class="num-in" id="vOneBasicN" type="text" inputmode="numeric" placeholder="0"></label>
-          <label class="field"><span>법정의무교육 <small>시간, 소양에 최대 6시간 더함</small></span><input class="num-in" id="vOneLegal" type="text" inputmode="decimal" placeholder="0"></label>
-        </div>
-        <div class="result" id="oneResult">
-          <div class="r-line big"><span class="k">참여일수 <small id="oneRange"></small></span><span class="v" id="oneDays"></span></div>
-          <div class="r-line" id="oneJobLine"><span class="k">직무교육</span><span class="v small" id="oneJob"></span></div>
-          <div class="r-line" id="oneBasicLine"><span class="k">소양교육</span><span class="v small" id="oneBasic"></span></div>
-        </div>
-        <p class="note" id="oneNote" role="status"></p>
-        <div class="controls-sub"><button class="btn btn-small" id="btnOneCopy" type="button">결과 글 복사</button></div>
-        <p class="note" id="oneCopyNote" role="status"></p>
-      </div>
-
-      <p class="rule"><strong>2025~2026년 지역자활센터 성과평가 안내서 37~41쪽 기준.</strong> 평가대상은 자활근로사업단(사회서비스형·시장진입형·시간제·청년자립도전) 참여자 중 급여를 1회 이상 받은 사람이며, 60일 미만 참여자는 빠집니다. 종결 후 다시 참여하면 같은 평가연도 안의 참여일수를 합칩니다. 참여기간의 50% 이상이 시간제이면 시간제 기준을 씁니다. 직무교육은 집합온라인(실시간) 50%만 인정되고 이러닝은 인정되지 않으며, 소양교육은 온라인 50% 인정, 법정의무교육은 각 1회씩 통산 6시간까지만 소양교육으로 인정됩니다. 하루 최대 8시간. 이 계산기는 집계 파일의 분·횟수를 그대로 쓰므로 온라인 50%·하루 8시간 제한·급여 수령 여부·증빙 적합성은 반영하지 못합니다. 결과는 참고용이고, 확정은 성과관리 메뉴와 증빙으로 하세요.</p>
+      <p class="rule"><strong>왜 가리나요.</strong> 참여자 이름·생년월일·연락처·주소는 개인정보라 AI 서비스나 메신저에 그대로 올리면 안 됩니다. 이름은 가운데 글자를, 생년월일은 연도만, 전화는 가운데 네 자리를 가리면 사람을 알아보기 어려우면서도 명단으로는 쓸 수 있습니다. 가린 결과도 센터 밖으로 보낼 때는 다시 한 번 살펴보세요. 엑셀로 내려받은 파일은 값만 들어가고 서식·수식은 빠집니다.</p>
 
       <div class="guide">
         <span class="guide-face"><img id="guideFace" alt="" width="56" height="56"></span>
@@ -411,14 +406,14 @@ body.big .bar{margin-top:28px;height:24px}
   <section class="uses" aria-labelledby="usesTitle">
     <h2 id="usesTitle">이럴 때 좋아요</h2>
     <ul>
-      <li><strong>분기마다 교육 계획</strong> 참여자현황과 교육이수집계를 내려받아 올리면, 연말까지 누가 몇 시간 더 들어야 하는지 한 표로 나옵니다. "부족한 사람만" 보기로 추려 교육 일정을 잡습니다.</li>
-      <li><strong>새 참여자 안내</strong> 한 사람 계산에 시작일만 넣으면 올해 안에 필요한 직무·소양 시간이 나와서 첫 상담 때 바로 알려 줄 수 있습니다.</li>
-      <li><strong>성과평가 준비</strong> 예상 이수율과 배점을 보고, 95% 기준까지 몇 명이 더 채워야 하는지 가늠합니다.</li>
+      <li><strong>AI에 명단 붙이기 전</strong> 참여자 명단으로 조 편성이나 안내문을 AI에 부탁하고 싶을 때, 가린 표를 복사해 붙이면 실명이 나가지 않습니다.</li>
+      <li><strong>외부 제출 자료</strong> 광역센터·협회에 보내는 참여자 통계 뒷받침 자료에서 이름·연락처를 가리고 보낼 때.</li>
+      <li><strong>화면 캡처 공유</strong> 자활정보시스템 화면을 캡처해 동료에게 설명할 때 이름 칸만 검게 칠해 보냅니다.</li>
     </ul>
   </section>
 
   <footer class="foot">
-    <p><strong>평가 연도·기준표·보기 설정만 이 PC의 이 브라우저에 저장됩니다.</strong> 올린 파일과 이름·생년월일은 저장하지 않으며, 인터넷으로 보내지 않습니다.</p>
+    <p><strong>가리기 설정만 이 PC의 이 브라우저에 저장됩니다.</strong> 올린 파일·그림·명단은 저장하지 않으며, 인터넷으로 보내지 않습니다.</p>
     <p>만든 사람: 서울강남지역자활센터 김태균</p>
   </footer>
 </div>
@@ -776,393 +771,221 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
 (function(){
   'use strict';
   var $=JT.$;
-  var KEY='jahwal-tools.edu-hours.v1';
+  var KEY='jahwal-tools.mask-privacy.v1';
   var setFace=JT.faceSetter(FACES);
-  var YEAR=2026; /* 아래 기준표의 근거 연도(2025~2026 성과평가 안내서). 화면에 표시하고 값은 사용자가 고친다 */
-  /* 참여기간별 필요 교육 (안내서 38·40쪽). [일수 이상, 직무 전일제h, 직무 시간제h, 소양 전일제h, 소양 전일제 횟수, 소양 시간제h, 소양 시간제 횟수] */
-  var DEF_REQ=[[60,3,2,4,1,2,1],[120,6,3,8,2,3,1],[180,9,4,12,2,6,2],[270,12,6,16,3,8,2]];
-  var LEGAL_MAX=6; /* 법정의무교육을 소양교육으로 인정하는 상한(시간) */
-  var MIN_DAYS=60;
-  var TABS=[['batch','파일로 일괄 계산'],['one','한 사람 계산']];
-  var BASIS=[['today','오늘까지'],['yearEnd','12월 31일까지 (연말 예상)'],['custom','직접 고른 날까지']];
-  var FILTERS=[['all','전체'],['lack','부족한 사람만'],['unmatched','교육 집계와 짝 못 찾음'],['excluded','평가 제외(60일 미만 등)']];
+  var TABS=[['table','표 가리기 (엑셀·명단)'],['image','그림 가리기 (캡처·사진)']];
+  /* 가리는 방식. [키, 이름, 설명] */
+  var RULES=[
+    ['keep','그대로 두기',''],
+    ['name','이름: 가운데 가리기','홍*동, 남궁*민'],
+    ['first','이름: 첫 글자만','홍**'],
+    ['birthYear','생년월일: 연도만','1975-**-**'],
+    ['rrn','주민번호: 뒷자리 가리기','750302-*******'],
+    ['phoneMid','전화: 가운데 가리기','010-****-1234'],
+    ['phoneTail','전화: 뒤 4자리 가리기','010-1234-****'],
+    ['addr','주소: 동·읍·면까지만','서울 강남구 역삼동'],
+    ['email','이메일: 아이디 가리기','ab***@…'],
+    ['account','계좌·번호: 뒤 4자리만','****1234'],
+    ['all','전부 가리기','***'],
+    ['drop','열 지우기','']
+  ];
+  var STYLES=[['black','검게'],['white','하얗게'],['pixel','모자이크']];
 
-  function cloneReq(a){return a.map(function(r){return r.slice();});}
-  function fresh(){return {tab:'batch',year:(new Date()).getFullYear(),basis:'today',basisDate:'',addLegal:true,targetOnly:true,filter:'all',req:cloneReq(DEF_REQ),
-    one:{start:'',end:'',part:false,job:0,basic:0,basicN:0,legal:0}};}
-  function num(v,d){v=+v;return isFinite(v)&&v>=0?v:d;}
-  function norm(o){
-    o=o||{};var f=fresh();var one=o.one||{};
-    var req=Array.isArray(o.req)&&o.req.length===4?o.req.map(function(r,i){r=Array.isArray(r)?r:[];return DEF_REQ[i].map(function(d,j){return num(r[j],d);});}):cloneReq(DEF_REQ);
-    return {tab:o.tab==='one'?'one':'batch',year:(+o.year>=2000&&+o.year<=2100)?+o.year:f.year,basis:['today','yearEnd','custom'].indexOf(o.basis)>=0?o.basis:'today',
-      basisDate:/^\d{4}-\d{2}-\d{2}$/.test(String(o.basisDate||''))?o.basisDate:'',addLegal:o.addLegal!==false,targetOnly:o.targetOnly!==false,
-      filter:['all','lack','unmatched','excluded'].indexOf(o.filter)>=0?o.filter:'all',req:req,
-      one:{start:/^\d{4}-\d{2}-\d{2}$/.test(String(one.start||''))?one.start:'',end:/^\d{4}-\d{2}-\d{2}$/.test(String(one.end||''))?one.end:'',part:!!one.part,job:num(one.job,0),basic:num(one.basic,0),basicN:num(one.basicN,0),legal:num(one.legal,0)}};
-  }
+  function fresh(){return {tab:'table',header:true,style:'black',rules:{}};}
+  function norm(o){o=o||{};var rules={};if(o.rules&&typeof o.rules==='object')Object.keys(o.rules).slice(0,200).forEach(function(k){if(RULES.some(function(r){return r[0]===o.rules[k];}))rules[String(k).slice(0,60)]=o.rules[k];});
+    return {tab:o.tab==='image'?'image':'table',header:o.header!==false,style:STYLES.some(function(s){return s[0]===o.style;})?o.style:'black',rules:rules};}
   var DB=JT.store(KEY);
-  var S=(function(){var o=DB.read();var s=o&&o.tab?norm(o):fresh();s.basisYear=o&&o.basisYear;return s;})();
-  var PREV_YEAR=JT.basisYear(S,YEAR,function(s){s.req=cloneReq(DEF_REQ);});
-  function save(){DB.write(S);} /* 파일 내용·이름은 저장하지 않는다. 설정만 */
+  var S=(function(){var o=DB.read();return o&&o.tab?norm(o):fresh();})();
+  function save(){DB.write(S);} /* 표 내용·그림은 저장하지 않는다 */
 
-  /* 메모리에만 두는 자료 */
-  var ROSTER=null,EDU=null; /* {rows, src:'file'|'paste'|'example', name} */
-  var RESULT=null;
-
-  /* ---------- 날짜 ---------- */
-  function pad(n){return (n<10?'0':'')+n;}
-  function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
-  function fromIso(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s||''));if(!m)return null;var d=new Date(+m[1],+m[2]-1,+m[3],12);return isNaN(d)?null:d;}
-  var serialDate=JT.serialDate;
-  /* 셀 값 → 날짜. 엑셀 일련번호, "2026-09-14", "2026.9.14", "20260914" */
-  function toDate(v){
-    if(v==null||v==='')return null;
-    if(typeof v==='number'){if(v>20000&&v<80000)return serialDate(v);if(v>19000000&&v<21000000)v=String(v);else return null;}
-    var s=String(v).trim(),m=/^(\d{4})[.\-\/]?\s*(\d{1,2})[.\-\/]?\s*(\d{1,2})/.exec(s);
-    if(!m)return null;var d=new Date(+m[1],+m[2]-1,+m[3],12);return isNaN(d)?null:d;
-  }
-  function birthDigits(v){var d=toDate(v);if(d)return iso(d).replace(/-/g,'');return String(v==null?'':v).replace(/[^\d*]/g,'');}
-  function daysBetween(a,b){return Math.round((b.getTime()-a.getTime())/86400000)+1;} /* 양 끝 포함 */
-  function fmtD(d){return (d.getMonth()+1)+'월 '+d.getDate()+'일';}
-
-  /* 평가 창: [연도 1/1, 끝 날] */
-  function windowRange(){
-    var y=S.year,from=new Date(y,0,1,12),dec=new Date(y,11,31,12),to;
-    var today=new Date();today.setHours(12,0,0,0);
-    if(S.basis==='yearEnd')to=dec;
-    else if(S.basis==='custom'){to=fromIso(S.basisDate)||today;}
-    else to=today;
-    if(to>dec)to=dec;if(to<from)to=from;
-    return {from:from,to:to};
-  }
-
-  /* ---------- 기준 ---------- */
-  function reqFor(days,part){
-    var row=null;for(var i=0;i<S.req.length;i++){if(days>=S.req[i][0])row=S.req[i];}
-    if(!row)return null;
-    return part?{job:row[2],basic:row[5],basicN:row[6]}:{job:row[1],basic:row[3],basicN:row[4]};
-  }
-  function points(rate){if(!(rate>0))return 0;if(rate<50)return 1;if(rate<75)return 2;if(rate<90)return 3;if(rate<95)return 4;return 5;}
-  function hrs(h){if(h==null||isNaN(h))return '-';var r=Math.round(h*10)/10;return r.toLocaleString('ko-KR')+'시간';}
-  function hm(min){min=Math.round(min||0);if(min<=0)return '0분';var h=Math.floor(min/60),m=min%60;return (h?h+'시간':'')+(h&&m?' ':'')+(m?m+'분':'');}
-
-  /* 엑셀 읽기는 공통 JT.readTableFile(zip+DecompressionStream, 라이브러리 없음) */
-  var canInflate=JT.canInflate,readFile=JT.readTableFile;
-
-  /* ---------- 표 해석 ---------- */
-  function cellStr(v){return v==null?'':String(v).trim();}
-  function findHeader(rows,must){
-    for(var i=0;i<Math.min(rows.length,15);i++){var r=rows[i]||[],hit=must.every(function(re){return r.some(function(c){return re.test(cellStr(c));});});if(hit)return i;}
-    return -1;
-  }
-  function colOf(hdr,re){for(var i=0;i<hdr.length;i++)if(re.test(cellStr(hdr[i])))return i;return -1;}
-
-  /* 참여자현황 → 사람 목록 */
-  function parseRoster(rows){
-    var h=findHeader(rows,[/시작일/,/이름|성명/]);
-    if(h<0)return {err:'참여자현황 표가 아닌 것 같습니다. "참여자이름"과 "참여시작일" 머리글이 있어야 합니다.'};
-    var hdr=rows[h],cName=colOf(hdr,/참여자\s*이름|이름|성명/),cBirth=colOf(hdr,/생년월일/),cStart=colOf(hdr,/참여\s*시작일|시작일/),cEnd=colOf(hdr,/참여\s*종료일|종료일/),cKind=colOf(hdr,/사업단\s*유형|유형/),cUnit=colOf(hdr,/운영\s*사업단명|사업단명|^사업단$/),cStatus=colOf(hdr,/현재\s*상태|상태/);
-    if(cName<0||cStart<0)return {err:'이름 열이나 참여시작일 열을 찾지 못했습니다.'};
-    var people={},order=[],n=0,noKind=0;
-    for(var i=h+1;i<rows.length;i++){
-      var r=rows[i]||[],name=cellStr(r[cName]);if(!name)continue;
-      var start=toDate(r[cStart]);if(!start)continue;n++;
-      var end=cEnd>=0?toDate(r[cEnd]):null,kind=cKind>=0?cellStr(r[cKind]):'',unit=cUnit>=0?cellStr(r[cUnit]):'',status=cStatus>=0?cellStr(r[cStatus]):'';
-      var bd=cBirth>=0?birthDigits(r[cBirth]):'',pid=name+'|'+bd;
-      if(!kind)noKind++;
-      if(!people[pid]){people[pid]={name:name,birth:bd,segs:[],units:[],statuses:[]};order.push(pid);}
-      var p=people[pid];p.segs.push({start:start,end:end,kind:kind,unit:unit,status:status});
+  /* ---------- 가리기 함수 ---------- */
+  function star(n){return new Array(Math.max(0,n)+1).join('*');}
+  function maskName(s){s=String(s).trim();if(!s)return s;var parts=s.split(/\s+/);return parts.map(function(w){var ch=Array.from(w);if(ch.length<=1)return w;if(ch.length===2)return ch[0]+'*';return ch[0]+star(ch.length-2)+ch[ch.length-1];}).join(' ');}
+  function maskFirst(s){s=String(s).trim();if(!s)return s;var ch=Array.from(s);return ch[0]+star(Math.max(1,ch.length-1));}
+  function maskBirth(s){var raw=String(s).trim();if(!raw)return raw;var d=raw.replace(/\D/g,'');if(d.length>=8)return d.slice(0,4)+'-**-**';if(d.length>=6)return (d.slice(0,2)<'30'?'20':'19')+d.slice(0,2)+'-**-**';if(d.length>=4)return d.slice(0,4)+'-**-**';return '****-**-**';}
+  function maskRrn(s){var raw=String(s).trim();if(!raw)return raw;var d=raw.replace(/\D/g,'');if(d.length>=6)return d.slice(0,6)+'-*******';return star(raw.length);}
+  function maskPhone(s,tail){var raw=String(s).trim();if(!raw)return raw;if(raw.indexOf('*')>=0)return raw; /* 이미 가린 번호는 그대로 */var d=raw.replace(/\D/g,'');if(d.length<7)return star(raw.length);
+    var head=d.length>=10?d.slice(0,3):d.slice(0,2),rest=d.slice(head.length),last=rest.slice(-4),mid=rest.slice(0,rest.length-4);
+    return tail?head+'-'+mid+'-****':head+'-'+star(mid.length)+'-'+last;}
+  function maskAddr(s){var raw=String(s).trim();if(!raw)return raw;var parts=raw.split(/\s+/),out=[];for(var i=0;i<parts.length;i++){out.push(parts[i]);if(/(동|읍|면|가)$/.test(parts[i].replace(/\d+$/,''))&&i>=1)return out.join(' ');if(/(동|읍|면)\d*$/.test(parts[i])&&i>=1)return out.join(' ');}
+    return parts.slice(0,Math.min(2,parts.length)).join(' ')+(parts.length>2?' …':'');}
+  function maskEmail(s){var raw=String(s).trim();if(!raw)return raw;var m=/^([^@\s]+)@(.+)$/.exec(raw);if(!m)return star(raw.length);var id=m[1];return (id.length<=2?id.charAt(0):id.slice(0,2))+'***@'+m[2];}
+  function maskAccount(s){var raw=String(s).trim();if(!raw)return raw;var d=raw.replace(/\D/g,'');if(d.length<=4)return star(raw.length);return star(4)+d.slice(-4);}
+  function apply(rule,v){
+    if(v==null||v==='')return v;var s=typeof v==='number'?String(v):String(v);
+    switch(rule){
+      case 'name':return maskName(s);case 'first':return maskFirst(s);
+      case 'birthYear':return typeof v==='number'&&v>20000&&v<80000?maskBirth(isoOf(JT.serialDate(v))):maskBirth(s);
+      case 'rrn':return maskRrn(s);case 'phoneMid':return maskPhone(s,false);case 'phoneTail':return maskPhone(s,true);
+      case 'addr':return maskAddr(s);case 'email':return maskEmail(s);case 'account':return maskAccount(s);
+      case 'all':return star(Math.min(6,Math.max(3,Array.from(s).length)));
+      default:return v;
     }
-    if(!n)return {err:'읽을 수 있는 참여 줄이 없습니다. 참여시작일이 날짜인지 확인하세요.'};
-    return {people:order.map(function(k){return people[k];}),rows:n,hasKind:cKind>=0,noKind:noKind};
   }
-  /* 교육이수집계 → 가린 키별 집계 */
-  function parseEdu(rows){
-    var h=findHeader(rows,[/이름|성명/,/직무/]);
-    if(h<0)return {err:'교육이수집계 표가 아닌 것 같습니다. "이름"과 "직무교육집계" 머리글이 있어야 합니다.'};
-    var hdr=rows[h],cName=colOf(hdr,/이름|성명/),cBirth=colOf(hdr,/생년월일/),cYear=colOf(hdr,/교육\s*년도|연도|년도/),cJob=colOf(hdr,/직무/),cBasic=colOf(hdr,/소양/),cLegal=colOf(hdr,/법정/);
-    if(cName<0||cJob<0)return {err:'이름 열이나 직무교육 열을 찾지 못했습니다.'};
-    /* 다음 줄이 "분 / 횟수" 소제목이면 건너뛴다 */
-    var dataFrom=h+1,sub=rows[h+1]||[];if(sub.some(function(c){return /^(분|횟수)$/.test(cellStr(c));}))dataFrom=h+2;
-    var list=[],years={};
-    for(var i=dataFrom;i<rows.length;i++){
-      var r=rows[i]||[],name=cellStr(r[cName]);if(!name||/^(이름|성명)$/.test(name))continue;
-      var y=cYear>=0?cellStr(r[cYear]):'';if(y)years[y]=(years[y]||0)+1;
-      var g=function(c,off){if(c<0)return 0;var v=r[c+off];v=typeof v==='number'?v:parseFloat(String(v==null?'':v).replace(/[^\d.]/g,''));return isFinite(v)?v:0;};
-      list.push({name:name,birth:cBirth>=0?String(r[cBirth]==null?'':r[cBirth]).trim():'',year:y,jobMin:g(cJob,0),jobN:g(cJob,1),basicMin:g(cBasic,0),basicN:g(cBasic,1),legalMin:g(cLegal,0),legalN:g(cLegal,1)});
+  function isoOf(d){return d.getFullYear()+'-'+(d.getMonth()<9?'0':'')+(d.getMonth()+1)+'-'+(d.getDate()<10?'0':'')+d.getDate();}
+  /* 머리글·열 성격으로 기본 방식 고르기 */
+  function guess(header,kind,sample){
+    var h=String(header||'');
+    if(/주민/.test(h))return 'rrn';
+    if(/생년|생일|출생/.test(h))return 'birthYear';
+    if(/이름|성명|성\s*명|참여자명|대상자명|name/i.test(h))return 'name';
+    if(/전화|연락처|휴대|핸드폰|tel|phone/i.test(h))return 'phoneMid';
+    if(/주소/.test(h))return 'addr';
+    if(/메일|email/i.test(h))return 'email';
+    if(/계좌/.test(h))return 'account';
+    if(kind==='phone')return 'phoneMid';
+    if(/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(sample||'')))return 'email';
+    if(/^\d{6}-?\d{7}$/.test(String(sample||'').replace(/\s/g,'')))return 'rrn';
+    return 'keep';
+  }
+
+  /* ---------- 표 ---------- */
+  var ROWS=null,SRC='',COLS=[]; /* COLS: [{idx, header, kind, sample, rule}] */
+  function setRows(rows,src){
+    rows=(rows||[]).filter(function(r){return r&&r.some(function(c){return c!=null&&String(c).trim()!=='';});});
+    if(!rows.length){ROWS=null;$('fileStat').className='fstat bad';$('fileStat').textContent='읽을 수 있는 줄이 없습니다.';renderTable();return;}
+    ROWS=rows;SRC=src;
+    var strRows=rows.map(function(r){return r.map(function(c){return c==null?'':String(c);});});
+    var sc=JT.sniffColumns(strRows);S.header=sc.hasHeader;
+    buildCols();renderTable();
+  }
+  function buildCols(){
+    if(!ROWS){COLS=[];return;}
+    var n=0;ROWS.forEach(function(r){if(r.length>n)n=r.length;});
+    var strRows=ROWS.map(function(r){return r.map(function(c){return c==null?'':String(c);});});
+    var sc=JT.sniffColumns(S.header?strRows:[[]].concat(strRows)); /* 머리글 토글을 사용자가 바꿨을 때도 kinds를 얻기 위한 꼼수: 머리글 없음이면 빈 줄을 머리글로 */
+    var body=S.header?ROWS.slice(1):ROWS,hdr=S.header?ROWS[0]:[];
+    COLS=[];
+    for(var c=0;c<n;c++){
+      var header=S.header?String(hdr[c]==null?'':hdr[c]).trim():'',sample='';
+      for(var i=0;i<body.length;i++){var v=body[i][c];if(v!=null&&String(v).trim()!==''){sample=v;break;}}
+      var kind=sc.kinds[c]||'text',label=header||('열 '+String.fromCharCode(65+(c%26)));
+      var rule=S.rules[label]||guess(header,kind,sample);
+      COLS.push({idx:c,header:header,label:label,kind:kind,sample:sample,rule:rule});
     }
-    if(!list.length)return {err:'읽을 수 있는 사람 줄이 없습니다.'};
-    return {list:list,years:years};
   }
-  /* 이름·생년월일을 가린 모양으로 맞추는 키: 이름 첫·끝 글자와 길이 + 생년월일 첫·끝 숫자 */
-  function maskKey(name,birth){
-    var n=String(name||'').replace(/\s+/g,''),first=n.charAt(0),last=n.length>1?n.charAt(n.length-1):'';if(last==='*')last='';
-    var d=String(birth||'').replace(/[^\d*]/g,''),bf=d.charAt(0),bl=d.length>1?d.charAt(d.length-1):'';if(bf==='*')bf='';if(bl==='*')bl='';
-    return first+'|'+last+'|'+n.length+'|'+bf+'|'+bl;
-  }
-  function maskName(name){var n=String(name||'');if(n.length<=1)return n;if(n.length===2)return n.charAt(0)+'*';return n.charAt(0)+new Array(n.length-1).join('*')+n.charAt(n.length-1);}
-  function maskBirth(d){d=String(d||'').replace(/\D/g,'');if(!d)return '';return d.charAt(0)+'******'+d.charAt(d.length-1);}
-
-  /* ---------- 계산 ---------- */
-  function kindClass(k){k=String(k||'');if(/시간제/.test(k))return 'part';if(/시장진입|사회서비스|청년자립|청년\s*자립/.test(k))return 'full';if(/근로유지/.test(k))return 'keep';if(/게이트웨이|gateway|인턴|도우미|자활기업|대기/i.test(k))return 'other';return k?'etc':'';}
-  function isTarget(cls){if(S.targetOnly)return cls==='part'||cls==='full';return cls!=='other'&&cls!=='';}
-  function personDays(p,win){
-    /* 평가 창 안에서 대상 구간을 일 단위로 겹침 없이 센다. 시간제 날도 따로 */
-    var marks={},partMarks={},unit='',status='',lastStart=null,kinds={},any=false;
-    p.segs.forEach(function(s){
-      var cls=kindClass(s.kind);if(s.kind)kinds[s.kind]=1;
-      if(!isTarget(cls))return;any=true;
-      var a=s.start<win.from?win.from:s.start,b=s.end?(s.end>win.to?win.to:s.end):win.to;
-      if(!lastStart||s.start>lastStart){lastStart=s.start;unit=s.unit;status=s.status;}
-      if(b<a)return;
-      for(var t=a.getTime();t<=b.getTime();t+=86400000){var k=Math.round(t/86400000);marks[k]=1;if(cls==='part')partMarks[k]=1;}
+  function maskedRows(){
+    if(!ROWS)return [];
+    var keepCols=COLS.filter(function(c){return c.rule!=='drop';});
+    var out=[];
+    ROWS.forEach(function(r,i){
+      var isHead=S.header&&i===0;
+      out.push(keepCols.map(function(c){var v=r[c.idx];if(v==null)return '';if(isHead)return v;
+        /* 엑셀 날짜 일련번호는 그대로 두는 열이라도 날짜 글자로 바꿔 둔다(내려받은 파일에서 숫자로 보이지 않게) */
+        if(c.rule==='keep'&&typeof v==='number'&&v>20000&&v<80000&&/일|날짜|date/i.test(c.header))return isoOf(JT.serialDate(v));
+        return apply(c.rule,v);}));
     });
-    var days=Object.keys(marks).length,part=Object.keys(partMarks).length;
-    return {days:days,partDays:part,part:days>0&&part*2>=days,unit:unit,status:status,kinds:Object.keys(kinds),any:any};
+    return out;
   }
-  function compute(){
-    RESULT=null;
-    if(!ROSTER)return null;
-    var win=windowRange(),out=[],stat={people:ROSTER.people.length,target:0,eval:0,jobOk:0,basicOk:0,matched:0,amb:0,none:0,lackJob:0,lackBasic:0,lackAny:0};
-    /* 교육 집계 키 */
-    var eduMap=null,eduUsed={};
-    if(EDU){eduMap={};var yStr=String(S.year);EDU.list.forEach(function(e){if(e.year&&/^\d{4}$/.test(e.year)&&e.year!==yStr)return;var k=maskKey(e.name,e.birth);(eduMap[k]=eduMap[k]||[]).push(e);});}
-    /* 짝 맞추기 키가 겹치는지 보는 범위는 평가대상 참여자(다른 유형만 있는 사람은 제외) */
-    var calc=ROSTER.people.map(function(p){return {p:p,d:personDays(p,win)};}).filter(function(x){return x.d.any;});
-    var keyCount={};calc.forEach(function(x){var k=maskKey(x.p.name,x.p.birth);keyCount[k]=(keyCount[k]||0)+1;});
-    calc.forEach(function(x){
-      var p=x.p,d=x.d;stat.target++;
-      var row={name:p.name,birth:maskBirth(p.birth),unit:d.unit,status:d.status,part:d.part,days:d.days,partDays:d.partDays,excluded:'',req:null,edu:null,match:'',lackJob:0,lackBasic:0,lackBasicN:0,okJob:null,okBasic:null};
-      if(d.days<MIN_DAYS)row.excluded=d.days?'참여 '+d.days+'일 (60일 미만)':'평가 기간 안 참여일 없음';
-      else{row.req=reqFor(d.days,d.part);stat.eval++;}
-      if(eduMap){
-        var k=maskKey(p.name,p.birth),cands=eduMap[k]||[];
-        if(!cands.length){row.match='none';}
-        else if(cands.length>1||keyCount[k]>1){row.match='amb';}
-        else{row.match='ok';eduUsed[k]=1;var e=cands[0];row.edu={job:e.jobMin/60,jobN:e.jobN,basic:e.basicMin/60,basicN:e.basicN,legal:e.legalMin/60,legalN:e.legalN};}
-      }
-      if(row.req){
-        var doneJob=row.edu?row.edu.job:0,doneBasic=row.edu?row.edu.basic+(S.addLegal?Math.min(row.edu.legal,LEGAL_MAX):0):0,doneBasicN=row.edu?row.edu.basicN+(S.addLegal?row.edu.legalN:0):0;
-        row.doneJob=doneJob;row.doneBasic=doneBasic;row.doneBasicN=doneBasicN;
-        row.lackJob=Math.max(0,row.req.job-doneJob);row.lackBasic=Math.max(0,row.req.basic-doneBasic);row.lackBasicN=Math.max(0,row.req.basicN-doneBasicN);
-        row.okJob=row.lackJob<=0;row.okBasic=row.lackBasic<=0&&row.lackBasicN<=0;
-        if(eduMap&&row.match==='ok'){if(row.okJob)stat.jobOk++;if(row.okBasic)stat.basicOk++;}
-        if(row.lackJob>0)stat.lackJob++;if(!row.okBasic)stat.lackBasic++;if(row.lackJob>0||!row.okBasic)stat.lackAny++;
-      }
-      if(eduMap){if(row.match==='ok')stat.matched++;else if(row.match==='amb')stat.amb++;else stat.none++;}
-      out.push(row);
+  function renderTable(){
+    $('colsWrap').hidden=!ROWS;
+    var face='empty',g='',st='가리기',tone='ready';
+    if(!ROWS){$('fileStat').className='fstat';if(!$('fileStat').classList.contains('bad'))$('fileStat').textContent='아직 없음';
+      g='명단 파일을 올리거나 붙여 넣으면 이름·전화·생년월일 열을 찾아 가리는 방법을 제안해 드려요. "예시 표로 보기"로 먼저 둘러봐도 됩니다.';
+      $('stage').dataset.tone=tone;setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title='개인정보 가리기';$('pos').textContent='표';return;}
+    var bodyN=S.header?ROWS.length-1:ROWS.length;
+    $('fileStat').className='fstat';$('fileStat').textContent=ROWS.length+'줄 × '+COLS.length+'열'+(S.header?' (첫 줄은 머리글)':'')+' — '+SRC;
+    var or=$('optRow');or.textContent='';JT.chip(or,'첫 줄은 머리글',S.header,false,function(){S.header=!S.header;buildCols();save();renderTable();});
+    var host=$('cols');host.textContent='';
+    COLS.forEach(function(c){
+      var card=document.createElement('div');card.className='colcard'+(c.rule!=='keep'&&c.rule!=='drop'?' on':'')+(c.rule==='drop'?' drop':'');
+      var h=document.createElement('h4');var t1=document.createElement('span');t1.textContent=c.label;var t2=document.createElement('small');t2.textContent=c.kind==='phone'?'전화번호 모양':(c.kind==='num'?'숫자':(c.kind==='date'?'날짜':''));h.appendChild(t1);h.appendChild(t2);card.appendChild(h);
+      var sm=document.createElement('p');sm.className='sample';var sv=c.sample==null?'':String(c.sample);if(typeof c.sample==='number'&&c.sample>20000&&c.sample<80000&&(c.rule==='birthYear'||c.kind==='date'))sv=isoOf(JT.serialDate(c.sample));
+      sm.textContent='예: ';var b=document.createElement('b');var after=apply(c.rule,c.sample);if(typeof after==='number')after=String(after);b.textContent=c.rule==='drop'?'(지움)':(c.rule==='keep'?sv:(sv+' → '+after));sm.appendChild(b);card.appendChild(sm);
+      var sel=document.createElement('select');sel.setAttribute('aria-label',c.label+' 가리는 방식');
+      RULES.forEach(function(r){var o=document.createElement('option');o.value=r[0];o.textContent=r[1]+(r[2]?' — '+r[2]:'');if(r[0]===c.rule)o.selected=true;sel.appendChild(o);});
+      sel.addEventListener('change',function(){c.rule=sel.value;S.rules[c.label]=sel.value;save();renderTable();});
+      card.appendChild(sel);host.appendChild(card);
     });
-    out.sort(function(a,b){if(!!a.excluded!==!!b.excluded)return a.excluded?1:-1;var la=a.lackJob+a.lackBasic,lb=b.lackJob+b.lackBasic;if(la!==lb)return lb-la;return a.name<b.name?-1:a.name>b.name?1:0;});
-    stat.jobRate=stat.eval?stat.jobOk/stat.eval*100:0;stat.basicRate=stat.eval?stat.basicOk/stat.eval*100:0;
-    stat.eduExtra=EDU?EDU.list.length-Object.keys(eduUsed).length:0;
-    RESULT={rows:out,stat:stat,win:win,hasEdu:!!EDU};
-    return RESULT;
+    /* 미리보기 */
+    var out=maskedRows(),tb=$('prevTable');tb.textContent='';var keepCols=COLS.filter(function(c){return c.rule!=='drop';});
+    var show=out.slice(0,16);
+    if(S.header){var thr=document.createElement('tr');keepCols.forEach(function(c){var th=document.createElement('th');th.textContent=c.label;thr.appendChild(th);});tb.appendChild(thr);show=show.slice(1);}
+    show.forEach(function(r,i){var tr=document.createElement('tr');r.forEach(function(v,j){var td=document.createElement('td');td.textContent=v==null?'':String(v);var orig=ROWS[i+(S.header?1:0)][keepCols[j].idx];if(String(orig==null?'':orig)!==String(v==null?'':v))td.className='changed';tr.appendChild(td);});tb.appendChild(tr);});
+    $('prevCount').textContent='앞 '+Math.min(15,bodyN)+'줄 미리보기 · 전체 '+bodyN+'줄 · 파란 글자가 바뀐 칸';
+    var changed=COLS.filter(function(c){return c.rule!=='keep';}).length,dropped=COLS.filter(function(c){return c.rule==='drop';}).length;
+    if(!changed){face='warn';tone='warn';g='아직 가리는 열이 없어요. 이름이나 전화 열의 방식을 골라 주세요.';st='가릴 열 없음';}
+    else{face='done';g=changed+'개 열을 가려요'+(dropped?'(지우는 열 '+dropped+')':'')+'. 미리보기를 보고 괜찮으면 내려받거나 복사하세요.';st=changed+'개 열 가림';}
+    $('stage').dataset.tone=tone;setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title=st+' | 개인정보 가리기';$('pos').textContent='표 · '+bodyN+'줄';
+  }
+  function example(){
+    setRows([['연번','이름','생년월일','연락처','주소','사업단','비고'],
+      [1,'가나다','1975-03-02','010-1234-5678','서울특별시 강남구 역삼동 123-4 행복아파트 101동','행복카페',''],
+      [2,'라마바','1982.11.15','010-9876-5432','서울 강남구 대치동 55 ○○빌라 302호','클린케어','반장'],
+      [3,'사아자','19690721','02-555-1234','경기도 성남시 분당구 정자동 7','반찬사업단',''],
+      [4,'남궁차카','1990-01-30','010-2222-3333','서울시 송파구 잠실본동 12-3','행복카페','']],'예시(가상)');
   }
 
-  /* ---------- 화면: 공통 ---------- */
+  /* ---------- 그림 ---------- */
+  var IMG=null,RECTS=[],drawing=null,cv=$('imgCanvas'),ctx=cv.getContext('2d');
+  function fitCanvas(){if(!IMG)return;var W=Math.min(IMG.naturalWidth,1600),H=Math.round(IMG.naturalHeight*W/IMG.naturalWidth);cv.width=W;cv.height=H;}
+  function paint(target,scale,withPreview){
+    var g=target.getContext('2d'),W=target.width,H=target.height;g.clearRect(0,0,W,H);g.drawImage(IMG,0,0,W,H);
+    var list=RECTS.slice();if(withPreview&&drawing)list.push(drawing);
+    list.forEach(function(r){var x=r.x*W,y=r.y*H,w=r.w*W,h=r.h*H;if(w<1||h<1)return;
+      if(S.style==='pixel'){var sx=Math.max(1,Math.round(w/12)),sy=Math.max(1,Math.round(h/12));var tmp=document.createElement('canvas');tmp.width=Math.max(1,Math.round(w/Math.max(sx,sy)*1));tmp.height=Math.max(1,Math.round(h/Math.max(sx,sy)*1));var tg=tmp.getContext('2d');tg.imageSmoothingEnabled=false;tg.drawImage(IMG,x/W*IMG.naturalWidth,y/H*IMG.naturalHeight,w/W*IMG.naturalWidth,h/H*IMG.naturalHeight,0,0,tmp.width,tmp.height);g.imageSmoothingEnabled=false;g.drawImage(tmp,0,0,tmp.width,tmp.height,x,y,w,h);g.imageSmoothingEnabled=true;}
+      else{g.fillStyle=S.style==='white'?'#fff':'#000';g.fillRect(x,y,w,h);}
+    });
+  }
+  function redraw(){if(!IMG)return;paint(cv,1,true);}
+  function loadImage(file){
+    var rd=new FileReader();rd.onload=function(){var im=new Image();im.onload=function(){IMG=im;RECTS=[];fitCanvas();cv.hidden=false;$('imgWrap').classList.remove('empty');$('imgEmpty').hidden=true;$('imgStat').className='fstat';$('imgStat').textContent=file.name+' · '+im.naturalWidth+'×'+im.naturalHeight;redraw();renderImageGuide();};
+      im.onerror=function(){$('imgStat').className='fstat bad';$('imgStat').textContent='그림을 읽지 못했습니다. PNG·JPG인지 확인하세요.';};im.src=String(rd.result);};
+    rd.onerror=function(){$('imgStat').className='fstat bad';$('imgStat').textContent='파일을 읽지 못했습니다.';};rd.readAsDataURL(file);
+  }
+  function pos(e){var r=cv.getBoundingClientRect();return {x:Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)),y:Math.min(1,Math.max(0,(e.clientY-r.top)/r.height))};}
+  cv.addEventListener('pointerdown',function(e){if(!IMG)return;e.preventDefault();var p=pos(e);drawing={x0:p.x,y0:p.y,x:p.x,y:p.y,w:0,h:0};try{cv.setPointerCapture(e.pointerId);}catch(x){}});
+  cv.addEventListener('pointermove',function(e){if(!drawing)return;var p=pos(e);drawing.x=Math.min(drawing.x0,p.x);drawing.y=Math.min(drawing.y0,p.y);drawing.w=Math.abs(p.x-drawing.x0);drawing.h=Math.abs(p.y-drawing.y0);redraw();});
+  function endDraw(){if(!drawing)return;if(drawing.w>0.003&&drawing.h>0.003)RECTS.push({x:drawing.x,y:drawing.y,w:drawing.w,h:drawing.h});drawing=null;redraw();renderImageGuide();}
+  cv.addEventListener('pointerup',endDraw);cv.addEventListener('pointercancel',function(){drawing=null;redraw();});
+  function renderImageGuide(){
+    var face,g,st;
+    if(!IMG){face='empty';g='캡처나 사진을 올리고 가릴 자리를 끌어 네모를 그리세요. PDF는 화면을 캡처해서 올리면 됩니다.';st='그림';}
+    else if(!RECTS.length){face='work';g='그림이 올라왔어요. 이름·연락처가 있는 자리를 마우스로 끌어 네모를 그리세요.';st='네모 0개';}
+    else{face='done';g=RECTS.length+'곳을 가렸어요. "가린 그림 내려받기"로 저장해 쓰세요. 원본은 바뀌지 않습니다.';st='네모 '+RECTS.length+'개';}
+    $('stage').dataset.tone='ready';setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title=st+' | 개인정보 가리기';$('pos').textContent='그림';
+  }
+  function downloadPng(){
+    if(!IMG){$('imgNote').textContent='먼저 그림을 올려 주세요.';return;}
+    if(!RECTS.length){$('imgNote').textContent='가릴 자리를 하나 이상 그려 주세요.';return;}
+    var full=document.createElement('canvas');full.width=IMG.naturalWidth;full.height=IMG.naturalHeight;paint(full,1,false);
+    try{full.toBlob(function(b){if(!b){$('imgNote').textContent='그림을 만들지 못했습니다.';return;}var ok=JT.downloadBlob(b,'가린그림_'+JT.today()+'.png');$('imgNote').textContent=ok?'가린 그림을 내려받았습니다.':'내려받기가 막혔습니다.';},'image/png');}
+    catch(e){$('imgNote').textContent='그림을 만들지 못했습니다.';}
+  }
+
+  /* ---------- 공통 화면 ---------- */
   function renderForm(){
     var tr=$('tabRow');tr.textContent='';TABS.forEach(function(t){JT.chip(tr,t[1],S.tab===t[0],false,function(){S.tab=t[0];save();renderForm();render();});});
-    $('paneBatch').hidden=S.tab!=='batch';$('paneOne').hidden=S.tab!=='one';
-    $('vYear').value=String(S.year);
-    var br=$('basisRow');br.textContent='';BASIS.forEach(function(b){JT.chip(br,b[1],S.basis===b[0],false,function(){S.basis=b[0];save();renderForm();render();});});
-    $('basisDateField').hidden=S.basis!=='custom';$('vBasisDate').value=S.basisDate;
-    var or=$('optRow');or.textContent='';
-    JT.chip(or,'법정의무교육을 소양교육에 더함 (최대 '+LEGAL_MAX+'시간)',S.addLegal,false,function(){S.addLegal=!S.addLegal;save();renderForm();render();});
-    JT.chip(or,'평가대상 유형만 (시장진입·사회서비스·시간제·청년자립도전)',S.targetOnly,false,function(){S.targetOnly=!S.targetOnly;save();renderForm();render();});
-    $('optHelp').textContent=(S.targetOnly?'게이트웨이·인턴형·도우미·자활기업·근로유지형 참여 구간은 세지 않습니다.':'사업단 유형이 적힌 모든 참여 구간을 셉니다(게이트웨이·인턴·도우미·자활기업 제외). 근로유지형도 포함됩니다.')+' 같은 사람이 여러 줄이면 평가연도 안의 참여일을 합칩니다.';
-    $('reqYear').textContent='('+YEAR+'년 안내서 기준)';
-    renderReq();
-    var pr=$('onePartRow');pr.textContent='';
-    JT.chip(pr,'전일제',!S.one.part,false,function(){S.one.part=false;save();renderForm();render();});
-    JT.chip(pr,'시간제',S.one.part,false,function(){S.one.part=true;save();renderForm();render();});
-    $('vOneStart').value=S.one.start;$('vOneEnd').value=S.one.end;
-    [['vOneJob','job'],['vOneBasic','basic'],['vOneBasicN','basicN'],['vOneLegal','legal']].forEach(function(x){$(x[0]).value=S.one[x[1]]?String(S.one[x[1]]):'';});
-    var fr=$('filterRow');fr.textContent='';FILTERS.forEach(function(f){JT.chip(fr,f[1],S.filter===f[0],false,function(){S.filter=f[0];save();renderForm();render();});});
-    $('noInflate').style.display=canInflate()?'none':'block';
+    $('paneTable').hidden=S.tab!=='table';$('paneImage').hidden=S.tab!=='image';
+    var sr=$('styleRow');sr.textContent='';STYLES.forEach(function(s){JT.chip(sr,s[1],S.style===s[0],false,function(){S.style=s[0];save();renderForm();redraw();});});
+    $('noInflate').hidden=JT.canInflate();
   }
-  function renderReq(){
-    var t=$('reqTable');t.textContent='';
-    var th=document.createElement('tr');['참여기간','직무 전일제','직무 시간제','소양 전일제','소양 횟수','소양 시간제','시간제 횟수'].forEach(function(h){var c=document.createElement('th');c.textContent=h;th.appendChild(c);});t.appendChild(th);
-    S.req.forEach(function(r,i){
-      var tr=document.createElement('tr'),td=document.createElement('td');
-      var next=S.req[i+1];td.textContent=r[0]+'일 이상'+(next?' ~ '+next[0]+'일 미만':'');tr.appendChild(td);
-      for(var j=1;j<7;j++){(function(j){var c=document.createElement('td'),inp=document.createElement('input');inp.type='text';inp.inputMode='decimal';inp.value=String(r[j]);inp.setAttribute('aria-label',th.children[j].textContent+' '+td.textContent);
-        inp.addEventListener('input',function(){var v=parseFloat(inp.value);var bad=!isFinite(v)||v<0;inp.classList.toggle('bad',bad);if(!bad){r[j]=v;save();render();}});c.appendChild(inp);tr.appendChild(c);})(j);}
-      t.appendChild(tr);
-    });
-  }
-
-  /* ---------- 화면: 일괄 ---------- */
-  function fileStat(el,info,src){
-    el.className='fstat';if(!info){el.textContent='아직 없음';return;}
-    if(info.err){el.classList.add('bad');el.textContent=info.err;return;}
-    el.classList.add('ok');el.textContent=info.text+(src?' — '+src:'');
-  }
-  function sumLine(k,v,sub,cls){var d=document.createElement('div');d.className='r-line'+(cls?' '+cls:'');var ks=document.createElement('span');ks.className='k';ks.textContent=k;var vs=document.createElement('span');vs.className='v';vs.textContent=v;if(sub){var b=document.createElement('b');b.textContent=sub;vs.appendChild(b);}d.appendChild(ks);d.appendChild(vs);return d;}
-  function td(tr,text,cls){var c=document.createElement('td');c.textContent=text;if(cls)c.className=cls;tr.appendChild(c);return c;}
-  var lastSummary='';
-  function renderBatch(){
-    var R=compute(),sb=$('sumBox'),tb=$('resTable');sb.textContent='';tb.textContent='';
-    var face='empty',tone='ready',g='',st='계산';
-    fileStat($('rosterStat'),ROSTER?{text:ROSTER.rows+'줄 → '+ROSTER.people.length+'명'+(ROSTER.noKind?' (유형 빈 줄 '+ROSTER.noKind+')':'')}:null,ROSTER&&ROSTER.src);
-    fileStat($('eduStat'),EDU?{text:EDU.list.length+'명 집계'+(Object.keys(EDU.years).length?' · 교육년도 '+Object.keys(EDU.years).sort().join(', '):'')}:null,EDU&&EDU.src);
-    if(!R){
-      $('sumHelp').textContent='';lastSummary='';
-      g=ROSTER===null&&EDU?'참여자현황 파일도 올려야 참여기간을 알 수 있어요.':'참여자현황 파일을 올리면 사람마다 올해 필요한 교육시간이 나옵니다. 교육이수집계까지 올리면 부족한 시간도 보여요. "예시 자료로 보기"로 먼저 둘러봐도 됩니다.';
-      if(ROSTER===null&&EDU)face='work';
-      $('stage').dataset.tone=tone;setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title='참여자교육 시간 계산기';$('pos').textContent=S.year+'년 · '+(S.basis==='yearEnd'?'연말 예상':'기준일 '+fmtD(windowRange().to));return;
-    }
-    var s=R.stat,win=R.win,rangeText=S.year+'년 1월 1일 ~ '+fmtD(win.to);
-    sb.appendChild(sumLine('평가대상 사업단 참여자',s.target+'명','전체 '+s.people+'명 중'));
-    sb.appendChild(sumLine('60일 이상 (평가 반영)',s.eval+'명',(s.target-s.eval)+'명 제외'));
-    if(R.hasEdu){
-      sb.appendChild(sumLine('직무교육 충족',s.jobOk+'명 · '+(Math.round(s.jobRate*10)/10)+'%','예상 '+points(s.jobRate)+'점',s.jobRate>=95?'':(s.jobRate>=75?'warn':'bad')));
-      sb.appendChild(sumLine('소양교육 충족',s.basicOk+'명 · '+(Math.round(s.basicRate*10)/10)+'%','예상 '+points(s.basicRate)+'점',s.basicRate>=95?'':(s.basicRate>=75?'warn':'bad')));
-      sb.appendChild(sumLine('교육 집계와 짝 맞춤',s.matched+'명',(s.none?'못 찾음 '+s.none:'')+(s.amb?(s.none?' · ':'')+'확인 필요 '+s.amb:'')||'모두 맞음',s.none||s.amb?'warn':''));
-    }else{
-      var needJob=0,needBasic=0;R.rows.forEach(function(r){if(r.req){needJob+=r.req.job;needBasic+=r.req.basic;}});
-      sb.appendChild(sumLine('필요 직무교육 합계',hrs(needJob),'60일 이상 '+s.eval+'명'));
-      sb.appendChild(sumLine('필요 소양교육 합계',hrs(needBasic),''));
-    }
-    $('sumHelp').textContent='참여일수는 '+rangeText+' 안에서 셌습니다. '+(R.hasEdu?'이수 시간은 교육이수집계의 분을 60으로 나눈 값이고, 짝은 이름 첫·끝 글자와 생년월일 첫·끝 숫자로 맞췄습니다. "확인 필요"는 같은 모양의 이름·생년월일이 둘 이상이라 자동으로 못 맞춘 사람입니다.':'교육이수집계 파일을 올리면 사람별 이수·부족 시간이 채워집니다.')+(s.eduExtra>0?' 집계에만 있고 현황에 없는 사람 '+s.eduExtra+'명은 표에 없습니다(다른 유형·다른 해 참여 등).':'');
-    /* 표 */
-    var rows=R.rows.filter(function(r){
-      if(S.filter==='lack')return !r.excluded&&(r.lackJob>0||!r.okBasic);
-      if(S.filter==='unmatched')return R.hasEdu&&r.match!=='ok';
-      if(S.filter==='excluded')return !!r.excluded;
-      return true;
-    });
-    var head=['번호','이름','사업단','형태','참여일','직무 필요','직무 이수','직무 부족','소양 필요','소양 이수','소양 부족','판정'];
-    if(!R.hasEdu)head=['번호','이름','사업단','형태','참여일','직무 필요','소양 필요','소양 횟수','비고'];
-    var thr=document.createElement('tr');head.forEach(function(h){var c=document.createElement('th');c.textContent=h;thr.appendChild(c);});tb.appendChild(thr);
-    var csv=[head.slice()];
-    rows.forEach(function(r,i){
-      var tr=document.createElement('tr');if(r.excluded)tr.className='ex';
-      td(tr,String(i+1));td(tr,r.name+(r.birth?' '+r.birth:''));td(tr,r.unit||'-');td(tr,r.part?'시간제':'전일제');td(tr,r.days+'일'+(r.partDays&&!r.part?' (시간제 '+r.partDays+')':''));
-      var line=[String(i+1),r.name+(r.birth?' '+r.birth:''),r.unit||'',r.part?'시간제':'전일제',String(r.days)];
-      if(r.excluded){
-        if(R.hasEdu){td(tr,'-','dim');td(tr,r.edu?hrs(r.edu.job):'-','dim');td(tr,'-','dim');td(tr,'-','dim');td(tr,r.edu?hrs(r.edu.basic):'-','dim');td(tr,'-','dim');td(tr,r.excluded,'dim');line.push('','', '', '', '', '',r.excluded);}
-        else{td(tr,'-','dim');td(tr,'-','dim');td(tr,'-','dim');td(tr,r.excluded,'dim');line.push('','','',r.excluded);}
-      }else if(R.hasEdu){
-        var basicDone=r.match==='ok'?hrs(r.doneBasic)+' · '+r.doneBasicN+'회':(r.match==='amb'?'확인 필요':'집계 없음');
-        td(tr,hrs(r.req.job));td(tr,r.match==='ok'?hrs(r.doneJob):(r.match==='amb'?'확인 필요':'집계 없음'),r.match==='ok'?'':'amb');td(tr,r.lackJob>0?hrs(r.lackJob):'충족',r.lackJob>0?'lack':'ok');
-        td(tr,hrs(r.req.basic)+' · '+r.req.basicN+'회');td(tr,basicDone,r.match==='ok'?'':'amb');
-        var lb=[];if(r.lackBasic>0)lb.push(hrs(r.lackBasic));if(r.lackBasicN>0)lb.push(r.lackBasicN+'회');td(tr,lb.length?lb.join(' · '):'충족',lb.length?'lack':'ok');
-        var verdict=r.match!=='ok'?(r.match==='amb'?'짝 확인 필요':'집계에 없음'):(r.okJob&&r.okBasic?'둘 다 충족':(r.okJob?'소양 부족':(r.okBasic?'직무 부족':'둘 다 부족')));
-        td(tr,verdict,r.okJob&&r.okBasic&&r.match==='ok'?'ok':(r.match==='ok'?'lack':'amb'));
-        line.push(r.req.job,r.match==='ok'?Math.round(r.doneJob*10)/10:'',r.lackJob>0?Math.round(r.lackJob*10)/10:0,r.req.basic+'h/'+r.req.basicN+'회',r.match==='ok'?Math.round(r.doneBasic*10)/10+'h/'+r.doneBasicN+'회':'',lb.join(' ')||'0',verdict);
-      }else{
-        td(tr,hrs(r.req.job));td(tr,hrs(r.req.basic));td(tr,r.req.basicN+'회');td(tr,r.status||'');
-        line.push(r.req.job,r.req.basic,r.req.basicN,r.status||'');
-      }
-      csv.push(line);tb.appendChild(tr);
-    });
-    if(!rows.length){var tr0=document.createElement('tr'),c0=document.createElement('td');c0.colSpan=head.length;c0.textContent='이 보기에 해당하는 사람이 없습니다.';c0.className='dim';tr0.appendChild(c0);tb.appendChild(tr0);}
-    RESULT.csv=csv;
-    /* 요약 글 */
-    var lines=['[참여자 교육시간 '+rangeText+']','평가대상 '+s.target+'명, 60일 이상 '+s.eval+'명'];
-    if(R.hasEdu){lines.push('직무교육 충족 '+s.jobOk+'명 ('+(Math.round(s.jobRate*10)/10)+'%, 예상 '+points(s.jobRate)+'점) · 부족 '+s.lackJob+'명');lines.push('소양교육 충족 '+s.basicOk+'명 ('+(Math.round(s.basicRate*10)/10)+'%, 예상 '+points(s.basicRate)+'점) · 부족 '+s.lackBasic+'명');if(s.none||s.amb)lines.push('집계와 짝 못 찾음 '+s.none+'명, 확인 필요 '+s.amb+'명');}
-    lines.push('(성과평가 안내서 기준, 참고용)');lastSummary=lines.join('\n');
-    /* 굿균 */
-    if(!R.hasEdu){face='work';g='60일 이상 '+s.eval+'명의 필요 시간이 나왔어요. 교육이수집계 파일을 올리면 누가 얼마나 부족한지도 보여요.';st=s.eval+'명';}
-    else if(s.lackAny){face='found';tone=s.jobRate<75||s.basicRate<75?'warn':'run';g='아직 부족한 사람이 '+s.lackAny+'명이에요. "부족한 사람만"으로 추려 교육 일정을 잡아 보세요.'+(s.amb?' 확인 필요 '+s.amb+'명은 이름이 비슷해 직접 보셔야 해요.':'');st='부족 '+s.lackAny+'명';}
-    else{face='done';g='60일 이상 참여자 모두 기준을 채웠어요.'+(s.none?' 다만 집계에 없는 '+s.none+'명은 확인해 보세요.':'');st='모두 충족';}
-    $('stage').dataset.tone=tone;setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title=st+' | 참여자교육 시간 계산기';
-    $('pos').textContent=S.year+'년 · '+(S.basis==='yearEnd'?'연말 예상':'기준일 '+fmtD(win.to));$('pos').setAttribute('aria-label',$('pos').textContent+'. 누르면 평가 기준으로 이동');
-  }
-
-  /* ---------- 화면: 한 사람 ---------- */
-  var lastOne='';
-  function renderOne(){
-    var win=windowRange(),start=fromIso(S.one.start),end=fromIso(S.one.end);
-    var face='empty',tone='ready',g='',st='계산';
-    if(!start){$('oneDays').textContent='-';$('oneJob').textContent='-';$('oneBasic').textContent='-';$('oneRange').textContent='';$('oneNote').textContent='';lastOne='';
-      g='참여 시작일을 넣으면 '+S.year+'년에 필요한 직무·소양교육 시간이 나옵니다.';$('stage').dataset.tone=tone;setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title='참여자교육 시간 계산기';$('pos').textContent=S.year+'년';return;}
-    var a=start<win.from?win.from:start,b=end?(end>win.to?win.to:end):win.to,days=b<a?0:daysBetween(a,b);
-    $('oneRange').textContent=fmtD(a)+' ~ '+fmtD(b);$('oneDays').textContent=days+'일';
-    var req=reqFor(days,S.one.part),notes=[];
-    if(end&&end<start)notes.push('종료일이 시작일보다 앞입니다.');
-    if(start>win.to)notes.push('시작일이 기준일 뒤라 평가 기간 안 참여일이 없습니다.');
-    if(!req){$('oneJob').textContent='60일 미만 — 평가 제외';$('oneBasic').textContent='60일 미만 — 평가 제외';$('oneJobLine').className='r-line';$('oneBasicLine').className='r-line';
-      var left=MIN_DAYS-days;notes.push(days?'60일이 되려면 '+left+'일 더 참여해야 평가에 들어갑니다.'+(S.basis!=='yearEnd'?' "12월 31일까지"로 바꾸면 연말 기준으로 볼 수 있어요.':''):'');
-      face='work';g='참여일이 60일 미만이라 올해 평가에서는 빠져요.';st=days+'일';lastOne='[교육시간 '+S.year+'년] 참여 '+days+'일 ('+fmtD(a)+'~'+fmtD(b)+'): 60일 미만, 평가 제외';}
-    else{
-      var doneBasic=S.one.basic+(S.addLegal?Math.min(S.one.legal,LEGAL_MAX):0),lackJob=Math.max(0,req.job-S.one.job),lackB=Math.max(0,req.basic-doneBasic),lackN=Math.max(0,req.basicN-S.one.basicN);
-      $('oneJob').textContent='필요 '+hrs(req.job)+' · 이수 '+hrs(S.one.job)+' → '+(lackJob>0?'부족 '+hrs(lackJob):'충족');$('oneJobLine').className='r-line '+(lackJob>0?'bad':'');
-      var lb=[];if(lackB>0)lb.push(hrs(lackB));if(lackN>0)lb.push(lackN+'회');
-      $('oneBasic').textContent='필요 '+hrs(req.basic)+' '+req.basicN+'회 · 이수 '+hrs(doneBasic)+' '+S.one.basicN+'회 → '+(lb.length?'부족 '+lb.join(' · '):'충족');$('oneBasicLine').className='r-line '+(lb.length?'bad':'');
-      if(S.addLegal&&S.one.legal>LEGAL_MAX)notes.push('법정의무교육은 '+LEGAL_MAX+'시간까지만 소양교육에 더했습니다.');
-      var any=lackJob>0||lb.length;face=any?'found':'done';tone=any?'run':'ready';
-      g=any?'연말 전에 '+(lackJob>0?'직무 '+hrs(lackJob):'')+(lackJob>0&&lb.length?', ':'')+(lb.length?'소양 '+lb.join(' '):'')+' 더 들으면 돼요.':'필요한 시간을 다 채웠어요.';
-      st=any?'부족':'충족';
-      lastOne='[교육시간 '+S.year+'년 '+(S.one.part?'시간제':'전일제')+'] 참여 '+days+'일 ('+fmtD(a)+'~'+fmtD(b)+')\n직무교육: 필요 '+hrs(req.job)+', 이수 '+hrs(S.one.job)+', '+(lackJob>0?'부족 '+hrs(lackJob):'충족')+'\n소양교육: 필요 '+hrs(req.basic)+' '+req.basicN+'회, 이수 '+hrs(doneBasic)+' '+S.one.basicN+'회, '+(lb.length?'부족 '+lb.join(' · '):'충족')+'\n(성과평가 안내서 기준, 참고용)';
-    }
-    $('oneNote').textContent=notes.join(' ');
-    $('stage').dataset.tone=tone;setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title=st+' | 참여자교육 시간 계산기';
-    $('pos').textContent=S.year+'년 · '+(S.one.part?'시간제':'전일제');
-  }
-  function render(){if(S.tab==='one')renderOne();else renderBatch();}
-
-  /* ---------- 파일 넣기 ---------- */
-  function loadInto(which,rowsPromise,srcLabel){
-    $('fileNote').textContent='읽는 중…';
-    rowsPromise.then(function(rows){
-      var info=which==='roster'?parseRoster(rows):parseEdu(rows);
-      if(info.err){if(which==='roster')ROSTER=null;else EDU=null;fileStat($(which+'Stat'),info);$('fileNote').textContent='';render();return;}
-      info.src=srcLabel;if(which==='roster')ROSTER=info;else EDU=info;
-      $('fileNote').textContent='';render();
-    }).catch(function(e){
-      var msg=e&&e.message==='NO_INFLATE'?'이 브라우저는 엑셀 파일을 바로 읽지 못합니다. CSV로 저장해 올리거나 표를 복사해 붙여 넣으세요.':'파일을 읽지 못했습니다. 자활정보시스템에서 내려받은 엑셀(.xlsx)이나 CSV인지 확인하세요.'+(e&&e.message&&e.message!=='NO_INFLATE'?' ('+e.message+')':'');
-      if(which==='roster')ROSTER=null;else EDU=null;fileStat($(which+'Stat'),{err:msg});$('fileNote').textContent='';render();
-    });
-  }
-  function hookFile(which){
-    $('btn'+(which==='roster'?'Roster':'Edu')).addEventListener('click',function(){$(which+'Input').click();});
-    $(which+'Input').addEventListener('change',function(){var f=$(which+'Input').files[0];if(!f)return;loadInto(which,readFile(f),f.name);$(which+'Input').value='';});
-    $('btn'+(which==='roster'?'Roster':'Edu')+'Clear').addEventListener('click',function(){if(which==='roster')ROSTER=null;else EDU=null;$(which+'Paste').value='';render();});
-    var t;$(which+'Paste').addEventListener('input',function(){clearTimeout(t);t=setTimeout(function(){var v=$(which+'Paste').value;if(!v.trim()){return;}loadInto(which,Promise.resolve(JT.parseTable(v)),'붙여넣기');},400);});
-  }
-  hookFile('roster');hookFile('edu');
-
-  /* 예시 자료(가상 이름). 파일 없이 화면을 둘러보는 용도 */
-  function example(){
-    var y=S.year;
-    var roster=[['No','년도','운영사업단명','참여자이름','현재상태','성별','생년월일','(참여시점)보장구분','(현재)보장구분','연락처','참여시작일','참여종료일','위탁의뢰일','위탁종료일','사업단유형','업종'],
-      [1,y,'행복카페','가나다','배정','여','1975-03-02','','','',(y-1)+'-06-01','','','','시장진입형사업단',''],
-      [2,y,'행복카페','라마바','배정','남','1982-11-15','','','',y+'-02-10','','','','시장진입형사업단',''],
-      [3,y,'클린케어','사아자','종결','여','1969-07-21','','','',y+'-01-05',y+'-05-31','','','사회서비스형사업단',''],
-      [4,y,'클린케어','사아자','배정','여','1969-07-21','','','',y+'-07-01','','','','사회서비스형사업단',''],
-      [5,y,'반찬사업단','차카타','배정','남','1990-01-30','','','',y+'-04-01','','','','시간제자활근로',''],
-      [6,y,'게이트웨이','파하거','배정','여','1988-09-09','','','',y+'-08-20','','','','게이트웨이',''],
-      [7,y,'반찬사업단','너더러','배정','남','1960-12-25','','','',y+'-09-15','','','','시장진입형사업단',''],
-      [8,y,'행복카페','머버서','배정','여','1979-05-05','','','',y+'-03-01','','','','청년자립도전사업단','']];
-    var edu=[['No.','교육년도','교육대상자','이름','생년월일','직무교육집계','','소양교육집계','','법정의무교육집계','','해당없음집계','',''],['','','','','','분','횟수','분','횟수','분','횟수','분','횟수',''],
-      [1,y,'자활근로','가*다','1******2',780,5,600,2,240,2,0,0],
-      [2,y,'자활근로','라*바','1******5',240,2,300,1,120,1,0,0],
-      [3,y,'자활근로','사*자','1******1',360,3,480,2,0,0,0,0],
-      [4,y,'자활근로','차*타','1******0',120,1,60,1,60,1,0,0],
-      [5,y,'자활근로','머*서','1******5',600,4,720,3,180,2,0,0]];
-    ROSTER=parseRoster(roster);ROSTER.src='예시';EDU=parseEdu(edu);EDU.src='예시';
-    $('rosterPaste').value='';$('eduPaste').value='';$('fileNote').textContent='가상 이름으로 만든 예시입니다. 실제 파일을 올리면 바뀝니다.';render();
-  }
-  $('btnExample').addEventListener('click',function(){S.tab='batch';save();renderForm();example();});
+  function render(){if(S.tab==='image')renderImageGuide();else renderTable();}
 
   /* ---------- 이벤트 ---------- */
-  $('vYear').addEventListener('input',function(){var v=parseInt($('vYear').value,10);var bad=!(v>=2000&&v<=2100);$('vYear').classList.toggle('bad',bad);if(!bad){S.year=v;save();render();}});
-  $('vBasisDate').addEventListener('input',function(){S.basisDate=$('vBasisDate').value;save();render();});
-  $('btnReqReset').addEventListener('click',function(){S.req=cloneReq(DEF_REQ);save();renderReq();render();$('copyNote').textContent=YEAR+'년 안내서 기본값으로 되돌렸습니다.';});
-  $('vOneStart').addEventListener('input',function(){S.one.start=$('vOneStart').value;save();render();});
-  $('vOneEnd').addEventListener('input',function(){S.one.end=$('vOneEnd').value;save();render();});
-  [['vOneJob','job'],['vOneBasic','basic'],['vOneBasicN','basicN'],['vOneLegal','legal']].forEach(function(x){$(x[0]).addEventListener('input',function(){var v=$(x[0]).value===''?0:parseFloat($(x[0]).value.replace(/,/g,''));var bad=!isFinite(v)||v<0;$(x[0]).classList.toggle('bad',bad);if(!bad){S.one[x[1]]=v;save();render();}});});
-  $('btnCsv').addEventListener('click',function(){if(!RESULT||!RESULT.csv||RESULT.csv.length<2){$('copyNote').textContent='먼저 파일을 올려 표가 나와야 합니다.';return;}var ok=JT.downloadCsv(RESULT.csv,'참여자교육시간_'+S.year+'_'+JT.today()+'.csv');$('copyNote').textContent=ok?'CSV를 내려받았습니다. 이름이 들어 있으니 보관에 주의하세요.':'내려받기가 막혔습니다.';});
-  $('btnCopy').addEventListener('click',function(){if(!lastSummary){$('copyNote').textContent='먼저 파일을 올려야 합니다.';return;}JT.copyText(lastSummary,$('copyNote'),'요약 글을 복사했습니다. 이름은 들어 있지 않습니다.');});
-  $('btnOneCopy').addEventListener('click',function(){if(!lastOne){$('oneCopyNote').textContent='먼저 시작일을 넣어야 합니다.';return;}JT.copyText(lastOne,$('oneCopyNote'),'결과 글을 복사했습니다.');});
-  $('pos').addEventListener('click',function(){$('vYear').scrollIntoView({block:'start'});});
+  $('btnFile').addEventListener('click',function(){$('fileInput').click();});
+  $('fileInput').addEventListener('change',function(){var f=$('fileInput').files[0];if(!f)return;$('fileStat').textContent='읽는 중…';
+    JT.readTableFile(f).then(function(rows){$('pasteBox').value='';setRows(rows,f.name);}).catch(function(e){ROWS=null;$('fileStat').className='fstat bad';$('fileStat').textContent=e&&e.message==='NO_INFLATE'?'이 브라우저는 엑셀 파일을 바로 읽지 못합니다. CSV로 저장해 올리거나 표를 붙여 넣으세요.':'파일을 읽지 못했습니다. 엑셀(.xlsx)이나 CSV인지 확인하세요.';renderTable();});
+    $('fileInput').value='';});
+  var pt;$('pasteBox').addEventListener('input',function(){clearTimeout(pt);pt=setTimeout(function(){var v=$('pasteBox').value;if(!v.trim())return;setRows(JT.parseTable(v),'붙여넣기');},400);});
+  $('btnClear').addEventListener('click',function(){ROWS=null;COLS=[];$('pasteBox').value='';$('fileStat').className='fstat';renderTable();});
+  $('btnExample').addEventListener('click',example);
+  $('btnXlsx').addEventListener('click',function(){var out=maskedRows();if(!out.length){$('copyNote').textContent='먼저 표를 올려 주세요.';return;}var ok=JT.downloadXlsx(out,'가린명단_'+JT.today()+'.xlsx','가린 명단');$('copyNote').textContent=ok?'엑셀 파일을 내려받았습니다. 값만 들어 있고 서식은 없습니다.':'내려받기가 막혔습니다. CSV나 복사를 써 보세요.';});
+  $('btnCsv').addEventListener('click',function(){var out=maskedRows();if(!out.length){$('copyNote').textContent='먼저 표를 올려 주세요.';return;}var ok=JT.downloadCsv(out,'가린명단_'+JT.today()+'.csv');$('copyNote').textContent=ok?'CSV를 내려받았습니다.':'내려받기가 막혔습니다.';});
+  $('btnCopy').addEventListener('click',function(){var out=maskedRows();if(!out.length){$('copyNote').textContent='먼저 표를 올려 주세요.';return;}var text=out.map(function(r){return r.map(function(v){return String(v==null?'':v).replace(/\t/g,' ');}).join('\t');}).join('\n');JT.copyText(text,$('copyNote'),'가린 표를 복사했습니다. AI 주문서나 엑셀에 붙여 넣으세요.');});
+  $('btnImg').addEventListener('click',function(){$('imgInput').click();});
+  $('imgInput').addEventListener('change',function(){var f=$('imgInput').files[0];if(f)loadImage(f);$('imgInput').value='';});
+  $('btnImgClear').addEventListener('click',function(){IMG=null;RECTS=[];cv.hidden=true;$('imgWrap').classList.add('empty');$('imgEmpty').hidden=false;$('imgStat').className='fstat';$('imgStat').textContent='아직 없음.';renderImageGuide();});
+  $('btnUndo').addEventListener('click',function(){RECTS.pop();redraw();renderImageGuide();});
+  $('btnRectClear').addEventListener('click',function(){RECTS=[];redraw();renderImageGuide();});
+  $('btnPng').addEventListener('click',downloadPng);
+  $('pos').addEventListener('click',function(){$('tabRow').scrollIntoView({block:'start'});});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
 
   function tick(){JT.showNow(new Date());}
   renderForm();
-  if(location.hash==='#'+encodeURIComponent('예시')||location.hash==='#예시'){example();}else render();
-  save();if(PREV_YEAR)JT.yearNote($('copyNote'),PREV_YEAR,YEAR);tick();setInterval(tick,1000);
+  if(location.hash==='#'+encodeURIComponent('예시')||location.hash==='#예시'){S.tab='table';renderForm();example();}else render();
+  save();tick();setInterval(tick,1000);
 })();
 </script>
 </body>
