@@ -160,6 +160,13 @@ body.big .guide{display:none}
 [hidden]{display:none !important}
 @media (prefers-reduced-motion:reduce){.stage{transition:none}}
 
+/* 세로 간격 통일(2026-10-07 사용자 지적): 머리 줄 아래, 갈색 안내 상자(예시·주의·읽기 전에·먼저 손댈 것) 위아래, 절 제목 위를 모두 14px로.
+   도구별 CSS보다 뒤에 오지 않아도 이기도록 .stage 를 앞에 붙여 우선순위를 높였다 */
+.stage .stage-head{margin-bottom:14px}
+.stage .ex-note,.stage .privacy,.stage .before,.stage .caveat,.stage .todo,.stage .unsupported,.stage .intro{margin:14px 0}
+.stage .sec-title{margin:14px 0 8px}
+.stage .sec-title:first-child{margin-top:0}
+
 /* AI 주문서 페이지 공통: 단계 안내, 주문서 상자, 주의 띠 */
 .intro{margin:0 0 14px;font-size:16px;line-height:1.6;max-width:80ch}
 .sec-title{margin:20px 0 8px;font-size:18px}
