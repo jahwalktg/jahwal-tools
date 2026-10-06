@@ -301,7 +301,8 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
 .colcard h4 small{font-weight:400;color:var(--muted);font-size:13px}
 .colcard .sample{font-size:14px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .colcard .sample b{color:var(--text);font-weight:600}
-.colcard select{min-height:40px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);font-size:15px;font-family:inherit;color:var(--text)}
+.colcard{min-width:0}
+.colcard select{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;min-height:40px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);font-size:15px;font-family:inherit;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tbl.mask{min-width:560px;font-size:14px}
 .tbl.mask th,.tbl.mask td{text-align:left;white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;padding:6px 8px}
 .tbl.mask td.changed{color:var(--blue);font-weight:600}
