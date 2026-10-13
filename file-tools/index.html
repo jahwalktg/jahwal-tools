@@ -158,6 +158,16 @@ textarea.names{width:100%;min-height:120px;padding:8px 10px;border:1.5px solid v
 .prog i{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
 .result{margin-top:10px;padding:10px 14px;border-radius:10px;background:var(--green-bg);color:var(--green);font-weight:700}
 .chip{display:inline-block;padding:1px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:13px;margin:2px 2px 0 0}
+.chip.btn-chip{cursor:pointer;border-color:var(--blue);color:var(--blue);background:var(--blue-bg)}
+.filter{margin:12px 0 4px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg)}
+.filter-head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.filter-head select{min-height:36px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);width:auto}
+.filter-head .mergeopt{display:inline-flex;align-items:center;gap:6px;font-size:14px}
+.filter-vals{display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:10px}
+.filter-vals label{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);font-size:14px;cursor:pointer}
+.filter-vals label.off{opacity:.5}
+.pg.off{opacity:.45}
+.pg .fld{font-size:12px;color:var(--muted);line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -195,7 +205,7 @@ textarea.names{width:100%;min-height:120px;padding:8px 10px;border:1.5px solid v
         <div>
           <p class="sub" style="margin:0 0 4px">파일 이름</p>
           <input class="wide-in" id="pattern" value="{이름}">
-          <p class="note">쓸 수 있는 것: <span class="chip">{이름}</span><span class="chip">{번호}</span><span class="chip">{원본}</span> 예: <code>{번호}_{이름}_수료증</code> → 01_홍길동_수료증.pdf</p>
+          <p class="note">쓸 수 있는 것: <span class="chip">{이름}</span><span class="chip">{번호}</span><span class="chip">{원본}</span><span id="fieldChips"></span> 예: <code>{번호}_{이름}_수료증</code> → 01_홍길동_수료증.pdf. <b>/</b>를 넣으면 폴더가 됩니다: <code>{사업단}/{이름}</code> → 사업단 폴더 안에 이름 파일.</p>
           <p class="sub" style="margin:10px 0 4px">결과 형식</p>
           <div class="radio">
             <label><input type="radio" name="fmt" value="pdf" checked> PDF</label>
@@ -206,18 +216,29 @@ textarea.names{width:100%;min-height:120px;padding:8px 10px;border:1.5px solid v
       </div>
     </section>
     <section class="card hidden" id="stepS3">
-      <h2><span class="no">3</span>이름 붙이기</h2>
-      <div class="howto">이름 목록이 있으면 아래에 <b>한 줄에 한 명</b>씩 붙여 넣으세요 (엑셀 이름 열을 그대로 복사해도 됩니다). 목록이 없으면 「쪽에서 이름 찾기」를 눌러 보세요 — 수료증처럼 쪽에 이름이 글자로 들어 있으면 자동으로 읽습니다. 미리보기 아래 칸은 직접 고칠 수 있습니다.</div>
+      <h2><span class="no">3</span>이름·항목 읽기</h2>
+      <div class="howto">「쪽에서 읽기」를 누르면 수료증처럼 쪽에 <b>「성명 : ○○○」「사업단 : ○○」</b>처럼 적힌 항목을 모두 읽어, 이름을 채우고 항목(사업단·생년월일·교육과정…)을 파일 이름과 「골라서 받기」에 쓸 수 있게 합니다. 스캔본(글자 없는 그림)은 못 읽으니 그때는 이름 목록을 <b>한 줄에 한 명</b>씩 붙여 넣으세요. 미리보기 아래 칸은 직접 고칠 수 있습니다.</div>
       <div class="opts">
         <div>
           <textarea class="names" id="names" placeholder="홍길동&#10;김영희&#10;…"></textarea>
           <div class="row-btns" style="margin-top:6px">
             <button class="btn btn-small" id="applyNames" type="button">목록대로 넣기</button>
-            <button class="btn btn-small" id="findNames" type="button">쪽에서 이름 찾기</button>
+            <button class="btn btn-small btn-main" id="findNames" type="button">쪽에서 읽기 (이름·항목)</button>
             <button class="btn btn-small" id="clearNames" type="button">이름 비우기</button>
           </div>
         </div>
         <ul class="checks" id="checksS"></ul>
+      </div>
+      <div class="filter hidden" id="filterBox">
+        <div class="filter-head">
+          <b>골라서 받기</b>
+          <label>항목 <select id="filterField"></select></label>
+          <button class="btn btn-small" id="filterAll" type="button">모두 체크</button>
+          <button class="btn btn-small" id="filterNone" type="button">모두 끄기</button>
+          <label class="mergeopt"><input type="checkbox" id="mergeByVal"> 체크한 값마다 한 파일로 묶기 (예: 사업단별 수료증 PDF 한 개)</label>
+        </div>
+        <div class="filter-vals" id="filterVals"></div>
+        <p class="note" id="filterNote"></p>
       </div>
       <div class="pages" id="pages"></div>
     </section>
@@ -378,7 +399,8 @@ App.bindDrop($('dropS'), $('fileS'), async f => {
   try {
     const lib = await pdfjs();
     const doc = await lib.getDocument({ data: f.data.slice(0) }).promise;
-    S = { bytes: f.data, name: f.name.replace(/\.pdf$/i, ''), doc, n: doc.numPages, thumbs: [], texts: [], names: Array(doc.numPages).fill(''), auto: Array(doc.numPages).fill(false) };
+    S = { bytes: f.data, name: f.name.replace(/\.pdf$/i, ''), doc, n: doc.numPages, thumbs: [], texts: [], lines: [], fields: Array(doc.numPages).fill(null), labels: [], filterSel: null, names: Array(doc.numPages).fill(''), auto: Array(doc.numPages).fill(false) };
+    $('filterBox').classList.add('hidden'); $('fieldChips').innerHTML = '';
     $('loadedS').textContent = `${f.name} · ${S.n}쪽 · ${mb(f.data.length)}`;
     ['stepS2', 'stepS3', 'stepS4'].forEach(id => $(id).classList.remove('hidden'));
     renderPages();
@@ -395,20 +417,30 @@ function groups(){
   }
   return g.filter(([a, b]) => a <= b);
 }
-function fileName(gi, g){
-  const name = (S.names[g[0] - 1] || '').trim() || `${g[0]}${g[1] > g[0] ? '-' + g[1] : ''}쪽`;
-  const pat = $('pattern').value.trim() || '{이름}';
-  return safe(pat.replace(/\{이름\}/g, name).replace(/\{번호\}/g, p2(gi + 1)).replace(/\{원본\}/g, S.name)) || `${gi + 1}`;
+/* 묶음(쪽 범위)의 항목: 앞쪽부터 찾아 처음 나온 값 */
+function fieldsOf(g){ const o = {}; for (let p = g[0]; p <= g[1]; p++) { const f = S.fields[p - 1]; if (f) Object.keys(f).forEach(k => { if (!(k in o)) o[k] = f[k]; }); } return o; }
+function applyPattern(pat, gi, g, nameOverride){
+  const name = nameOverride != null ? nameOverride : ((S.names[g[0] - 1] || '').trim() || `${g[0]}${g[1] > g[0] ? '-' + g[1] : ''}쪽`);
+  const f = fieldsOf(g);
+  const out = pat.replace(/\{([^{}]+)\}/g, (m, k) => k === '이름' ? name : k === '번호' ? p2(gi + 1) : k === '원본' ? S.name : (f[k] != null ? f[k] : (nameOverride != null ? nameOverride : '')));
+  return out.split('/').map(seg => safe(seg)).filter(Boolean).join('/');
 }
+function fileName(gi, g){ return applyPattern($('pattern').value.trim() || '{이름}', gi, g) || `${gi + 1}`; }
+/* 골라서 받기: 체크한 값의 묶음만 */
+function filterLabel(){ return S.labels.length && !$('filterBox').classList.contains('hidden') ? $('filterField').value : ''; }
+function valueOf(g, label){ return label ? (fieldsOf(g)[label] || '(없음)') : ''; }
+function activeGroups(){ const g = groups(), L = filterLabel(); if (!L || !S.filterSel) return g.map((x, i) => [x, i]); return g.map((x, i) => [x, i]).filter(([x]) => S.filterSel.has(valueOf(x, L))); }
 function renderPages(){
   const g = groups(), headOf = {}; g.forEach(([a, b], i) => { headOf[a] = i; });
+  const fl = filterLabel();
   const names = S.names, seen = {}; names.forEach((v, i) => { if (v) seen[v] = (seen[v] || 0) + 1; });
   $('pages').innerHTML = Array.from({ length: S.n }, (_, i) => {
     const p = i + 1, head = headOf[p] != null, gi = headOf[p];
     return `<div class="pg${head ? ' head' : ''}" id="pg${p}">${S.thumbs[i] ? '<span class="ph"></span>' : '<div class="ph" style="aspect-ratio:1/1.414;border:1px solid var(--line);border-radius:4px;background:var(--bg)"></div>'}
       <div class="no"><span>${p}쪽</span>${head ? `<span class="grp">파일 ${gi + 1}${g[gi][1] > g[gi][0] ? ` (${g[gi][0]}~${g[gi][1]}쪽)` : ''}</span>` : '<span class="grp" style="color:var(--muted)">앞 파일에 포함</span>'}</div>
-      ${head ? `<input data-i="${i}" value="${esc(names[i])}" placeholder="이름" class="${S.auto[i] ? 'auto' : ''}${names[i] && seen[names[i]] > 1 ? ' dup' : ''}">` : ''}</div>`;
+      ${head ? `<input data-i="${i}" value="${esc(names[i])}" placeholder="이름" class="${S.auto[i] ? 'auto' : ''}${names[i] && seen[names[i]] > 1 ? ' dup' : ''}">` : ''}${head && fl ? `<div class="fld" title="${esc(fl + ': ' + valueOf(g[gi], fl))}">${esc(fl)}: ${esc(valueOf(g[gi], fl))}</div>` : ''}</div>`;
   }).join('');
+  if (fl && S.filterSel) g.forEach(([a], gi) => { if (!S.filterSel.has(valueOf(g[gi], fl))) $('pg' + a).classList.add('off'); });
   S.thumbs.forEach((c, i) => { const el = $('pg' + (i + 1)); if (el && c) el.querySelector('.ph').replaceWith(c); });
   const heads = g.map(x => x[0] - 1), filled = heads.filter(i => names[i]).length, dups = Object.values(seen).filter(n => n > 1).length;
   const checks = [['info', `${S.n}쪽 → 파일 ${g.length}개`]];
@@ -416,14 +448,17 @@ function renderPages(){
   if (filled < g.length) checks.push(['info', `이름이 비어 있는 파일 ${g.length - filled}개 — 쪽 번호로 저장됩니다.`]);
   else checks.push(['ok', '모든 파일에 이름이 있습니다.']);
   if (dups) checks.push(['bad', `같은 이름 ${dups}건 (빨간 칸) — 그대로 두면 뒤 파일이 번호로 구분됩니다.`]);
-  if (g.length) checks.push(['info', `예: ${fileName(0, g[0])}.${document.querySelector('input[name=fmt]:checked').value}`]);
+  const act = activeGroups();
+  if (fl) checks.push([act.length ? 'info' : 'bad', `골라서 받기: 「${fl}」 ${S.filterSel ? S.filterSel.size : 0}개 값 체크 → 파일 ${$('mergeByVal').checked ? (S.filterSel ? S.filterSel.size : 0) + '개 (값마다 한 파일)' : act.length + '개'}`]);
+  if (act.length) checks.push(['info', `예: ${$('mergeByVal').checked && fl ? applyPattern($('pattern').value.trim() || '{이름}', act[0][1], act[0][0], valueOf(act[0][0], fl)) + '.pdf' : fileName(act[0][1], act[0][0]) + '.' + document.querySelector('input[name=fmt]:checked').value}`]);
   $('checksS').innerHTML = checks.map(([c, t]) => `<li class="${c}">${c === 'ok' ? '✓ ' : c === 'bad' ? '✕ ' : '· '}${esc(t)}</li>`).join('');
   $('unitNote').textContent = g.length ? `파일 ${g.length}개가 만들어집니다.` : '';
 }
 $('pages').addEventListener('input', e => { const inp = e.target.closest('input[data-i]'); if (!inp) return; S.names[+inp.dataset.i] = inp.value; S.auto[+inp.dataset.i] = false; });
 $('pages').addEventListener('change', () => renderPages());
-document.querySelectorAll('input[name=unit]').forEach(r => r.onchange = () => { $('ranges').classList.toggle('hidden', r.value !== 'r' || !r.checked); if (S) renderPages(); });
-$('perN').oninput = () => S && renderPages(); $('ranges').oninput = () => S && renderPages(); $('pattern').oninput = () => S && renderPages();
+const regroup = () => { if (!S) return; if (S.labels.length) buildFilter(); renderPages(); };
+document.querySelectorAll('input[name=unit]').forEach(r => r.onchange = () => { $('ranges').classList.toggle('hidden', r.value !== 'r' || !r.checked); regroup(); });
+$('perN').oninput = regroup; $('ranges').oninput = regroup; $('pattern').oninput = () => S && renderPages();
 document.querySelectorAll('input[name=fmt]').forEach(r => r.onchange = () => S && renderPages());
 
 $('applyNames').onclick = () => {
@@ -437,8 +472,49 @@ $('applyNames').onclick = () => {
 };
 async function pageTexts(){
   if (S.texts.length === S.n) return S.texts;
-  for (let i = 1; i <= S.n; i++) { const tc = await (await S.doc.getPage(i)).getTextContent(); S.texts[i - 1] = tc.items.map(x => x.str).join(' ').replace(/\s+/g, ' '); }
+  for (let i = 1; i <= S.n; i++) {
+    const tc = await (await S.doc.getPage(i)).getTextContent();
+    S.texts[i - 1] = tc.items.map(x => x.str).join(' ').replace(/\s+/g, ' ');
+    /* 같은 높이(y)에 있는 글자 조각을 한 줄로 → 「라벨 : 값」을 줄 단위로 읽기 위해 */
+    const rows = {}; tc.items.forEach(x => { if (!x.str) return; const y = Math.round(x.transform[5] / 3); (rows[y] = rows[y] || []).push(x); });
+    /* 한 줄 안에서 글자 조각 사이가 벌어져 있으면(글자 폭 0.3 이상) 띄어쓰기로 본다 — 「더마실카페 세곡점」 */
+    S.lines[i - 1] = Object.keys(rows).map(Number).sort((a, b) => b - a).map(y => {
+      const it = rows[y].sort((a, b) => a.transform[4] - b.transform[4]); let out = '', end = null;
+      it.forEach(x => { const x0 = x.transform[4], fs = Math.abs(x.transform[0]) || 10; if (end != null && x0 - end > fs * 0.3 && !/\s$/.test(out)) out += ' '; out += x.str; end = x0 + (x.width || 0); });
+      return out.replace(/\s+/g, ' ').trim();
+    });
+    S.fields[i - 1] = parseFields(S.lines[i - 1]);
+  }
   return S.texts;
+}
+/* 「성   명 : 홍길동」「사 업 단 : ○○」「No. 2026-0001」 → { 성명: '홍길동', 사업단: '○○', No: '2026-0001' } */
+function parseFields(lines){
+  const o = {};
+  lines.forEach(ln => {
+    let m = ln.match(/^([가-힣A-Za-z][가-힣A-Za-z ]{0,14}?)\s*[:：]\s*(.+)$/);
+    if (m) { const k = m[1].replace(/\s+/g, ''), v = m[2].trim(); if (k.length >= 2 && k.length <= 10 && v && !(k in o)) o[k] = v.slice(0, 80); return; }
+    m = ln.match(/^No\.?\s*[:：]?\s*(\S+)/i); if (m && !('No' in o)) o.No = m[1];
+  });
+  if (o['성명'] && !o['이름']) o['이름'] = o['성명'];
+  return o;
+}
+function buildFilter(){
+  const g = groups(), count = {};
+  g.forEach(x => { const f = fieldsOf(x); Object.keys(f).forEach(k => { (count[k] = count[k] || new Map()).set(f[k], (count[k].get(f[k]) || 0) + 1); }); });
+  /* 쓸모 있는 항목: 값이 2가지 이상이고 모든 묶음이 제각각은 아닌 것(이름·생년월일처럼 다 다른 것은 뒤로) */
+  S.labels = Object.keys(count).filter(k => k !== '이름').sort((a, b) => (count[a].size === g.length) - (count[b].size === g.length) || count[a].size - count[b].size);
+  $('fieldChips').innerHTML = S.labels.map(k => `<span class="chip btn-chip" data-k="${esc(k)}" title="눌러서 파일 이름에 넣기">{${esc(k)}}</span>`).join('');
+  const useful = S.labels.filter(k => count[k].size >= 2 && count[k].size < g.length);
+  if (!useful.length) { $('filterBox').classList.add('hidden'); S.filterSel = null; return; }
+  $('filterBox').classList.remove('hidden');
+  $('filterField').innerHTML = useful.map(k => `<option value="${esc(k)}">${esc(k)} (${count[k].size}가지)</option>`).join('');
+  S.count = count; renderFilterVals(true);
+}
+function renderFilterVals(resetAll){
+  const L = $('filterField').value, m = S.count[L] || new Map();
+  if (resetAll || !S.filterSel) S.filterSel = new Set([...m.keys()]);
+  $('filterVals').innerHTML = [...m.entries()].sort((a, b) => String(a[0]).localeCompare(String(b[0]), 'ko')).map(([v, n]) => `<label class="${S.filterSel.has(v) ? '' : 'off'}"><input type="checkbox" data-v="${esc(v)}"${S.filterSel.has(v) ? ' checked' : ''}> ${esc(v)} <small>(${n})</small></label>`).join('');
+  $('filterNote').textContent = '체크한 값의 묶음만 내려받습니다. 체크를 끄면 그 묶음은 미리보기에서 흐리게 보입니다.';
 }
 $('findNames').onclick = async () => {
   if (!S) return;
@@ -447,24 +523,48 @@ $('findNames').onclick = async () => {
   const list = $('names').value.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
   let hit = 0;
   g.forEach(([a, b], gi) => {
-    const t = texts.slice(a - 1, b).join(' ');
+    const t = texts.slice(a - 1, b).join(' '), f = fieldsOf([a, b]);
     let name = '';
     if (list.length) name = list.find(nm => t.includes(nm)) || '';                       // 목록에 있는 이름이 쪽에 보이면 그것
-    if (!name) { const m = t.match(/(?:성\s*명|이\s*름)\s*[:：]?\s*([가-힣]{2,4})/); if (m) name = m[1]; }   // 「성명: 홍길동」
+    if (!name && f['이름']) name = f['이름'];                                             // 「성명 : 홍길동」 줄
+    if (!name) { const m = t.match(/(?:성\s*명|이\s*름)\s*[:：]?\s*([가-힣]{2,4})/); if (m) name = m[1]; }
     if (!name) { const m = t.match(/([가-힣]{2,4})\s*(?:님|귀하)/); if (m) name = m[1]; }                   // 「홍길동 님」
     if (name) { S.names[a - 1] = name; S.auto[a - 1] = true; hit++; }
   });
+  buildFilter();
   renderPages();
-  toast(hit ? `${g.length}개 중 ${hit}개에서 이름을 찾았습니다 (점선 칸). 맞는지 보세요.` : '쪽에서 이름을 찾지 못했습니다. 스캔본이면 글자가 없어 못 읽습니다 — 목록을 붙여 넣어 주세요.');
+  const nf = S.labels.length;
+  toast(hit ? `${g.length}개 중 ${hit}개에서 이름을 찾았습니다 (점선 칸)${nf ? ` · 항목 ${nf}개(${S.labels.slice(0, 4).join('·')}${nf > 4 ? '…' : ''})도 읽었습니다` : ''}. 맞는지 보세요.` : '쪽에서 이름을 찾지 못했습니다. 스캔본이면 글자가 없어 못 읽습니다 — 목록을 붙여 넣어 주세요.');
 };
 $('clearNames').onclick = () => { if (!S) return; S.names = Array(S.n).fill(''); S.auto = Array(S.n).fill(false); renderPages(); };
+$('filterField').onchange = () => { renderFilterVals(true); renderPages(); };
+$('filterVals').addEventListener('change', e => { const c = e.target.closest('input[data-v]'); if (!c) return; if (c.checked) S.filterSel.add(c.dataset.v); else S.filterSel.delete(c.dataset.v); c.closest('label').classList.toggle('off', !c.checked); renderPages(); });
+$('filterAll').onclick = () => { renderFilterVals(true); renderPages(); };
+$('filterNone').onclick = () => { S.filterSel = new Set(); renderFilterVals(false); renderPages(); };
+$('mergeByVal').onchange = () => S && renderPages();
+$('fieldChips').addEventListener('click', e => { const c = e.target.closest('[data-k]'); if (!c) return; const inp = $('pattern'); inp.value = (inp.value.trim() ? inp.value.trim() + '_' : '') + '{' + c.dataset.k + '}'; renderPages(); });
 
 async function makeParts(onProg){
-  const g = groups(), fmt = document.querySelector('input[name=fmt]:checked').value, parts = [], used = {};
+  const act = activeGroups(), fmt = document.querySelector('input[name=fmt]:checked').value, parts = [], used = {};
   const src = await PDFLib.PDFDocument.load(S.bytes, { ignoreEncryption: true });
-  for (let gi = 0; gi < g.length; gi++) {
-    const [a, b] = g[gi];
-    let name = fileName(gi, g[gi]); if (used[name]) name += '_' + p2(++used[name]); else used[name] = 1;
+  const L = filterLabel();
+  if (L && $('mergeByVal').checked) {
+    /* 값마다 한 PDF: 그 값의 묶음 쪽을 순서대로 모음 */
+    const byVal = new Map(); act.forEach(([x, gi]) => { const v = valueOf(x, L); if (!byVal.has(v)) byVal.set(v, []); byVal.get(v).push([x, gi]); });
+    let k = 0;
+    for (const [v, list] of byVal) {
+      let name = applyPattern($('pattern').value.trim() || '{이름}', list[0][1], list[0][0], v) || safe(v) || String(k + 1);
+      if (used[name]) name += '_' + p2(++used[name]); else used[name] = 1;
+      const out = await PDFLib.PDFDocument.create();
+      for (const [[a, b]] of list) { const cp = await out.copyPages(src, Array.from({ length: b - a + 1 }, (_, i) => a - 1 + i)); cp.forEach(p => out.addPage(p)); }
+      parts.push([name + '.pdf', await out.save(), 'application/pdf']);
+      if (onProg) onProg(++k / byVal.size);
+    }
+    return parts;
+  }
+  for (let ai = 0; ai < act.length; ai++) {
+    const [[a, b], gi] = act[ai];
+    let name = fileName(gi, [a, b]); if (used[name]) name += '_' + p2(++used[name]); else used[name] = 1;
     if (fmt === 'pdf') {
       const out = await PDFLib.PDFDocument.create();
       const cp = await out.copyPages(src, Array.from({ length: b - a + 1 }, (_, k) => a - 1 + k)); cp.forEach(p => out.addPage(p));
@@ -476,12 +576,13 @@ async function makeParts(onProg){
         parts.push([name + (b > a ? '_' + (p - a + 1) : '') + '.' + fmt, await bytesOf(blob), blob.type]);
       }
     }
-    if (onProg) onProg((gi + 1) / g.length);
+    if (onProg) onProg((ai + 1) / act.length);
   }
   return parts;
 }
 $('goSplit').onclick = async () => {
   if (!S || !groups().length) return;
+  if (!activeGroups().length) { toast('체크한 값이 없습니다. 「골라서 받기」에서 값을 체크하세요.'); return; }
   $('goSplit').disabled = true; $('resS').classList.add('hidden'); prog('progS', 0);
   try {
     const parts = await makeParts(v => prog('progS', v));
@@ -492,7 +593,8 @@ $('goSplit').onclick = async () => {
 };
 $('goSplitEach').onclick = async () => {
   if (!S || !groups().length) return;
-  const g = groups(); if (g.length > 20 && !confirm(`파일 ${g.length}개를 하나씩 내려받습니다. 브라우저가 여러 번 물을 수 있습니다. 계속할까요?`)) return;
+  if (!activeGroups().length) { toast('체크한 값이 없습니다. 「골라서 받기」에서 값을 체크하세요.'); return; }
+  const g = activeGroups(); if (g.length > 20 && !confirm(`파일 ${g.length}개를 하나씩 내려받습니다. 브라우저가 여러 번 물을 수 있습니다. 계속할까요?`)) return;
   $('goSplitEach').disabled = true; prog('progS', 0);
   try { const parts = await makeParts(v => prog('progS', v)); for (const [n, d, m] of parts) { App.download(d, n, m); await new Promise(r => setTimeout(r, 400)); } $('resS').classList.remove('hidden'); $('resS').textContent = `파일 ${parts.length}개를 내려받았습니다.`; }
   catch (e) { toast('나누지 못했습니다: ' + (e.message || e)); }
