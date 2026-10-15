@@ -3,8 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>사회보험 예상 계산기 | 지역자활센터 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="사업단 유형을 고르면 지침의 월평균 보수액(표준소득액)으로 4대보험 예상액을 보험별 전체 금액·본인 공제·기관 부담으로 나눠 보여 주고, 인원을 넣으면 사업단 전체 예상액이 나옵니다. 요율은 2026년 기준이며 고칠 수 있습니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/jahwal-tools/social-insurance/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="지역자활센터 업무 도구">
+<meta property="og:title" content="사회보험 예상 계산기 | 지역자활센터 업무 도구">
+<meta property="og:description" content="사업단 유형을 고르면 지침의 월평균 보수액(표준소득액)으로 4대보험 예상액을 보험별 전체 금액·본인 공제·기관 부담으로 나눠 보여 주고, 인원을 넣으면 사업단 전체 예상액이 나옵니다. 요율은 2026년 기준이며 고칠 수 있습니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/jahwal-tools/social-insurance/">
+<meta property="og:image" content="https://jahwalktg.github.io/jahwal-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
 <style>
 :root{
   box-sizing:border-box;
@@ -728,7 +744,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     ['ei','고용보험',0.9,1.15,'실업급여 0.9%씩 + 고용안정·직업능력개발 0.25%(150인 미만 기관)는 기관만'],
     ['wc','산재보험',0,1.47,'기관 전액. 업종별 요율(0.5%~18.5%)이라 2026 평균 1.47%(출퇴근재해 0.06% 포함)를 넣어 두었음. 사업단 업종 요율로 고치세요']
   ];
-  var NP_LOW=400000,NP_HIGH=6370000; /* 2026 국민연금 기준소득월액 하한·상한 */
+  var NP_LOW=410000,NP_HIGH=6590000; /* 국민연금 기준소득월액 하한·상한 — 2026.7.1~2027.6.30 (그 전 2025.7~2026.6은 400,000·6,370,000) */
 
   function defRates(){var o={};INS_DEF.forEach(function(d){o[d[0]]={on:true,w:d[2],e:d[3]};});return o;}
   function fresh(){return {type:'market',part:false,pay:1614080,head:11,ins:defRates(),npLow:NP_LOW,npHigh:NP_HIGH};}
@@ -782,7 +798,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
       var sub=document.createElement('p');sub.className='sub';sub.textContent=d[4];box.appendChild(sub);
       host.appendChild(box);
     });
-    $('insHelp').textContent='국민연금 기준소득월액 하한 '+fmt(S.npLow)+'원 · 상한 '+fmt(S.npHigh)+'원 ('+YEAR+'년 7월 기준). 보수액이 이 범위를 벗어나면 상·하한으로 계산합니다.';
+    $('insHelp').textContent='국민연금 기준소득월액 하한 '+fmt(S.npLow)+'원 · 상한 '+fmt(S.npHigh)+'원 (2026.7.1~2027.6.30 적용, 해마다 7월에 바뀜). 보수액이 이 범위를 벗어나면 상·하한으로 계산합니다.';
   }
 
   var lastRows=[];
