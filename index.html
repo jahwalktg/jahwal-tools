@@ -742,7 +742,7 @@ body.fb-on{overflow:hidden}
   'use strict';
   var $=function(id){return document.getElementById(id);};
   var panel=$('fbPanel'),back=$('fbBack');if(!panel)return;
-  var TOOLS=['자활계산기','할 일 관리기','문서·명단 도구','AI 주문서','시간관리기','첫 화면·전체'];
+  var TOOLS=['자활계산기','할 일 관리기','문서·명단 도구','홍보 도구','AI 주문서','시간관리기','첫 화면·전체'];
   var KINDS=['숫자·계산이 틀렸어요','말이 어색해요','화면이 불편해요','이런 도구가 있으면','우리 센터는 이렇게 해요','그 밖'];
   var sel={tool:'',kind:''};
   function chips(host,list,key){host.textContent='';list.forEach(function(t){var b=document.createElement('button');b.type='button';b.className='fb-chip';b.textContent=t;b.setAttribute('aria-pressed',String(sel[key]===t));b.addEventListener('click',function(){sel[key]=sel[key]===t?'':t;chips(host,list,key);updateMail();});host.appendChild(b);});}
@@ -778,6 +778,58 @@ body.fb-on{overflow:hidden}
   document.addEventListener('click',function(e){var a=e.target&&e.target.closest?e.target.closest('.card a.open, .top10 a, .rail-try a'):null;if(!a)return;var m=/\.\/([^\/]+)\/index\.html/.exec(a.getAttribute('href')||'');if(!m)return;var o=readS();o.opens[m[1]]=(o.opens[m[1]]||0)+1;writeS(o);renderTop();});
   var clr=$('btnTopClear');if(clr)clr.addEventListener('click',function(){writeS({opens:{}});renderTop();});
   renderTop();
+})();
+</script>
+<!-- 새 소식 팝업: NOTICE.id를 바꾸면 한 번씩 다시 뜬다. 닫으면 이 브라우저에 본 id만 기억 (jahwal-tools.notice). 주소 끝 ?notice 면 항상 뜸 -->
+<style>
+.nt-back{position:fixed;inset:0;background:rgba(10,20,45,.5);z-index:60}
+.nt-box{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:61;width:min(460px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;background:var(--surface);color:var(--text);border:1.5px solid var(--line);border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.3);padding:22px 20px 18px}
+.nt-tag{display:inline-block;background:var(--blue-bg);color:var(--blue);font-weight:800;font-size:13px;border-radius:999px;padding:3px 10px;margin-bottom:8px}
+.nt-box h2{margin:0 0 6px;font-size:22px;line-height:1.35}
+.nt-box p{margin:0 0 12px;color:var(--muted);font-size:16px}
+.nt-list{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px}
+.nt-list a{display:block;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;color:inherit;text-decoration:none;background:var(--bg)}
+.nt-list a:hover{border-color:var(--blue)}
+.nt-list b{display:block;font-size:16px}
+.nt-list span{font-size:14px;color:var(--muted)}
+.nt-btns{display:flex;gap:8px;flex-wrap:wrap}
+.nt-btns .btn{flex:1 1 140px}
+.nt-x{position:absolute;right:10px;top:10px;width:40px;height:40px;border:0;background:none;font-size:22px;color:var(--muted);border-radius:10px}
+</style>
+<div class="nt-back" id="ntBack" hidden></div>
+<div class="nt-box" id="ntBox" role="dialog" aria-modal="true" aria-labelledby="ntTitle" hidden>
+  <button class="nt-x" type="button" data-nt-close aria-label="닫기">×</button>
+  <span class="nt-tag">새 소식</span>
+  <h2 id="ntTitle">「홍보 도구」 묶음이 생겼습니다</h2>
+  <p>연말·연초에 많이 쓰는 홍보 일을 사실과 사진만 넣으면 모양은 도구가 잡아 줍니다.</p>
+  <ul class="nt-list">
+    <li><a href="./greeting/index.html"><b>인사장·초대장 만들기</b><span>새해 연하장·송년 인사·초대장·명절·감사 인사, 받는 분 이름 넣어 한꺼번에</span></a></li>
+    <li><a href="./press/index.html"><b>보도자료 쓰기</b><span>몇 가지 사실 → 초안, 빠진 내용·표현 점검, AI 글 숫자 대조</span></a></li>
+    <li><a href="./newsletter/index.html"><b>소식지·카드뉴스 만들기</b><span>사진과 글 → A4 소식지 자동 배치, 같은 내용으로 카드뉴스</span></a></li>
+  </ul>
+  <div class="nt-btns"><a class="btn btn-small" href="#promo" data-nt-close style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:inherit;background:var(--blue);border-color:var(--blue);color:var(--btn-text)">홍보 도구 보러 가기</a><button class="btn btn-small" type="button" data-nt-close>닫기</button></div>
+</div>
+<script>
+(function(){
+  'use strict';
+  var NOTICE={id:'2026-10-promo',until:'2026-12-31'};
+  var KEY='jahwal-tools.notice',box=document.getElementById('ntBox'),back=document.getElementById('ntBack');
+  if(!box)return;
+  var force=/[?&]notice\b/.test(location.search);
+  var seen='';try{seen=localStorage.getItem(KEY)||'';}catch(e){}
+  var today=new Date().toISOString().slice(0,10);
+  if(!force&&(seen===NOTICE.id||today>NOTICE.until))return;
+  var last=null;
+  function close(){box.hidden=true;back.hidden=true;try{localStorage.setItem(KEY,NOTICE.id);}catch(e){}if(last&&last.focus)last.focus();}
+  function show(){last=document.activeElement;box.hidden=false;back.hidden=false;var b=box.querySelector('.nt-x');if(b)b.focus();}
+  box.querySelectorAll('[data-nt-close]').forEach(function(b){b.addEventListener('click',function(e){
+    close();
+    if(b.getAttribute('href')==='#promo'){e.preventDefault();var t=document.getElementById('promo');if(t)t.scrollIntoView({block:'start'});}
+  });});
+  box.querySelectorAll('.nt-list a').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem(KEY,NOTICE.id);}catch(e){}});});
+  back.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!box.hidden)close();});
+  setTimeout(show,400);
 })();
 </script>
 </body>
