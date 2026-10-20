@@ -6,12 +6,12 @@
 <meta name="robots" content="index, follow">
 <title>우편 주소 라벨 인쇄 | 지역자활센터 업무 도구</title>
 <!--meta:start-->
-<meta name="description" content="엑셀 명단을 넣으면 A4 스티커 용지를 칸 수·간격대로 나눠(자르는 선 포함) 또는 시판 라벨지 칸에 맞춰 주소 라벨을 채워 인쇄합니다. 주소 빠진 사람·중복은 미리 알려 줍니다.">
+<meta name="description" content="(우편번호 자동 채움 가능) 주소 명단 엑셀(xlsx·xls·csv)을 넣거나 붙여 넣으면 → 빠진 우편번호를 찾아 채우고 → A4 스티커 용지를 칸 수·간격대로 나눠(자르는 선 포함) 또는 시판 라벨지에 인쇄합니다. 우편번호만 더한 엑셀로도 받을 수 있습니다.">
 <link rel="canonical" href="https://jahwalktg.github.io/jahwal-tools/labels/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="지역자활센터 업무 도구">
 <meta property="og:title" content="우편 주소 라벨 인쇄 | 지역자활센터 업무 도구">
-<meta property="og:description" content="엑셀 명단을 넣으면 A4 스티커 용지를 칸 수·간격대로 나눠(자르는 선 포함) 또는 시판 라벨지 칸에 맞춰 주소 라벨을 채워 인쇄합니다. 주소 빠진 사람·중복은 미리 알려 줍니다.">
+<meta property="og:description" content="(우편번호 자동 채움 가능) 주소 명단 엑셀(xlsx·xls·csv)을 넣거나 붙여 넣으면 → 빠진 우편번호를 찾아 채우고 → A4 스티커 용지를 칸 수·간격대로 나눠(자르는 선 포함) 또는 시판 라벨지에 인쇄합니다. 우편번호만 더한 엑셀로도 받을 수 있습니다.">
 <meta property="og:url" content="https://jahwalktg.github.io/jahwal-tools/labels/">
 <meta property="og:image" content="https://jahwalktg.github.io/jahwal-tools/og.png">
 <meta property="og:image:width" content="1200">
@@ -91,6 +91,8 @@ table.list tr.dup td{opacity:.55}
 .zf.none{background:var(--red-bg);color:var(--red)}
 .zf.multi{background:var(--amber-bg);color:var(--amber)}
 table.list select{font-size:12px;max-width:220px;padding:2px}
+.howto{margin:0 0 14px;padding:12px 14px 12px 34px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;font-size:15px}
+.howto li{margin:2px 0}
 .stage{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
 .bar .grow{flex:1}
@@ -130,8 +132,14 @@ table.list select{font-size:12px;max-width:220px;padding:2px}
 <body>
 <div class="wrapall">
   <p class="crumb"><a href="../index.html">지역자활센터 업무 도구</a> › 문서·명단 도구</p>
-  <h1>우편 주소 라벨 인쇄</h1>
+  <h1>우편 주소 라벨 인쇄 <small style="font-size:17px;color:var(--green);font-weight:700">(우편번호 자동 채움 가능)</small></h1>
   <p class="lead">엑셀 명단(이름·주소)을 넣으면 빠진 우편번호를 찾아 채우고, A4 스티커 용지를 원하는 칸 수·간격으로 나눠(자르는 선 포함) 또는 시판 라벨지 칸에 맞춰 주소 라벨을 채우고 바로 인쇄합니다. 칸은 머리글 이름으로 알아서 찾고, 주소가 빠진 사람·같은 사람은 미리 알려 줍니다. 명단은 이 PC 안에서만 처리합니다.</p>
+  <ol class="howto">
+    <li><b>명단 넣기</b> — 엑셀 파일(xlsx·xls·csv)을 끌어다 놓거나, 엑셀에서 머리글 줄까지 복사해 붙여 넣기. 이름·주소 칸만 있으면 됩니다(우편번호·기관·직함·상세주소 칸은 있으면 씀).</li>
+    <li><b>칸 확인</b> — 머리글 이름으로 칸을 알아서 고릅니다. 빨간 줄(주소 없음)·노란 줄(우편번호 없음)을 확인하세요.</li>
+    <li><b>우편번호 채우기 (필요할 때)</b> — 「우편번호 찾기」를 누르면 빠진 우편번호를 찾아 채웁니다. 우편번호만 필요하면 「우편번호 더한 엑셀 받기」로 끝.</li>
+    <li><b>인쇄</b> — 용지(A4 스티커 칸 나누기 또는 시판 라벨지)를 고르고 「인쇄」. 처음엔 보통 종이로 시험 인쇄해 겹쳐 보세요.</li>
+  </ol>
 
   <div class="layout">
     <div>
