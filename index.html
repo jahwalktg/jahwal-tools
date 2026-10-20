@@ -271,6 +271,11 @@ body.fb-on{overflow:hidden}
 .card p{margin:0;font-size:15px;color:var(--muted);line-height:1.5}
 .card .open{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 16px;border-radius:10px;background:var(--blue);color:var(--btn-text);text-decoration:none;font-weight:700;font-size:17px}
 .card .open:hover{filter:brightness(1.08)}
+.card.fold-hide{display:none}
+.more-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:12px;min-height:48px;border-radius:12px;border:1.5px dashed var(--line);background:var(--bg);color:var(--blue);font-weight:700;font-size:16px}
+.more-btn:hover{border-color:var(--blue)}
+.toc .fold-all{min-height:44px;padding:0 14px;border-radius:999px;border:1.5px dashed var(--line);background:transparent;color:var(--muted);font-weight:600;font-size:15px}
+.toc .fold-all:hover{border-color:var(--blue);color:var(--blue)}
 .planned{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
 .planned li{padding:8px 12px;border-radius:999px;border:1.5px dashed var(--line);color:var(--muted);font-size:15px}
 .planned-note{margin:10px 0 0;font-size:15px;color:var(--muted)}
@@ -789,6 +794,51 @@ body.fb-on{overflow:hidden}
   document.addEventListener('click',function(e){var a=e.target&&e.target.closest?e.target.closest('.card a.open, .top10 a, .rail-try a'):null;if(!a)return;var m=/\.\/([^\/]+)\/index\.html/.exec(a.getAttribute('href')||'');if(!m)return;var o=readS();o.opens[m[1]]=(o.opens[m[1]]||0)+1;writeS(o);renderTop();});
   var clr=$('btnTopClear');if(clr)clr.addEventListener('click',function(){writeS({opens:{}});renderTop();});
   renderTop();
+})();
+</script>
+<script>
+/* 첫 화면 묶음 접기: 묶음마다 첫 줄만 보이고 「○개 더 보기」. 펼친 묶음은 이 브라우저에 기억 (jahwal-tools.open.v1) */
+(function(){
+  'use strict';
+  var KEY='jahwal-tools.open.v1';
+  /* 묶음별로 앞에 보일 대표 도구 (나머지는 원래 순서) */
+  var FEATURED={calc:['quote-calculator','work-hours','budget-plan','social-insurance'],docs:['list-compare','file-tools','cert-print','form-overlay'],promo:['greeting','press','newsletter','map'],ai:['ai-howto','prompt-minutes','prompt-notice','prompt-directions']};
+  var open={};try{(JSON.parse(localStorage.getItem(KEY)||'[]')||[]).forEach(function(id){open[id]=1;});}catch(e){}
+  function store(){try{localStorage.setItem(KEY,JSON.stringify(Object.keys(open)));}catch(e){}}
+  var groups=[].slice.call(document.querySelectorAll('section.group'));
+  groups.forEach(function(g){
+    var ul=g.querySelector('.cards');if(!ul)return;
+    (FEATURED[g.id]||[]).slice().reverse().forEach(function(id){var li=ul.querySelector('.card[data-id="'+id+'"]');if(li)ul.insertBefore(li,ul.firstChild);});
+    var b=document.createElement('button');b.type='button';b.className='more-btn';b.setAttribute('aria-controls',ul.id||'');
+    b.addEventListener('click',function(){if(open[g.id]){delete open[g.id];}else{open[g.id]=1;}store();apply(g);if(!open[g.id]){var top=g.getBoundingClientRect().top;if(top<0)g.scrollIntoView({block:'start'});}});
+    ul.parentNode.insertBefore(b,ul.nextSibling);
+  });
+  function cols(ul){var t=getComputedStyle(ul).gridTemplateColumns;return t&&t!=='none'?t.split(' ').filter(Boolean).length:1;}
+  function apply(g){
+    var ul=g.querySelector('.cards'),b=g.querySelector('.more-btn');if(!ul||!b)return;
+    var cards=[].slice.call(ul.querySelectorAll('.card')),n=Math.max(cols(ul),2),name=(g.querySelector('h2')||{}).textContent||'';
+    if(cards.length<=n+1){cards.forEach(function(c){c.classList.remove('fold-hide');});b.hidden=true;return;}
+    b.hidden=false;
+    var isOpen=!!open[g.id];
+    cards.forEach(function(c,i){c.classList.toggle('fold-hide',!isOpen&&i>=n);});
+    b.textContent=isOpen?name+' 접기 ▲':name+' '+(cards.length-n)+'개 더 보기 ▼';
+    b.setAttribute('aria-expanded',isOpen?'true':'false');
+  }
+  function applyAll(){groups.forEach(apply);updAll();}
+  /* 바로 가기: 누른 묶음은 펼쳐서 보여 줌 */
+  var toc=document.querySelector('.toc');
+  if(toc){
+    toc.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;var id=a.getAttribute('href').slice(1);if(document.getElementById(id)){open[id]=1;store();apply(document.getElementById(id));}});
+    var all=document.createElement('button');all.type='button';all.className='fold-all';toc.appendChild(all);
+    all.addEventListener('click',function(){var anyClosed=groups.some(function(g){var b=g.querySelector('.more-btn');return b&&!b.hidden&&!open[g.id];});groups.forEach(function(g){if(anyClosed)open[g.id]=1;else delete open[g.id];});store();applyAll();});
+    var updAll=function(){var anyClosed=groups.some(function(g){var b=g.querySelector('.more-btn');return b&&!b.hidden&&!open[g.id];});all.textContent=anyClosed?'모두 펼치기':'모두 접기';};
+    window._updAll=updAll;
+  }
+  function updAll(){if(window._updAll)window._updAll();}
+  /* 주소 끝 #묶음 으로 들어오면 그 묶음 펼침 */
+  if(location.hash&&document.getElementById(location.hash.slice(1))&&document.getElementById(location.hash.slice(1)).classList.contains('group'))open[location.hash.slice(1)]=1;
+  applyAll();
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(applyAll,150);});
 })();
 </script>
 <!-- 새 소식 팝업: NOTICE.id를 바꾸면 한 번씩 다시 뜬다. 닫으면 이 브라우저에 본 id만 기억 (jahwal-tools.notice). 주소 끝 ?notice 면 항상 뜸 -->
