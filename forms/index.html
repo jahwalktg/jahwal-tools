@@ -6,12 +6,12 @@
 <meta name="robots" content="index, follow">
 <title>자활 서식 도우미 | 지역자활센터 업무 도구</title>
 <!--meta:start-->
-<meta name="description" content="2026년 자활사업 안내 서식 71종을 찾고(상황별 찾기), 서식마다 한글 파일로 받습니다. 자주 쓰는 11종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 꾸러미로 한꺼번에.">
+<meta name="description" content="2026년 자활사업 안내 서식 71종을 찾고(상황별 찾기), 서식마다 한글 파일로 받습니다. 자주 쓰는 24종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 꾸러미로 한꺼번에.">
 <link rel="canonical" href="https://jahwalktg.github.io/jahwal-tools/forms/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="지역자활센터 업무 도구">
 <meta property="og:title" content="자활 서식 도우미 | 지역자활센터 업무 도구">
-<meta property="og:description" content="2026년 자활사업 안내 서식 71종을 찾고(상황별 찾기), 서식마다 한글 파일로 받습니다. 자주 쓰는 11종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 꾸러미로 한꺼번에.">
+<meta property="og:description" content="2026년 자활사업 안내 서식 71종을 찾고(상황별 찾기), 서식마다 한글 파일로 받습니다. 자주 쓰는 24종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 꾸러미로 한꺼번에.">
 <meta property="og:url" content="https://jahwalktg.github.io/jahwal-tools/forms/">
 <meta property="og:image" content="https://jahwalktg.github.io/jahwal-tools/og.png">
 <meta property="og:image:width" content="1200">
@@ -130,7 +130,7 @@ h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
 <div class="wrapall">
   <p class="crumb"><a href="../index.html">지역자활센터 업무 도구</a> › 문서·명단 도구</p>
   <h1>자활 서식 도우미</h1>
-  <p class="lead">「2026년 자활사업 안내」 서식 71종을 찾고, 서식마다 한글 파일(hwpx)로 받습니다. 자주 쓰는 11종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 연관 서식은 꾸러미로 한꺼번에 받습니다.</p>
+  <p class="lead">「2026년 자활사업 안내」 서식 71종을 찾고, 서식마다 한글 파일(hwpx)로 받습니다. 자주 쓰는 24종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 연관 서식은 꾸러미로 한꺼번에 받습니다.</p>
 
   <div class="tabs">
     <button type="button" class="tab on" data-tab="find">서식 찾기</button>
@@ -214,13 +214,13 @@ const KIND = { fill: '자동 입력', cell: '칸 서식', list: '명단 표', pi
 const INFO = {
   'f1': ['target', 'g', 'ref', '결정 통지 적합 부적합 변경 정지 중지 상실 사회보장급여'],
   'f2': ['target', 'g', 'pic', '안내문 자활사업 안내'], 'f2-1': ['target', 'g', 'pic', '복지서비스 기관 안내'],
-  'f3': ['target', 'p', 'cell', '금융정보 신용정보 보험정보 동의서'], 'f4': ['target', 'p', 'cell', '차상위 신청서 자활근로 신청'],
-  'f5': ['target', 'g', 'ref', '지정 통보 조건부수급자'], 'f5-1': ['target', 'p', 'cell', '조건제시유예 소득신고 근로활동'],
-  'f6': ['target', 'c', 'cell', '상담불응 상담요구 통보서 가구별 자활지원계획'], 'f7': ['target', 'c', 'cell', '결정상담 통보서'],
-  'f8': ['target', 'g', 'ref', '생계급여 중지 통보 조건불이행'], 'f8-1': ['target', 'g', 'ref', '참여 중지 통보'], 'f8-2': ['target', 'c', 'cell', '참여거부 확인서 거부'],
+  'f3': ['target', 'p', 'cell', '금융정보 신용정보 보험정보 동의서'], 'f4': ['target', 'p', 'fill', '차상위 신청서 자활근로 신청'],
+  'f5': ['target', 'g', 'ref', '지정 통보 조건부수급자'], 'f5-1': ['target', 'p', 'fill', '조건제시유예 소득신고 근로활동'],
+  'f6': ['target', 'c', 'fill', '상담불응 상담요구 통보서 가구별 자활지원계획'], 'f7': ['target', 'c', 'fill', '결정상담 통보서'],
+  'f8': ['target', 'g', 'ref', '생계급여 중지 통보 조건불이행'], 'f8-1': ['target', 'g', 'ref', '참여 중지 통보'], 'f8-2': ['target', 'c', 'fill', '참여거부 확인서 거부'],
   'f9': ['gw', 'c', 'fill', '게이트웨이 참여 사실 확인서 고용센터'], 'f10': ['gw', 'c', 'fill', '기본면접기록지 초기상담지 초기상담 면접'],
   'f11': ['gw', 'c', 'fill', '게이트웨이 참여신청서 신청서'], 'f11-2': ['gw', 'c', 'fill', '개인정보 동의서 수집 이용 제공 민감정보'],
-  'f12': ['gw', 'c', 'cell', '자활사정지 전문상담지'], 'f13': ['gw', 'c', 'cell', '자립역량 진단표 진단평가표 assessment'],
+  'f12': ['gw', 'c', 'fill', '자활사정지 전문상담지'], 'f13': ['gw', 'c', 'fill', '자립역량 진단표 진단평가표 assessment'],
   'f13-1': ['gw', 'c', 'cell', '질적성과지표'], 'f14': ['gw', 'c', 'cell', '교육계획 결과서 교육실시보고서 교육'],
   'f17': ['gw', 'c', 'cell', '사례관리 욕구조사지 욕구'], 'f18': ['gw', 'c', 'fill', 'IAP 개인별 자립계획 자립경로'],
   'f19': ['gw', 'c', 'fill', 'ISP 개인별 자활지원계획'], 'f20': ['gw', 'c', 'fill', '상담일지 상담'],
@@ -230,15 +230,15 @@ const INFO = {
   'f25': ['work', 'c', 'list', '위탁결과 통보서 위탁'], 'f26': ['work', 'c', 'list', '참가결과 통보서 근로일수 임금 조건이행 월말'],
   'f27': ['work', 'c', 'cell', '국고보조금 교부신청서 보조금'], 'f28': ['work', 'c', 'list', '선발 투입현황 일당'],
   'f29': ['work', 'c', 'pic', '근무상황부 출근부 근태 출퇴근'], 'f30': ['work', 'c', 'list', '월차휴가 확인서 월차 관리대장 휴가'],
-  'f31': ['work', 'c', 'list', '조건부수급자 접수대장 대장'], 'f32': ['work', 'c', 'cell', '조건부수급자 관리대장 대장 조건이행'],
-  'f33': ['work', 'g', 'ex', '사업계획 심사표'], 'f34': ['work', 'g', 'ex', '표준 위탁계약서 계약'], 'f34-1': ['work', 'c', 'cell', '위탁 종결보고서'],
-  'f35': ['work', 'b', 'cell', '인턴 고용유지 확약 인건비 신청'], 'f35-1': ['work', 'p', 'cell', '보안각서 복지도우미 자활도우미 도우미'],
-  'f35-2': ['work', 'g', 'cell', '근무사실 인정서 복지도우미 도우미 증명'],
+  'f31': ['work', 'c', 'list', '조건부수급자 접수대장 대장'], 'f32': ['work', 'c', 'fill', '조건부수급자 관리대장 대장 조건이행'],
+  'f33': ['work', 'g', 'ex', '사업계획 심사표'], 'f34': ['work', 'g', 'ex', '표준 위탁계약서 계약'], 'f34-1': ['work', 'c', 'fill', '위탁 종결보고서'],
+  'f35': ['work', 'b', 'fill', '인턴 고용유지 확약 인건비 신청'], 'f35-1': ['work', 'p', 'fill', '보안각서 복지도우미 자활도우미 도우미'],
+  'f35-2': ['work', 'g', 'fill', '근무사실 인정서 복지도우미 도우미 증명'],
   'f36': ['sales', 'c', 'ex', '매출액 정산'], 'f37': ['sales', 'c', 'pic', '매출 보고'],
   'f38': ['ent', 'g', 'cell', '자활기업 인정서'], 'f38-1': ['ent', 'g', 'cell', '지원대상 자활기업 확인서'], 'f38-2': ['ent', 'e', 'cell', '예외지원 신청서'],
   'f38-3': ['ent', 'g', 'cell', '예외지원 확인 통보서'], 'f38-4': ['ent', 'g', 'cell', '인정취소 결과 통보서'], 'f38-5': ['ent', 'e', 'cell', '취약계층 고용비율 확인서'],
   'f38-6': ['ent', 'e', 'cell', '자활기업 사업보고서'], 'f38-7': ['ent', 'g', 'cell', '사업보고 검토서'], 'f38-8': ['ent', 'e', 'list', '본점 지점 현황'],
-  'f39': ['ent', 'e', 'cell', '한시적 인건비 지원 신청서 인건비'],
+  'f39': ['ent', 'e', 'fill', '한시적 인건비 지원 신청서 인건비'],
   'f45': ['center', 'k', 'cell', '지역자활센터 광역자활센터 지정신청서'], 'f45-1': ['center', 'g', 'ref', '자활센터 지정서'],
   'f46': ['fund', 'g', 'ex', '임차예정점포 계약체결 검토 점포'], 'f47': ['fund', 'g', 'ex', '임대차 계약서'], 'f48': ['fund', 'g', 'ex', '임대사업 추진 현황보고'],
   'f49-1': ['fund', 'e', 'cell', '자활기금 사업장 점포 임대 지원 신청서'], 'f49-2': ['fund', 'e', 'cell', '자활기금 지원 약정서'], 'f49-3': ['fund', 'p', 'cell', '개인정보제공동의서 자활기금 동의서'],
@@ -369,6 +369,9 @@ const FIELDS = {
   consultDate: ['상담일', 'date', 'x'], iapRound: ['IAP 작성 차수', 'text', 'x', '예: 1차'], closeDate: ['종결 결정일', 'date', 'x'],
   business: ['사업(업무) 내용', 'text', 'x', '예: 청소 사업'], place: ['작업 장소', 'text', 'x'], dailyWage: ['1일 급여(원)', 'text', 'x'], workDays: ['근무 요일', 'text', 'x', '예: 월~금'],
   workHours: ['근무 시간', 'text', 'x', '예: 09:00~18:00'], breakTime: ['휴게 시간', 'text', 'x', '예: 12:00~13:00'],
+  round: ['통보 차수', 'text', 'x', '예: 1'], due1: ['처음 상담 기한', 'date', 'x'], due2: ['다시 정한 상담 기한', 'date', 'x'],
+  reason: ['불참 사유', 'text', 'x'], edu: ['최종학력 및 전공', 'text', 'x', '예: ○○고 졸업'], dong: ['근무 읍·면·동', 'text', 'x', '예: ○○동'],
+  bizName: ['사업장(자활기업) 이름', 'text', 'x'], bizHead: ['사업장 대표자', 'text', 'x'], bizNo: ['사업자등록번호', 'text', 'x'], bizAddr: ['사업장 주소', 'text', 'x'], bizTel: ['사업장 전화', 'tel', 'x'],
   household: ['세대주 성명(시설명)', 'text', 'x'], relation: ['세대주와의 관계', 'text', 'x', '예: 본인'], content: ['참여(사업) 내용', 'text', 'x'], purpose: ['용도', 'text', 'x', '예: 취업 제출용'], submitTo: ['제출처', 'text', 'x']
 };
 const ORG_KEYS = ['org', 'orgHead', 'orgTel', 'sigungu', 'counselor'];
@@ -382,7 +385,7 @@ const per = (a, b) => (a || b) ? (dK(a) || '    년    월    일') + ' ~ ' + (d
 const won = s => { const n = String(s || '').replace(/[^\d]/g, ''); return n ? Number(n).toLocaleString('ko-KR') : ''; };
 function vals(F){
   const v = Object.assign({}, F);
-  v.birthK = dK(F.birth); v.birthDot = dDot(F.birth); v.consultDot = dDot(F.consultDate); v.period = per(F.start, F.end); v.gwPeriod = per(F.gwStart, F.gwEnd);
+  v.birthK = dK(F.birth); v.due1K = dK(F.due1); v.due2K = dK(F.due2); v.writeDot = dDot(F.writeDate); v.birthDot = dDot(F.birth); v.consultDot = dDot(F.consultDate); v.period = per(F.start, F.end); v.gwPeriod = per(F.gwStart, F.gwEnd);
   v.writeK = dK(F.writeDate); v.startK = dK(F.start); v.endK = dK(F.end); v.consultK = dK(F.consultDate); v.closeK = dK(F.closeDate);
   v.rrnFull = F.rrn7 ? F.rrn7.replace(/\s/g, '') + '******' : '';
   v.wageW = won(F.wage); v.expenseW = won(F.expense); v.dailyWageW = won(F.dailyWage);
@@ -397,6 +400,68 @@ const R = (src, fl) => new RegExp(src.replace(/OO/g, O2).replace(/SGG/g, SGG), f
 /* 서식마다 칸 채우기 정의
    c: 이 글자인 칸의 오른쪽(below면 아래) 칸에 값 / cell: 이 글자인 칸 자체를 값으로 / cx: 칸 안 글자 바꾸기 / p: 문단 글자 바꾸기(정규식) */
 const SPECS = {
+  'f4': { f: ['name', 'sex', 'rrn7', 'addr', 'phone', 'edu'], ops: [
+    { c: '성명', v: 'name' }, { cell: '남,여', v: 'sex' }, { cell: '‒', nth: 0, v: 'rrnFull' }, { c: '주소', v: 'addr' }, { c: '연락전화번호', v: 'phone' },
+    { c: '최종학력및전공', v: 'edu' } ] },
+  'f5-1': { f: ['name', 'birth', 'addr', 'writeDate'], ops: [
+    { c: '성명', v: 'name' }, { c: '생년월일', v: 'birthK' }, { c: '주소', v: 'addr' },
+    { p: /^\s*20\s+년\s+월\s+일\s*$/, r: v => v.writeK }, { p: /신고자：\s+\(인\)/, r: v => v.name ? '신고자： ' + v.name + '     (인)' : '' } ] },
+  'f6': { f: ['name', 'rrn7', 'phone', 'addr', 'round', 'due1', 'due2', 'org', 'sigungu', 'writeDate'], ops: [
+    { c: '성명', all: 1, v: 'name' }, { cell: '______-_******', all: 1, v: 'rrnFull' }, { c: '전화번호', all: 1, v: 'phone' }, { c: '주소', all: 1, v: 'addr' },
+    { p: /\(\s*\)차 통보서/, all: 1, r: v => v.round ? '(' + v.round + ')차 통보서' : '' },
+    { p: /\(\s*년\s*월\s*일\)까지 가구별자활지원계획/, r: v => v.due1K ? '(' + v.due1K + ')까지 가구별자활지원계획' : '' },
+    { p: /대하여 \(\s*년\s*월\s*일\)까지/, r: v => v.due2K ? '대하여 (' + v.due2K + ')까지' : '' },
+    { p: /따라서 \(\s*년\s*월\s*일\)까지 \(\s*\)기관에/, r: v => (v.due1K || v.org) ? '따라서 (' + (v.due1K || '      년   월   일') + ')까지 (' + (v.org || '              ') + ')기관에' : '' },
+    { p: /아니한 바,\s*\(\s*년\s*월\s*일\)까지는/, r: v => v.due2K ? '아니한 바, (' + v.due2K + ')까지는' : '' },
+    { p: /^\s*년\s+월\s+일\s*$/, all: 1, r: v => v.writeK },
+    { p: R('담당기관：\\(\\s*\\)SGG청'), r: v => v.sigungu ? '담당기관：' + v.sigungu + '청' : '' } ] },
+  'f7': { f: ['name', 'rrn7', 'phone', 'addr', 'round', 'due1', 'due2', 'org', 'orgTel', 'counselor', 'writeDate'], ops: [
+    { c: '성명', all: 1, v: 'name' }, { cell: '______-_******', all: 1, v: 'rrnFull' }, { c: '전화번호', all: 1, v: 'phone' }, { c: '주소', all: 1, v: 'addr' },
+    { p: /\(\s*\)차 통보서/, all: 1, r: v => v.round ? '(' + v.round + ')차 통보서' : '' },
+    { p: /\(\s*년\s*월\s*일\)까지 참여할 구체적인/, r: v => v.due1K ? '(' + v.due1K + ')까지 참여할 구체적인' : '' },
+    { p: /대하여 \(\s*년\s*월\s*일\)까지/, r: v => v.due2K ? '대하여 (' + v.due2K + ')까지' : '' },
+    { p: /따라서 \(\s*년\s*월\s*일\)까지 \(\s*\)기관에/, r: v => (v.due1K || v.org) ? '따라서 (' + (v.due1K || '      년   월   일') + ')까지 (' + (v.org || '              ') + ')기관에' : '' },
+    { p: /아니한 바,\s*\(\s*년\s*월\s*일\)까지는/, r: v => v.due2K ? '아니한 바, (' + v.due2K + ')까지는' : '' },
+    { p: /^\s*년\s+월\s+일\s*$/, all: 1, r: v => v.writeK },
+    { p: /소속기관：\s+/, r: v => v.org ? '소속기관： ' + v.org + '   ' : '' },
+    { p: /성명：\s+\(서명\)/, r: v => v.counselor ? '성명： ' + v.counselor + '   (서명)' : '' },
+    { p: /\(자활사업실시기관\) 장/, r: v => v.org ? v.org + '장' : '' },
+    { p: /^문의전화：\s*$/, r: v => v.orgTel ? '문의전화： ' + v.orgTel : '' } ] },
+  'f8-2': { f: ['name', 'rrn7', 'addr', 'phone', 'reason', 'sigungu', 'writeDate'], ops: [
+    { c: '성명', below: 1, v: 'name' }, { cell: '______-_******', v: 'rrnFull' }, { c: '주소', below: 1, v: 'addr' }, { c: '연락처', below: 1, v: 'phone' },
+    { p: /불참사유\(구체적으로\) :\s*$/, r: v => v.reason ? '불참사유(구체적으로) : ' + v.reason : '' },
+    { p: /성명 :\s+\(서명\)/, r: v => v.name ? '성명 : ' + v.name + '      (서명)' : '' },
+    { p: /^\s*202\s+\.\s+\.\s+\.\s*$/, r: v => v.writeDot },
+    { p: R('^OOSGG청장 귀하$'), r: v => v.sigungu ? v.sigungu + '청장 귀하' : '' } ] },
+  'f12': { f: ['caseNo', 'name', 'counselor', 'consultDate'], ops: [
+    { c: '사례관리번호', v: 'caseNo' }, { c: '참여자이름', v: 'name' }, { c: '상담자', v: 'counselor' }, { c: '상담일자', v: 'consultK' } ] },
+  'f13': { f: ['name', 'counselor', 'consultDate'], ops: [
+    { c: '참여자명', v: 'name' }, { c: '사정일시', v: 'consultDot' }, { c: '담당자', v: v => v.counselor ? v.counselor + '  (인)' : '' } ] },
+  'f32': { f: ['caseNo', 'name', 'rrn7', 'addr', 'phone', 'consultDate', 'business', 'start', 'end', 'org', 'orgTel'], ops: [
+    { cell: '관리번호()', v: v => v.caseNo ? '관리번호 (' + v.caseNo + ')' : '' }, { c: '성명', v: 'name' }, { cell: '______-_******', v: 'rrnFull' }, { c: '주소', nth: 0, v: 'addr' },
+    { c: '전화번호', nth: 0, v: 'phone' }, { c: '상담일자', v: 'consultK' }, { c: '사업내용', nth: 0, v: 'business' }, { c: '실시기간', v: 'period' },
+    { c: '실시기관', v: 'org' }, { c: '전화번호', nth: 1, v: 'orgTel' } ] },
+  'f34-1': { f: ['caseNo', 'name', 'counselor', 'writeDate', 'guar'], ops: [
+    { c: '사례관리번호', v: 'caseNo' }, { c: '참여자이름', v: 'name' }, { c: '작성자', v: 'counselor' }, { c: '작성일자', v: 'writeK' },
+    { cin: '○일반수급자', find: '○ 일반수급자', rep: '● 일반수급자', if: v => v.guar === '일반수급자' }, { cin: '○일반수급자', find: '○ 조건부수급자', rep: '● 조건부수급자', if: v => v.guar === '조건부수급자' },
+    { cin: '○일반수급자', find: '○ 자활특례', rep: '● 자활특례', if: v => v.guar === '자활특례' }, { cin: '○일반수급자', find: '○ 차상위', rep: '● 차상위', if: v => v.guar === '차상위' } ] },
+  'f35': { f: ['bizName', 'bizHead', 'bizAddr', 'bizTel', 'bizNo', 'name', 'rrn7', 'addr', 'phone', 'start', 'end'], ops: [
+    { c: '사업자명', v: 'bizName' }, { c: '대표자', v: 'bizHead' }, { c: '주소지', v: v => v.bizAddr ? v.bizAddr + (v.bizTel ? '  (전화 ' + v.bizTel + ')' : '') : '' }, { c: '사업자등록번호', v: 'bizNo' },
+    { c: '성명', v: 'name' }, { c: '주민등록번호', v: 'rrnFull' }, { c: '주소', v: 'addr' }, { c: '전화번호', v: 'phone' }, { c: '지원기간', v: 'period' },
+    { p: /확약인 ：\s+\(인\)/, r: v => v.bizHead ? '확약인 ： ' + v.bizHead + '     (인)' : '' } ] },
+  'f35-1': { f: ['name', 'birth', 'phone', 'start', 'dong', 'sigungu', 'writeDate'], ops: [
+    { p: /본인은 20\s+년\s+월\s+일부터\s+\(읍,면,동\)/, r: v => (v.startK || v.dong) ? '본인은 ' + (v.startK || '20  년   월   일') + '부터 ' + (v.dong || '    (읍,면,동)') : '' },
+    { p: /^\s*20\s+년\s+월\s+일\s*$/, r: v => v.writeK },
+    { p: /- 성\s+명 :\s+\(서명\)/, r: v => v.name ? '- 성      명 : ' + v.name + '      (서명)' : '' },
+    { p: /- 생 년 월 일 :\s*$/, r: v => v.birthK ? '- 생 년 월 일 : ' + v.birthK : '' },
+    { p: /- 연\s+락\s+처 :\s*$/, r: v => v.phone ? '- 연  락  처 : ' + v.phone : '' },
+    { p: R('\\(OO시장/군수/구청장\\)'), r: v => v.sigungu ? v.sigungu + '청장' : '' } ] },
+  'f35-2': { f: ['name', 'rrn7', 'addr', 'start', 'end', 'unit', 'content'], ops: [
+    { c: '성명', v: 'name' }, { cell: 'OOOOOO‒O', v: 'rrn7' }, { c: '주소', v: 'addr' }, { c: '총참여기간', v: 'period' },
+    { cell: '년월일~년월일', nth: 0, v: 'period', right: ['unit', 'content'] } ] },
+  'f39': { f: ['bizName', 'bizHead', 'bizAddr', 'bizTel', 'bizNo', 'name', 'rrn7', 'addr', 'phone', 'start', 'end'], ops: [
+    { c: '자활기업명', v: 'bizName' }, { c: '대표자', v: 'bizHead' }, { c: '주소지', v: v => v.bizAddr ? v.bizAddr + (v.bizTel ? '  (전화 ' + v.bizTel + ')' : '') : '' }, { c: '사업자등록번호', v: 'bizNo' },
+    { c: '성명', v: 'name' }, { c: '주민등록번호', v: 'rrnFull' }, { c: '주소', v: 'addr' }, { c: '전화번호', v: 'phone' }, { c: '지원기간', v: 'period' } ] },
   'f9': { f: ['name', 'rrn7', 'addr', 'phone', 'org', 'orgHead', 'orgTel', 'gwStart', 'gwEnd'], ops: [
     { c: '성명', below: 1, v: 'name' }, { cell: '______-_******', v: 'rrnFull' }, { c: '주소', below: 1, v: 'addr' }, { c: '연락처', below: 1, nth: 0, v: 'phone' },
     { c: '수행기관(지역자활센터)', below: 1, v: 'org' }, { c: '대표자', below: 1, v: 'orgHead' }, { c: '연락처', below: 1, nth: 1, v: 'orgTel' }, { c: 'Gateway과정참여기간', below: 1, v: 'gwPeriod' },
@@ -459,11 +524,14 @@ const SPECS = {
 };
 const PACKS = [
   { id: 'gwin', name: 'Gateway 입소', d: '참여신청서·동의서·기본면접기록지·참여 사실 확인서', ids: ['f11', 'f11-2', 'f10', 'f9'] },
-  { id: 'case', name: '사례관리', d: 'IAP·ISP·상담일지 머리 칸', ids: ['f18', 'f19', 'f20'] },
+  { id: 'case', name: '사례관리', d: '자활사정지·자립역량 진단표·IAP·ISP·상담일지 머리 칸', ids: ['f12', 'f13', 'f18', 'f19', 'f20'] },
   { id: 'close', name: '종결·사업단 배치', d: 'Gateway 종결보고서·자활근로 참여신청서', ids: ['f21', 'f22'] },
+  { id: 'apply', name: '자활근로 신청(차상위·특례)', d: '자활근로사업 신청서·개인정보 동의서·참여신청서', ids: ['f4', 'f11-2', 'f22'] },
+  { id: 'refuse', name: '상담불응·참여거부', d: '상담요구 통보서·결정상담 통보서·참여거부 확인서·관리대장', ids: ['f6', 'f7', 'f8-2', 'f32'] },
+  { id: 'helper', name: '복지·자활도우미', d: '보안각서·근무사실 인정서', ids: ['f35-1', 'f35-2'] },
   { id: 'cert', name: '증명서', d: '자활근로 참여확인서·자활경력 증명서', ids: ['f23', 'f23-1'] }
 ];
-const FILL_IDS = Object.keys(SPECS);
+const FILL_IDS = Object.keys(SPECS).sort((a, b) => FORMS.findIndex(f => f.id === a) - FORMS.findIndex(f => f.id === b));
 
 /* hwpx 다루기: zip 풀기·묶기 */
 const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
@@ -557,13 +625,20 @@ function applySpec(doc, spec, v){
     if (op.c || op.cell || op.cx || op.cin) {
       const key = ntext(op.c || op.cell || op.cx || op.cin);
       const hits = cells.filter(tc => op.cin ? ntext(cellText(tc)).startsWith(key) : ntext(cellText(tc)) === key);
-      const tc = hits[op.nth || 0]; if (!tc) { seen[key] = 'x'; continue; }
-      if (op.cell) { const s = val(op); if (s) setCell(tc, s); continue; }
-      if (op.cx || op.cin) { const t = op.cin ? tc : neighbor(tc, false); if (t) cellParas(t).forEach(p => replaceInPara(p, new RegExp(op.find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), () => op.rep)); continue; }
-      const t = neighbor(tc, !!op.below), s = val(op); if (t && s) setCell(t, s, tc);
+      const targets = op.all ? hits : [hits[op.nth || 0]].filter(Boolean);
+      if (!targets.length) { seen[key] = 'x'; continue; }
+      for (const tc of targets) {
+        if (op.cell) {
+          const s = val(op); if (s) setCell(tc, s);
+          let cur = tc; (op.right || []).forEach(k => { cur = cur && neighbor(cur, false); const x = typeof k === 'function' ? k(v) : (v[k] || ''); if (cur && x) setCell(cur, x, tc); });
+          continue;
+        }
+        if (op.cx || op.cin) { const t = op.cin ? tc : neighbor(tc, false); if (t) cellParas(t).forEach(p => replaceInPara(p, new RegExp(op.find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), () => op.rep)); continue; }
+        const t = neighbor(tc, !!op.below), s = val(op); if (t && s) setCell(t, s, tc);
+      }
     } else if (op.p) {
       const s = op.r(v); if (!s) continue;
-      for (const p of doc.getElementsByTagNameNS(HP, 'p')) { if (replaceInPara(p, op.p, () => s)) break; }
+      for (const p of [...doc.getElementsByTagNameNS(HP, 'p')]) { if (replaceInPara(p, op.p, () => s) && !op.all) break; }
     }
   }
   return seen;
