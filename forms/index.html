@@ -6,12 +6,12 @@
 <meta name="robots" content="index, follow">
 <title>자활 서식 도우미 | 지역자활센터 업무 도구</title>
 <!--meta:start-->
-<meta name="description" content="2026년 자활사업 안내 서식 71종을 찾고(상황별 찾기), 서식마다 한글 파일로 받습니다. 자주 쓰는 24종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 꾸러미로 한꺼번에.">
+<meta name="description" content="2026년 자활사업 안내 서식 71종을 번호·이름·낱말, 영역, 작성 주체로 찾고 미리 본 뒤 서식마다 한글 파일(hwpx)로 받습니다.">
 <link rel="canonical" href="https://jahwalktg.github.io/jahwal-tools/forms/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="지역자활센터 업무 도구">
-<meta property="og:title" content="자활 서식 도우미 | 지역자활센터 업무 도구">
-<meta property="og:description" content="2026년 자활사업 안내 서식 71종을 찾고(상황별 찾기), 서식마다 한글 파일로 받습니다. 자주 쓰는 24종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 꾸러미로 한꺼번에.">
+<meta property="og:title" content="서식 찾기·받기 | 지역자활센터 업무 도구">
+<meta property="og:description" content="2026년 자활사업 안내 서식 71종을 번호·이름·낱말, 영역, 작성 주체로 찾고 미리 본 뒤 서식마다 한글 파일(hwpx)로 받습니다.">
 <meta property="og:url" content="https://jahwalktg.github.io/jahwal-tools/forms/">
 <meta property="og:image" content="https://jahwalktg.github.io/jahwal-tools/og.png">
 <meta property="og:image:width" content="1200">
@@ -128,7 +128,7 @@ h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
 </head>
 <body>
 <div class="wrapall">
-  <p class="crumb"><a href="../index.html">지역자활센터 업무 도구</a> › 문서·명단 도구</p>
+  <p class="crumb"><a href="../index.html">지역자활센터 업무 도구</a> › 자활서식활용기</p>
   <h1>자활 서식 도우미</h1>
   <p class="lead">「2026년 자활사업 안내」 서식 71종을 찾고, 서식마다 한글 파일(hwpx)로 받습니다. 자주 쓰는 24종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 연관 서식은 꾸러미로 한꺼번에 받습니다.</p>
 
@@ -144,7 +144,7 @@ h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
       <div class="chips" id="areaChips"></div>
       <div class="chips" id="whoChips"></div>
     </section>
-    <section class="card">
+    <section class="card" id="sitCard">
       <h2>상황으로 찾기</h2>
       <p class="sub">지금 하려는 일을 고르면 필요한 서식을 순서대로 보여 줍니다.</p>
       <div class="sits" id="sits"></div>
@@ -717,7 +717,13 @@ $('btnMake').addEventListener('click', async () => {
 
 /* ── 시작 ── */
 renderFind(); renderSits(); renderFill();
-if (/[#&]fill/.test(location.hash)) setTab('fill');
+/* 첫 화면 카드에서 바로 가기: #fill = 채워서 받기, #sit = 상황으로 찾기 */
+function fromHash(){
+  const h = location.hash;
+  if (/fill/.test(h)) setTab('fill');
+  else if (/sit/.test(h)) { setTab('find'); const c = $('sitCard'); if (c) c.scrollIntoView({ block: 'start' }); }
+}
+fromHash(); window.addEventListener('hashchange', fromHash);
 window._forms = { FORMS, SPECS, fillForm, unzip, F, setF: o => Object.assign(F, o) };
 })();
 </script>
