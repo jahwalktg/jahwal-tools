@@ -84,6 +84,13 @@ table.list tr.dup td{opacity:.55}
 .sum span{padding:2px 9px;border-radius:999px;background:var(--bg)}
 .sum .s-bad{background:var(--red-bg);color:var(--red)}
 .sum .s-warn{background:var(--amber-bg);color:var(--amber)}
+.zipbox{margin-top:14px;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg)}
+.zipbox h3{margin:0 0 4px;font-size:17px}
+.zf{font-size:11px;font-weight:800;border-radius:6px;padding:0 5px;margin-left:4px}
+.zf.ok{background:var(--green-bg);color:var(--green)}
+.zf.none{background:var(--red-bg);color:var(--red)}
+.zf.multi{background:var(--amber-bg);color:var(--amber)}
+table.list select{font-size:12px;max-width:220px;padding:2px}
 .stage{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
 .bar .grow{flex:1}
@@ -124,7 +131,7 @@ table.list tr.dup td{opacity:.55}
 <div class="wrapall">
   <p class="crumb"><a href="../index.html">지역자활센터 업무 도구</a> › 문서·명단 도구</p>
   <h1>우편 주소 라벨 인쇄</h1>
-  <p class="lead">엑셀 명단(이름·주소·우편번호)을 넣으면 A4 스티커 용지를 원하는 칸 수·간격으로 나눠(자르는 선 포함) 또는 시판 라벨지 칸에 맞춰 주소 라벨을 채우고 바로 인쇄합니다. 칸은 머리글 이름으로 알아서 찾고, 주소가 빠진 사람·같은 사람은 미리 알려 줍니다. 명단은 이 PC 안에서만 처리합니다.</p>
+  <p class="lead">엑셀 명단(이름·주소)을 넣으면 빠진 우편번호를 찾아 채우고, A4 스티커 용지를 원하는 칸 수·간격으로 나눠(자르는 선 포함) 또는 시판 라벨지 칸에 맞춰 주소 라벨을 채우고 바로 인쇄합니다. 칸은 머리글 이름으로 알아서 찾고, 주소가 빠진 사람·같은 사람은 미리 알려 줍니다. 명단은 이 PC 안에서만 처리합니다.</p>
 
   <div class="layout">
     <div>
@@ -147,6 +154,14 @@ table.list tr.dup td{opacity:.55}
         <div class="sum" id="sum"></div>
         <div class="tblwrap"><table class="list" id="list"></table></div>
         <p class="note">빨간 줄 = 주소 없음(라벨에서 뺌), 노란 줄 = 우편번호 없음, 흐린 줄 = 이름·주소가 같은 사람(한 번만). 왼쪽 칸을 눌러 넣고 뺄 수 있습니다.</p>
+        <div class="zipbox" id="zipBox">
+          <h3>우편번호 채우기</h3>
+          <p class="sub">주소 글자만 행정안전부 「도로명주소 검색」(공식)으로 보내 우편번호와 정리된 도로명주소를 찾습니다. 이름·연락처 등 다른 칸은 보내지 않습니다. 지번 주소도 찾습니다.</p>
+          <label class="chk"><input type="checkbox" id="recheck"> 이미 적힌 우편번호도 다시 찾아 바꾸기</label>
+          <label class="chk"><input type="checkbox" id="useRoad"> 라벨 주소를 찾은 도로명주소(정리된 주소)로 쓰기</label>
+          <div class="btns"><button class="btn btn-main" type="button" id="btnZip">우편번호 찾기</button><button class="btn" type="button" id="btnXlsx">우편번호 더한 엑셀 받기</button></div>
+          <p class="note" id="zipNote"></p>
+        </div>
       </section>
 
       <section class="card">
@@ -213,7 +228,8 @@ table.list tr.dup td{opacity:.55}
   </div>
 
   <div class="foot">
-    <p>명단은 브라우저 안에서만 읽고 어디에도 올리거나 저장하지 않습니다(라벨지·모양 설정만 이 PC에 기억). 엑셀 읽는 프로그램만 인터넷(cdnjs)에서 받습니다.</p>
+    <p>명단은 브라우저 안에서만 읽고 저장하지 않습니다(용지·모양 설정만 이 PC에 기억). 엑셀 읽는 프로그램만 인터넷(cdnjs)에서 받습니다.</p>
+    <p>「우편번호 찾기」를 누를 때만 주소 글자가 행정안전부 도로명주소 검색(business.juso.go.kr)으로 갑니다. 이름·연락처는 보내지 않습니다.</p>
     <p>라벨지 크기는 흔히 쓰는 A4 규격 기준이며 회사마다 조금씩 다를 수 있습니다. 포장에 적힌 크기로 「직접 맞추기」를 고치세요.</p>
     <p>만든 사람: 서울강남지역자활센터 김태균</p>
   </div>
@@ -246,10 +262,10 @@ const PRESETS = [
 /* ── 상태 ── */
 const KEY = 'jahwal.labels.v1';
 let C = { preset: 'grid', cols: 2, rows: 8, gx: 0, gy: 0, m: 5, w: 100, h: 35.875, top: 5, left: 5 };
-let O = { cut: 'solid', honor: '님', zipPos: 'top', copies: 1, order: 'orig', fsize: 'auto', from: '', offX: 0, offY: 0, guide: true };
+let O = { useRoad: false, cut: 'solid', honor: '님', zipPos: 'top', copies: 1, order: 'orig', fsize: 'auto', from: '', offX: 0, offY: 0, guide: true };
 try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v) { if (v.C) C = Object.assign(C, v.C); if (v.O) O = Object.assign(O, v.O); } } catch (e) {}
 function save(){ try { localStorage.setItem(KEY, JSON.stringify({ C, O })); } catch (e) {} }
-let book = null, rows = [], head = [], M = {}, people = [];
+let book = null, rows = [], head = [], M = {}, people = [], srcName = '';
 
 /* ── 엑셀 읽기 ── */
 async function readFile(f){
@@ -263,7 +279,7 @@ async function readFile(f){
     // 사람이 가장 많아 보이는 시트를 먼저
     let best = 0, bestN = -1; names.forEach((n, i) => { const r = XLSX.utils.sheet_to_json(book.Sheets[n], { header: 1, raw: false, defval: '' }); if (r.length > bestN) { bestN = r.length; best = i; } });
     $('sheet').value = best; useSheet(best);
-    $('fileNote').textContent = f.name + ' 읽음';
+    $('fileNote').textContent = f.name + ' 읽음'; srcName = f.name;
     $('fileNote').className = 'note ok';
   } catch (e) { toast('파일을 읽지 못했습니다: ' + (e.message || e)); }
 }
@@ -277,7 +293,7 @@ function setRows(r){
   r.slice(0, 10).forEach((x, i) => { const sc = x.filter(v => /이름|성명|성함|받는|수신|주소|우편|소재지|기관|소속|직함|연락|전화/.test(v)).length; if (sc > hs) { hs = sc; hi = i; } });
   if (hs <= 0) hi = -1;
   head = hi >= 0 ? r[hi] : r[0].map((_, k) => '칸 ' + (k + 1));
-  rows = r.slice(hi + 1);
+  rows = r.slice(hi + 1); found = {}; off = new Set();
   autoMap(); $('mapCard').classList.remove('hidden'); build();
 }
 const FIELDS = [
@@ -300,7 +316,7 @@ function autoMap(){
 $('maps').addEventListener('change', e => { const k = e.target.dataset.m; if (!k) return; M[k] = +e.target.value; build(); });
 
 /* ── 명단 정리 ── */
-let off = new Set();
+let off = new Set(), found = {};
 function build(){
   const g = (r, k) => M[k] >= 0 ? String(r[M[k]] || '').trim() : '';
   const seen = new Map();
@@ -312,6 +328,12 @@ function build(){
     const p = { i, name: g(r, 'name'), org: g(r, 'org'), title: g(r, 'title'), zip, addr, detail };
     const key = (p.name + '|' + p.addr + p.detail).replace(/\s/g, '');
     p.dup = seen.has(key); if (!p.dup) seen.set(key, i);
+    const F = found[i];
+    if (F) {
+      const hit = F.st === 'ok' ? F : (F.st === 'multi' && F.pick != null ? F.cands[F.pick] : null);
+      if (hit) { p.road = hit.road; if (!p.zip || F.recheck) { p.zipOld = p.zip; p.zip = hit.zip; } }
+      p.look = F.st === 'multi' && F.pick != null ? 'ok' : F.st;
+    }
     p.bad = !p.addr; p.warn = !p.bad && !p.zip;
     return p;
   });
@@ -322,12 +344,91 @@ function renderList(){
   const nBad = people.filter(p => p.bad).length, nWarn = people.filter(p => p.warn).length, nDup = people.filter(p => p.dup).length, nIn = people.filter(included).length;
   $('sum').innerHTML = '<span>명단 ' + people.length + '명</span><span>라벨 ' + nIn + '명</span>' + (nBad ? '<span class="s-bad">주소 없음 ' + nBad + '</span>' : '') + (nWarn ? '<span class="s-warn">우편번호 없음 ' + nWarn + '</span>' : '') + (nDup ? '<span>같은 사람 ' + nDup + '</span>' : '');
   $('list').innerHTML = '<tr><th></th><th>이름</th><th>우편번호</th><th>주소</th></tr>' + people.map(p =>
-    '<tr class="' + (p.bad ? 'bad' : p.dup ? 'dup' : p.warn ? 'warn' : '') + '"><td><input type="checkbox" data-p="' + p.i + '"' + (included(p) ? ' checked' : '') + (p.bad ? ' disabled' : '') + '></td><td>' + esc([p.org, p.name, p.title].filter(Boolean).join(' ')) + '</td><td>' + esc(p.zip) + '</td><td>' + esc([p.addr, p.detail].filter(Boolean).join(' ') || '주소 없음') + '</td></tr>').join('');
+    '<tr class="' + (p.bad ? 'bad' : p.dup ? 'dup' : p.warn ? 'warn' : '') + '"><td><input type="checkbox" data-p="' + p.i + '"' + (included(p) ? ' checked' : '') + (p.bad ? ' disabled' : '') + '></td><td>' + esc([p.org, p.name, p.title].filter(Boolean).join(' ')) + '</td><td>' + zipCell(p) + '</td><td>' + esc([p.addr, p.detail].filter(Boolean).join(' ') || '주소 없음') + (p.road && p.road.replace(/\s/g, '') !== p.addr.replace(/\s/g, '') ? '<br><span class="note" style="font-size:12px">→ ' + esc(p.road) + '</span>' : '') + '</td></tr>').join('');
+}
+function zipCell(p){
+  const F = found[p.i];
+  if (F && F.st === 'multi') return '<select data-pick="' + p.i + '"><option value="">후보 ' + F.cands.length + '개 — 고르기</option>' + F.cands.map((c, k) => '<option value="' + k + '"' + (F.pick === k ? ' selected' : '') + '>' + esc(c.zip + ' ' + c.road + (c.bd ? ' (' + c.bd + ')' : '')) + '</option>').join('') + '</select>';
+  return esc(p.zip) + (p.look === 'ok' ? '<span class="zf ok">찾음</span>' : p.look === 'none' ? '<span class="zf none">못 찾음</span>' : p.look === 'err' ? '<span class="zf none">오류</span>' : '');
 }
 $('list').addEventListener('change', e => {
+  if (e.target.dataset.pick != null) { const F = found[e.target.dataset.pick]; F.pick = e.target.value === '' ? null : +e.target.value; build(); return; }
   const i = e.target.dataset.p; if (i == null) return; const p = people.find(x => x.i === +i);
   if (e.target.checked) { off.delete(p.i); if (p.dup) p.forceOn = true; } else { off.add(p.i); p.forceOn = false; }
   renderList(); render();
+});
+
+/* ── 우편번호 찾기 (행정안전부 도로명주소 검색 API, 승인 사이트: jahwalktg.github.io) ── */
+const JUSO = 'https://business.juso.go.kr/addrlink/addrLinkApi.do', JKEY = 'U01TX0FVVEgyMDI2MTAyMDE2MTgxMjEyMDc4Mjc=';
+const clean = s => String(s).replace(/[%=><\[\]{}"'`;\\|^*+]/g, ' ').replace(/\s+/g, ' ').trim();
+function variants(a){
+  const base = clean(a.replace(/\([^)]*\)/g, ' ').replace(/,/g, ' '));
+  const out = [base];
+  let m = base.match(/^(.*?길\s*\d+(?:-\d+)?)/); if (m) out.push(m[1]);
+  m = base.match(/^(.*?(?:로|대로)\s*\d+(?:-\d+)?)(?![\d-])(?!\s*길)/); if (m) out.push(m[1]);
+  m = base.match(/^(.*?(?:동|리|가)\s*(?:산\s*)?\d+(?:-\d+)?)/); if (m) out.push(m[1]);
+  return [...new Set(out.filter(x => x.length >= 4))];
+}
+async function lookup(addr){
+  for (const kw of variants(addr)) {
+    const r = await fetch(JUSO + '?confmKey=' + encodeURIComponent(JKEY) + '&currentPage=1&countPerPage=10&resultType=json&keyword=' + encodeURIComponent(kw));
+    const j = await r.json(), c = j.results && j.results.common;
+    if (!c || c.errorCode !== '0') throw new Error(c ? c.errorMessage : '응답 없음');
+    const list = j.results.juso || [];
+    if (list.length) {
+      const cands = list.map(x => ({ zip: x.zipNo, road: x.roadAddrPart1, bd: x.bdNm || '' }));
+      const zips = [...new Set(cands.map(x => x.zip))];
+      if (zips.length === 1) return { st: 'ok', zip: zips[0], road: cands[0].road, cands };
+      /* 도로명 + 건물번호가 정확히 같은 후보가 하나면 그것으로 */
+      const m = clean(addr).match(/(\S+(?:로|길))\s*(\d+(?:-\d+)?)(?![\d-])/);
+      if (m) {
+        const want = (m[1] + ' ' + m[2]).replace(/\s+/g, ' ');
+        const ex = cands.filter(c => c.road === want || c.road.endsWith(' ' + want));
+        const ez = [...new Set(ex.map(c => c.zip))];
+        if (ez.length === 1) return { st: 'ok', zip: ez[0], road: ex[0].road, cands };
+      }
+      return { st: 'multi', cands, pick: null };
+    }
+  }
+  return { st: 'none' };
+}
+let looking = false;
+$('btnZip').addEventListener('click', async () => {
+  if (looking) return;
+  const recheck = $('recheck').checked;
+  const todo = people.filter(p => !p.bad && !p.dup && (recheck || !p.zip || (found[p.i] && found[p.i].st === 'err')));
+  if (!todo.length) { toast('찾을 주소가 없습니다(우편번호가 다 있으면 「다시 찾아 바꾸기」를 켜세요)'); return; }
+  if (!confirm('주소 ' + todo.length + '개를 행정안전부 도로명주소 검색으로 보내 우편번호를 찾습니다. 이름 등 다른 칸은 보내지 않습니다. 진행할까요?')) return;
+  looking = true; $('btnZip').disabled = true; let done = 0, ok = 0, multi = 0, none = 0, err = 0;
+  const queue = todo.slice();
+  async function worker(){
+    while (queue.length) {
+      const p = queue.shift();
+      try { const R = await lookup(p.addr + (p.detail && !/동|호|층/.test(p.detail) ? ' ' + p.detail : '')); R.recheck = recheck; found[p.i] = R; if (R.st === 'ok') ok++; else if (R.st === 'multi') multi++; else none++; }
+      catch (e) { found[p.i] = { st: 'err', msg: e.message }; err++; if (/승인|KEY|키/.test(e.message)) queue.length = 0; }
+      done++; $('zipNote').textContent = '찾는 중… ' + done + ' / ' + todo.length;
+    }
+  }
+  await Promise.all([worker(), worker(), worker(), worker()]);
+  looking = false; $('btnZip').disabled = false;
+  build();
+  $('zipNote').textContent = '찾음 ' + ok + '명' + (multi ? ', 후보 여러 개 ' + multi + '명(목록에서 고르기)' : '') + (none ? ', 못 찾음 ' + none + '명(주소 확인)' : '') + (err ? ', 오류 ' + err + '명(' + (Object.values(found).find(f => f.st === 'err') || {}).msg + ')' : '');
+  $('zipNote').className = 'note ' + (none || err || multi ? 'warn' : 'ok');
+});
+$('recheck').addEventListener('change', () => {});
+$('useRoad').checked = !!O.useRoad; $('useRoad').addEventListener('change', e => { O.useRoad = e.target.checked; render(); });
+$('btnXlsx').addEventListener('click', () => {
+  if (!rows.length || typeof XLSX === 'undefined') { toast('먼저 명단을 넣으세요'); return; }
+  const by = {}; people.forEach(p => { by[p.i] = p; });
+  const aoa = [head.concat(['우편번호(찾음)', '정리된 도로명주소', '찾기 결과'])].concat(rows.map((r, i) => {
+    const p = by[i] || {}, F = found[i];
+    const st = !F ? (p.zip ? '원래 있음' : '') : F.st === 'ok' ? '찾음' : F.st === 'multi' ? (F.pick != null ? '골라서 찾음' : '후보 여러 개') : F.st === 'none' ? '못 찾음' : '오류';
+    return r.concat([F && (F.st === 'ok' || F.pick != null) ? p.zip : (p.zip || ''), p.road || '', st]);
+  }));
+  const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = head.map(() => ({ wch: 14 })).concat([{ wch: 10 }, { wch: 40 }, { wch: 12 }]);
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '우편번호');
+  XLSX.writeFile(wb, (srcName || '주소명단').replace(/\.(xlsx|xls|csv|txt)$/i, '') + '_우편번호.xlsx');
+  toast('우편번호를 더한 엑셀을 받았습니다');
 });
 
 /* ── 라벨 그리기 ── */
@@ -342,7 +443,7 @@ function labelHTML(p){
   if (!p) return '';
   return (O.from ? '<div class="from">' + esc(O.from) + '</div>' : '')
     + (O.zipPos === 'top' && p.zip ? '<div class="zip">' + esc(p.zip) + '</div>' : '')
-    + '<div class="addr">' + esc([p.addr, p.detail].filter(Boolean).join(' ')) + '</div>'
+    + '<div class="addr">' + esc([O.useRoad && p.road ? p.road : p.addr, p.detail].filter(Boolean).join(' ')) + '</div>'
     + '<div class="to">' + esc(toLine(p)) + '</div>';
 }
 function seq(){
@@ -462,9 +563,10 @@ $('btnTest').addEventListener('click', () => doPrint(true));
 window.addEventListener('afterprint', () => { $('printArea').innerHTML = ''; });
 
 renderPreset(); render();
+if (location.hash === '#zip') { $('fileNote').textContent = '명단을 넣으면 아래 「칸 맞추기·명단 확인」에 「우편번호 채우기」가 나옵니다.'; $('fileNote').className = 'note warn'; }
 /* 시험용: 주소 끝 #printtest 면 예시 명단으로 인쇄본(테두리 포함)을 준비 */
 if (location.hash === '#printtest') { $('btnSample').click(); setTimeout(() => prep(false), 300); }
-window._labels = { setRows, get people(){ return people; }, C, O, render, prep };
+window._labels = { lookup, variants, get found(){ return found; }, setRows, get people(){ return people; }, C, O, render, prep };
 })();
 </script>
 </body>
