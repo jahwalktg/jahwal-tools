@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>자활 서식 도우미 | 지역자활센터 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="2026년 자활사업 안내 서식 71종을 찾고(상황별 찾기), 서식마다 한글 파일로 받습니다. 자주 쓰는 11종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 꾸러미로 한꺼번에.">
+<link rel="canonical" href="https://jahwalktg.github.io/jahwal-tools/forms/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="지역자활센터 업무 도구">
+<meta property="og:title" content="자활 서식 도우미 | 지역자활센터 업무 도구">
+<meta property="og:description" content="2026년 자활사업 안내 서식 71종을 찾고(상황별 찾기), 서식마다 한글 파일로 받습니다. 자주 쓰는 11종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 꾸러미로 한꺼번에.">
+<meta property="og:url" content="https://jahwalktg.github.io/jahwal-tools/forms/">
+<meta property="og:image" content="https://jahwalktg.github.io/jahwal-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#E63946; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC;
+  --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10;
+    --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1240px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 14px;color:var(--muted)}
+.tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.tab{min-height:46px;padding:0 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:700}
+.tab.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:19px;display:flex;align-items:center;gap:8px}
+.card h2 .no{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:14px;flex:none}
+.sub{margin:0 0 10px;color:var(--muted);font-size:14px}
+.search{width:100%;min-height:50px;padding:8px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chips button{min-height:36px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;font-size:14px}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.chips .lab{align-self:center;font-size:13px;color:var(--muted);font-weight:700;margin-right:2px}
+.sits{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.sits button{text-align:left;min-height:54px;padding:8px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:15px}
+.sits button.on{border-color:var(--blue);background:var(--blue-bg)}
+.steps{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;counter-reset:st}
+.steps li{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 10px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg)}
+.steps li::before{counter-increment:st;content:counter(st);display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;font-weight:700;flex:none}
+.steps .t{flex:1 1 220px}
+.steps .t b{display:block}
+.steps .t span{font-size:13px;color:var(--muted)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.fc{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.fc .thumb{height:150px;overflow:hidden;background:#fff;border-bottom:1px solid var(--line);cursor:zoom-in;display:block;width:100%;border-width:0 0 1px;padding:0}
+.fc .thumb img{width:100%;display:block}
+.fc .body{padding:10px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+.fc .no{font-size:13px;color:var(--blue);font-weight:800}
+.fc h3{margin:0;font-size:16px;line-height:1.35}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.badge{font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.badge.fill{background:var(--green-bg);border-color:transparent;color:var(--green)}
+.badge.pic{background:var(--amber-bg);border-color:transparent;color:var(--amber)}
+.fc .acts{display:flex;gap:6px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
+.btn{min-height:40px;padding:0 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-fill{background:var(--green-bg);border-color:transparent;color:var(--green)}
+.btn-small{min-height:34px;font-size:14px;padding:0 10px}
+.count{font-size:14px;color:var(--muted);margin:0 0 8px}
+.empty{color:var(--muted);text-align:center;padding:30px 0}
+/* 채워서 받기 */
+.layout{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:980px){.layout{grid-template-columns:minmax(0,1fr) 380px;align-items:start}.side{position:sticky;top:10px}}
+.packs{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.packs button{text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700}
+.packs button span{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.packs button.on{border-color:var(--blue);background:var(--blue-bg)}
+.picks{display:grid;gap:4px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));margin-top:10px}
+.picks label{display:flex;gap:8px;align-items:center;font-size:14px;padding:4px 6px;border-radius:8px}
+.picks input{width:18px;height:18px}
+.fields{display:grid;gap:8px 10px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.field{display:block}
+.field>span{display:block;font-size:13px;color:var(--muted);margin-bottom:2px}
+.field>span em{font-style:normal;color:var(--blue);font-size:12px;margin-left:4px}
+.in,select.in{width:100%;min-height:42px;padding:7px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+.grp{margin:14px 0 6px;font-weight:800;font-size:15px}
+.note{font-size:14px;color:var(--muted);margin:6px 0 0}
+.note.warn{color:var(--amber);font-weight:600}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:8px 0}
+.chk input{width:18px;height:18px}
+.sel-list{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:4px;font-size:14px}
+.sel-list li{padding:6px 10px;border-radius:8px;background:var(--bg)}
+/* 미리보기 창 */
+.mback{position:fixed;inset:0;background:rgba(10,20,45,.55);z-index:50}
+.modal{position:fixed;inset:16px;z-index:51;max-width:820px;margin:0 auto;background:var(--surface);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;border:1.5px solid var(--line)}
+.mhead{display:flex;gap:8px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.mhead h2{margin:0;font-size:18px;flex:1 1 200px}
+.mbody{overflow:auto;padding:14px;background:#E9EDF4}
+.mbody img{display:block;width:100%;max-width:760px;margin:0 auto;box-shadow:0 2px 10px rgba(0,0,0,.2);background:#fff}
+.mrel{padding:10px 14px;border-top:1px solid var(--line);font-size:14px}
+.mrel button{border:0;background:none;color:var(--blue);font-weight:700;padding:2px 4px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:60;max-width:calc(100% - 32px)}
+.toast.on{opacity:1}
+.hidden{display:none !important}
+.foot{margin-top:24px;padding-top:14px;border-top:1.5px solid var(--line);font-size:14px;color:var(--muted)}
+.foot p{margin:2px 0}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">지역자활센터 업무 도구</a> › 문서·명단 도구</p>
+  <h1>자활 서식 도우미</h1>
+  <p class="lead">「2026년 자활사업 안내」 서식 71종을 찾고, 서식마다 한글 파일(hwpx)로 받습니다. 자주 쓰는 11종은 사람 정보를 한 번 넣으면 칸이 채워진 한글 파일로, 연관 서식은 꾸러미로 한꺼번에 받습니다.</p>
+
+  <div class="tabs">
+    <button type="button" class="tab on" data-tab="find">서식 찾기</button>
+    <button type="button" class="tab" data-tab="fill">채워서 받기 (자동 입력)</button>
+  </div>
+
+  <!-- ───── 서식 찾기 ───── -->
+  <div id="pFind">
+    <section class="card">
+      <input class="search" id="q" type="search" placeholder="서식 이름·번호·낱말로 찾기 (예: 경력증명, 동의서, 23, 상담일지)" autocomplete="off">
+      <div class="chips" id="areaChips"></div>
+      <div class="chips" id="whoChips"></div>
+    </section>
+    <section class="card">
+      <h2>상황으로 찾기</h2>
+      <p class="sub">지금 하려는 일을 고르면 필요한 서식을 순서대로 보여 줍니다.</p>
+      <div class="sits" id="sits"></div>
+      <div id="sitBox" class="hidden"><p class="note" id="sitNote"></p><ol class="steps" id="steps"></ol></div>
+    </section>
+    <p class="count" id="count"></p>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <!-- ───── 채워서 받기 ───── -->
+  <div id="pFill" class="hidden">
+    <div class="layout">
+      <div>
+        <section class="card">
+          <h2><span class="no">1</span>무엇을 만들까요</h2>
+          <div class="packs" id="packs"></div>
+          <div class="picks" id="picks"></div>
+        </section>
+        <section class="card">
+          <h2><span class="no">2</span>정보 넣기</h2>
+          <p class="sub">고른 서식에 필요한 칸만 나옵니다. 비워 둔 칸은 서식에 원래 빈칸·안내 글 그대로 남으니, 받은 한글 파일에서 이어서 쓰면 됩니다.</p>
+          <div id="fieldsBox"></div>
+          <label class="chk"><input type="checkbox" id="rememberOrg"> 기관 정보(기관 이름·센터장·전화·시군구·상담자)만 이 PC에 기억</label>
+          <p class="note">사람 정보(이름·생년월일·주소 등)는 저장하지 않고, 화면을 닫으면 사라집니다. 어디로도 보내지 않습니다.</p>
+        </section>
+      </div>
+      <div class="side">
+        <section class="card">
+          <h2><span class="no">3</span>받기</h2>
+          <ul class="sel-list" id="selList"></ul>
+          <button class="btn btn-main" id="btnMake" type="button" style="width:100%;min-height:52px;font-size:17px">한글 파일로 받기</button>
+          <p class="note" id="makeNote"></p>
+          <p class="note">한글 2014 이상에서 열립니다. 서명·도장 칸과 지침상 시군구가 쓰는 칸은 비워 둡니다.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>서식 출처: 보건복지부 「2026년 자활사업 안내」 서식편. 공개된 서식을 서식별 파일로 나누고 쪽 크기만 A4로 바꾼 것으로, 원본과 다른 점이 있으면 지침이 우선입니다.</p>
+    <p>자동 입력은 브라우저 안에서 한글 파일의 칸을 채웁니다. 입력한 개인정보는 저장·전송하지 않습니다. 주민등록번호는 지침대로 앞 7자리만 받습니다.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </div>
+</div>
+
+<div class="mback hidden" id="mBack"></div>
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="mhead"><h2 id="mTitle"></h2><button class="btn btn-small" id="mDown" type="button">한글 파일 받기</button><button class="btn btn-small btn-fill hidden" id="mFill" type="button">채워서 받기</button><button class="btn btn-small" id="mClose" type="button">닫기</button></div>
+  <div class="mbody"><p class="note" id="mInfo" style="text-align:center;margin:0 0 8px"></p><img id="mImg" alt=""></div>
+  <div class="mrel" id="mRel"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+(() => {
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), 2800); }
+
+/* ── 서식 목록 (제목·쪽은 원본에서 뽑은 META) ── */
+const META = [{"id": "f1", "title": "사회보장급여(결정(적합, 부적합), 변경･정지･중지･상실) 통지서", "page": 5, "pages": 15}, {"id": "f2", "title": "○○○ 시･군･구 자활사업 안내", "page": 23, "pages": 1}, {"id": "f2-1", "title": "○○○ 시･군･구 복지서비스기관 안내", "page": 24, "pages": 1}, {"id": "f3", "title": "금융정보등(금융･신용･보험정보) 제공 동의서", "page": 25, "pages": 2}, {"id": "f4", "title": "자활근로사업 신청서‒차상위계층", "page": 27, "pages": 1}, {"id": "f5", "title": "조건부수급자 자활사업 지정 통보서", "page": 28, "pages": 1}, {"id": "f5-1", "title": "조건제시유예 근로활동 및 소득신고서", "page": 29, "pages": 1}, {"id": "f6", "title": "가구별자활지원계획 수립 (  )차 통보서", "page": 30, "pages": 1}, {"id": "f7", "title": "자활사업 결정 상담 (  )차 통보서", "page": 31, "pages": 1}, {"id": "f8", "title": "조건부수급자 생계급여 중지 통보서", "page": 32, "pages": 1}, {"id": "f8-1", "title": "자활근로 참여 중지 통보서", "page": 33, "pages": 1}, {"id": "f8-2", "title": "자활근로사업 참여 거부 확인서", "page": 34, "pages": 1}, {"id": "f9", "title": "자활사업 Gateway과정 참여 사실 확인서", "page": 41, "pages": 1}, {"id": "f10", "title": "기본면접기록지 [구, 초기상담지]", "page": 42, "pages": 5}, {"id": "f11", "title": "Gateway 과정 참여 신청서", "page": 47, "pages": 1}, {"id": "f11-2", "title": "개인정보 수집･이용･제공 동의서", "page": 48, "pages": 3}, {"id": "f12", "title": "자활사정지 [구, 전문상담지]", "page": 51, "pages": 2}, {"id": "f13", "title": "자립역량 진단표 [구, 진단･평가표(Assessment)]", "page": 53, "pages": 2}, {"id": "f13-1", "title": "질적성과지표", "page": 55, "pages": 1}, {"id": "f14", "title": "교육계획 및 결과서 [구, 교육실시보고서]", "page": 56, "pages": 2}, {"id": "f17", "title": "사례관리 욕구조사지", "page": 58, "pages": 4}, {"id": "f18", "title": "개인별 자립계획IAP", "page": 62, "pages": 1}, {"id": "f19", "title": "개인별 자활지원 계획(ISP)", "page": 63, "pages": 1}, {"id": "f20", "title": "상담일지", "page": 64, "pages": 1}, {"id": "f21", "title": "Gateway 종결보고서", "page": 65, "pages": 1}, {"id": "f21-1", "title": "Gateway 운영 현황 및 결과", "page": 66, "pages": 1}, {"id": "f22", "title": "자활근로참여 신청서(표준안)", "page": 67, "pages": 1}, {"id": "f23", "title": "자활근로참여 확인서", "page": 68, "pages": 1}, {"id": "f23-1", "title": "자활경력 증명서", "page": 69, "pages": 1}, {"id": "f24", "title": "자활사업 위탁의뢰서", "page": 70, "pages": 1}, {"id": "f25", "title": "자활사업 위탁결과 통보서", "page": 71, "pages": 1}, {"id": "f26", "title": "자활사업 참가결과 통보서", "page": 72, "pages": 1}, {"id": "f27", "title": "자활사업 국고보조금 교부신청서", "page": 73, "pages": 1}, {"id": "f28", "title": "자활근로사업 선발･투입현황", "page": 74, "pages": 1}, {"id": "f29", "title": "자활사업근무상황부", "page": 75, "pages": 1}, {"id": "f30", "title": "월차휴가 발생 및 사용 확인서", "page": 76, "pages": 1}, {"id": "f31", "title": "조건부수급자 접수대장", "page": 77, "pages": 1}, {"id": "f32", "title": "조건부수급자 관리대장", "page": 78, "pages": 1}, {"id": "f33", "title": "사업계획 심사표(예시)", "page": 79, "pages": 2}, {"id": "f34", "title": "자활근로사업 표준 위탁계약서(예시)", "page": 81, "pages": 4}, {"id": "f34-1", "title": "위탁 종결보고서", "page": 91, "pages": 1}, {"id": "f35", "title": "자활인턴사원 고용유지 확약 및 인건비 신청서", "page": 92, "pages": 1}, {"id": "f35-1", "title": "복지･자활도우미 보안각서", "page": 93, "pages": 1}, {"id": "f35-2", "title": "복지･자활도우미 근무사실 인정서", "page": 94, "pages": 1}, {"id": "f36", "title": "매출액 정산 예시", "page": 95, "pages": 1}, {"id": "f37", "title": "매출관련 보고서식", "page": 98, "pages": 1}, {"id": "f38", "title": "자활기업 인정서", "page": 99, "pages": 1}, {"id": "f38-1", "title": "지원대상 자활기업 확인서", "page": 100, "pages": 1}, {"id": "f38-2", "title": "자활기업 예외 지원 신청서", "page": 101, "pages": 1}, {"id": "f38-3", "title": "자활기업 예외 지원 확인 통보서", "page": 102, "pages": 1}, {"id": "f38-4", "title": "자활기업 인정취소 결과 통보서", "page": 103, "pages": 1}, {"id": "f38-5", "title": "자활기업 취약계층 고용비율 확인서", "page": 104, "pages": 1}, {"id": "f38-6", "title": "자활기업 사업보고서", "page": 105, "pages": 2}, {"id": "f38-7", "title": "자활기업 사업보고 검토서", "page": 107, "pages": 1}, {"id": "f38-8", "title": "자활기업 본점 및 지점 현황", "page": 108, "pages": 1}, {"id": "f39", "title": "자활기업 한시적 인건비 지원 신청서", "page": 109, "pages": 1}, {"id": "f45", "title": "([  ] 광역･[  ] 지역)자활센터 지정신청서", "page": 110, "pages": 1}, {"id": "f45-1", "title": "([  ] 광역･[  ] 지역)자활센터 지정서", "page": 111, "pages": 2}, {"id": "f46", "title": "임차예정점포 계약체결 가능여부 검토 보고", "page": 116, "pages": 2}, {"id": "f47", "title": "임대차 계약서", "page": 118, "pages": 3}, {"id": "f48", "title": "임대사업 추진 현황보고", "page": 121, "pages": 1}, {"id": "f49-1", "title": "자활기금-사업장(점포) 임대 지원 신청서", "page": 122, "pages": 1}, {"id": "f49-2", "title": "자활기금 지원 약정서", "page": 123, "pages": 1}, {"id": "f49-3", "title": "개인정보제공동의서", "page": 124, "pages": 1}, {"id": "f50", "title": "사업계획서", "page": 125, "pages": 2}, {"id": "f51", "title": "사업개시 신고서", "page": 127, "pages": 1}, {"id": "f52", "title": "사업변경 신고서", "page": 128, "pages": 1}, {"id": "f53", "title": "자활기금 운용･관리실적", "page": 129, "pages": 1}, {"id": "a1", "title": "사실조사확인서", "page": 130, "pages": 1}, {"id": "a2", "title": "사실조사확인서 (조건제시유예)", "page": 131, "pages": 1}, {"id": "a3", "title": "자활역량평가표", "page": 132, "pages": 6}];
+const AREAS = [['target', '대상자 관리'], ['gw', 'Gateway·사례관리'], ['work', '자활근로'], ['sales', '매출'], ['ent', '자활기업'], ['center', '지역자활센터'], ['fund', '자활기금'], ['etc', '조사·평가']];
+const WHO = { c: '센터', g: '시군구', p: '신청인·참여자', e: '자활기업', b: '사업장', k: '광역' };
+const KIND = { fill: '자동 입력', cell: '칸 서식', list: '명단 표', pic: '그림 서식', ex: '예시', ref: '시군구 참고' };
+/* id: [영역, 작성 주체, 종류, 찾기 낱말] */
+const INFO = {
+  'f1': ['target', 'g', 'ref', '결정 통지 적합 부적합 변경 정지 중지 상실 사회보장급여'],
+  'f2': ['target', 'g', 'pic', '안내문 자활사업 안내'], 'f2-1': ['target', 'g', 'pic', '복지서비스 기관 안내'],
+  'f3': ['target', 'p', 'cell', '금융정보 신용정보 보험정보 동의서'], 'f4': ['target', 'p', 'cell', '차상위 신청서 자활근로 신청'],
+  'f5': ['target', 'g', 'ref', '지정 통보 조건부수급자'], 'f5-1': ['target', 'p', 'cell', '조건제시유예 소득신고 근로활동'],
+  'f6': ['target', 'c', 'cell', '상담불응 상담요구 통보서 가구별 자활지원계획'], 'f7': ['target', 'c', 'cell', '결정상담 통보서'],
+  'f8': ['target', 'g', 'ref', '생계급여 중지 통보 조건불이행'], 'f8-1': ['target', 'g', 'ref', '참여 중지 통보'], 'f8-2': ['target', 'c', 'cell', '참여거부 확인서 거부'],
+  'f9': ['gw', 'c', 'fill', '게이트웨이 참여 사실 확인서 고용센터'], 'f10': ['gw', 'c', 'fill', '기본면접기록지 초기상담지 초기상담 면접'],
+  'f11': ['gw', 'c', 'fill', '게이트웨이 참여신청서 신청서'], 'f11-2': ['gw', 'c', 'fill', '개인정보 동의서 수집 이용 제공 민감정보'],
+  'f12': ['gw', 'c', 'cell', '자활사정지 전문상담지'], 'f13': ['gw', 'c', 'cell', '자립역량 진단표 진단평가표 assessment'],
+  'f13-1': ['gw', 'c', 'cell', '질적성과지표'], 'f14': ['gw', 'c', 'cell', '교육계획 결과서 교육실시보고서 교육'],
+  'f17': ['gw', 'c', 'cell', '사례관리 욕구조사지 욕구'], 'f18': ['gw', 'c', 'fill', 'IAP 개인별 자립계획 자립경로'],
+  'f19': ['gw', 'c', 'fill', 'ISP 개인별 자활지원계획'], 'f20': ['gw', 'c', 'fill', '상담일지 상담'],
+  'f21': ['gw', 'c', 'fill', '게이트웨이 종결보고서 종결 중도탈락'], 'f21-1': ['gw', 'c', 'list', '게이트웨이 운영 현황 결과 분기 실적'],
+  'f22': ['work', 'c', 'fill', '자활근로 참여신청서 표준안 참여조건'], 'f23': ['work', 'g', 'fill', '자활근로 참여확인서 확인서 발급 증명'],
+  'f23-1': ['work', 'g', 'fill', '자활경력 증명서 경력증명 증명'], 'f24': ['work', 'g', 'list', '위탁의뢰서 위탁'],
+  'f25': ['work', 'c', 'list', '위탁결과 통보서 위탁'], 'f26': ['work', 'c', 'list', '참가결과 통보서 근로일수 임금 조건이행 월말'],
+  'f27': ['work', 'c', 'cell', '국고보조금 교부신청서 보조금'], 'f28': ['work', 'c', 'list', '선발 투입현황 일당'],
+  'f29': ['work', 'c', 'pic', '근무상황부 출근부 근태 출퇴근'], 'f30': ['work', 'c', 'list', '월차휴가 확인서 월차 관리대장 휴가'],
+  'f31': ['work', 'c', 'list', '조건부수급자 접수대장 대장'], 'f32': ['work', 'c', 'cell', '조건부수급자 관리대장 대장 조건이행'],
+  'f33': ['work', 'g', 'ex', '사업계획 심사표'], 'f34': ['work', 'g', 'ex', '표준 위탁계약서 계약'], 'f34-1': ['work', 'c', 'cell', '위탁 종결보고서'],
+  'f35': ['work', 'b', 'cell', '인턴 고용유지 확약 인건비 신청'], 'f35-1': ['work', 'p', 'cell', '보안각서 복지도우미 자활도우미 도우미'],
+  'f35-2': ['work', 'g', 'cell', '근무사실 인정서 복지도우미 도우미 증명'],
+  'f36': ['sales', 'c', 'ex', '매출액 정산'], 'f37': ['sales', 'c', 'pic', '매출 보고'],
+  'f38': ['ent', 'g', 'cell', '자활기업 인정서'], 'f38-1': ['ent', 'g', 'cell', '지원대상 자활기업 확인서'], 'f38-2': ['ent', 'e', 'cell', '예외지원 신청서'],
+  'f38-3': ['ent', 'g', 'cell', '예외지원 확인 통보서'], 'f38-4': ['ent', 'g', 'cell', '인정취소 결과 통보서'], 'f38-5': ['ent', 'e', 'cell', '취약계층 고용비율 확인서'],
+  'f38-6': ['ent', 'e', 'cell', '자활기업 사업보고서'], 'f38-7': ['ent', 'g', 'cell', '사업보고 검토서'], 'f38-8': ['ent', 'e', 'list', '본점 지점 현황'],
+  'f39': ['ent', 'e', 'cell', '한시적 인건비 지원 신청서 인건비'],
+  'f45': ['center', 'k', 'cell', '지역자활센터 광역자활센터 지정신청서'], 'f45-1': ['center', 'g', 'ref', '자활센터 지정서'],
+  'f46': ['fund', 'g', 'ex', '임차예정점포 계약체결 검토 점포'], 'f47': ['fund', 'g', 'ex', '임대차 계약서'], 'f48': ['fund', 'g', 'ex', '임대사업 추진 현황보고'],
+  'f49-1': ['fund', 'e', 'cell', '자활기금 사업장 점포 임대 지원 신청서'], 'f49-2': ['fund', 'e', 'cell', '자활기금 지원 약정서'], 'f49-3': ['fund', 'p', 'cell', '개인정보제공동의서 자활기금 동의서'],
+  'f50': ['fund', 'e', 'cell', '자활기금 사업계획서'], 'f51': ['fund', 'e', 'cell', '사업개시 신고서'], 'f52': ['fund', 'e', 'cell', '사업변경 신고서'],
+  'f53': ['fund', 'g', 'pic', '자활기금 운용 관리실적'],
+  'a1': ['etc', 'g', 'cell', '사실조사확인서 근로능력 근로곤란 판정'], 'a2': ['etc', 'g', 'cell', '사실조사확인서 조건제시유예'], 'a3': ['etc', 'g', 'cell', '자활역량평가표 역량평가 점수']
+};
+const FORMS = META.map(m => {
+  const i = INFO[m.id] || ['etc', 'c', 'cell', ''];
+  const no = m.id[0] === 'a' ? (m.id === 'a1' ? '붙임 1' : m.id === 'a2' ? '붙임 2' : '붙임') : '서식 ' + m.id.slice(1) + '호';
+  return Object.assign({}, m, { area: i[0], who: i[1], kind: i[2], keys: i[3], no });
+});
+const byId = id => FORMS.find(f => f.id === id);
+
+/* ── 상황 ── */
+const SITS = [
+  { t: '새 조건부수급자 의뢰를 받았다', s: [['f24', '시군구에서 받는 의뢰서'], ['f31', '접수대장에 적기'], ['f10', '첫 상담'], ['f11', 'Gateway 참여 신청'], ['f11-2', '개인정보 동의'], ['f9', '참여 사실 확인(시군구 거쳐 고용센터)'], ['f25', '위탁결과 시군구에 통보']] },
+  { t: '차상위·특례 본인이 자활근로를 신청한다', s: [['f4', '자활근로사업 신청서'], ['f11-2', '개인정보 동의'], ['f22', '자활근로 참여신청서(조건 안내)']] },
+  { t: '상담에 오지 않는다·참여를 거부한다', s: [['f6', '상담요구 통보'], ['f7', '결정상담 통보'], ['f8-2', '참여거부 확인서'], ['f32', '관리대장에 불이행 기록'], ['f8', '생계급여 중지(시군구)']] },
+  { t: '사례관리를 시작한다', s: [['f12', '자활사정지'], ['f13', '자립역량 진단표'], ['f13-1', '질적성과지표'], ['f17', '욕구조사지'], ['f18', '개인별 자립계획 IAP'], ['f19', '개인별 자활지원계획 ISP'], ['f20', '상담마다 상담일지']] },
+  { t: 'Gateway 교육을 연다', s: [['f14', '교육계획 및 결과서']] },
+  { t: 'Gateway를 마치고 사업단에 배치한다', s: [['f21', 'Gateway 종결보고서'], ['f22', '자활근로 참여신청서'], ['f35-1', '도우미면 보안각서']] },
+  { t: '매달 시군구에 보고한다', s: [['f26', '참가결과 통보서(근로일수·임금·조건이행)'], ['f28', '선발·투입현황'], ['f29', '근무상황부'], ['f30', '월차휴가 확인서']] },
+  { t: '분기 보고를 한다', s: [['f21-1', 'Gateway 운영 현황 및 결과']] },
+  { t: '참여자가 증명서를 달라고 한다', s: [['f23', '자활근로 참여확인서'], ['f23-1', '자활경력 증명서'], ['f35-2', '복지·자활도우미 근무사실 인정서']] },
+  { t: '참여를 중지·종결한다', s: [['f8-1', '참여 중지 통보(시군구)'], ['f26', '참가결과 통보에 반영'], ['f21', 'Gateway 참여자면 종결보고서']] },
+  { t: '인턴형·도우미를 운영한다', s: [['f35', '인턴 고용유지 확약 및 인건비 신청'], ['f35-1', '도우미 보안각서'], ['f35-2', '근무사실 인정서']] },
+  { t: '사업단을 위탁 운영한다', s: [['f33', '사업계획 심사표'], ['f34', '표준 위탁계약서'], ['f34-1', '위탁 종결보고서']] },
+  { t: '국고보조금을 신청한다', s: [['f27', '국고보조금 교부신청서']] },
+  { t: '매출을 정산·보고한다', s: [['f36', '매출액 정산 예시'], ['f37', '매출관련 보고서식']] },
+  { t: '자활기업을 인정받고 지원받는다', s: [['f38-1', '지원대상 확인서'], ['f38-5', '취약계층 고용비율 확인서'], ['f38-2', '예외지원 신청'], ['f39', '한시적 인건비 지원 신청'], ['f38-6', '사업보고서'], ['f38-8', '본점·지점 현황']] },
+  { t: '자활기금으로 점포를 임대한다', s: [['f46', '계약체결 가능 여부 검토'], ['f49-1', '임대 지원 신청서'], ['f49-3', '개인정보 제공 동의'], ['f50', '사업계획서'], ['f49-2', '지원 약정서'], ['f47', '임대차 계약서'], ['f51', '사업개시 신고'], ['f52', '사업변경 신고'], ['f48', '추진 현황 보고'], ['f53', '운용·관리 실적']] },
+  { t: '근로능력·조건제시유예를 확인한다(시군구)', s: [['a1', '사실조사확인서'], ['a2', '사실조사확인서(조건제시유예)'], ['a3', '자활역량평가표'], ['f5-1', '근로활동 및 소득신고서']] }
+];
+
+/* ── 서식 찾기 화면 ── */
+let fArea = '', fWho = '', fQ = '', sitIdx = -1;
+function chipRow(el, label, list, cur, cb){
+  el.innerHTML = '<span class="lab">' + label + '</span>' + [['', '전체']].concat(list).map(([v, n]) => '<button type="button" data-v="' + v + '" class="' + (v === cur ? 'on' : '') + '">' + esc(n) + '</button>').join('');
+  el.onclick = e => { const b = e.target.closest('button[data-v]'); if (b) cb(b.dataset.v); };
+}
+const norm = s => String(s).toLowerCase().replace(/[\s･·\-‒()（）「」\[\]]/g, '');
+function match(f){
+  if (fArea && f.area !== fArea) return false;
+  if (fWho && f.who !== fWho) return false;
+  if (!fQ) return true;
+  const hay = norm(f.no + f.title + f.keys + KIND[f.kind] + WHO[f.who]);
+  return norm(fQ).split(/\s+/).every(w => hay.includes(w)) || norm(f.id.slice(1)) === norm(fQ.replace(/호$/, ''));
+}
+function fcard(f){
+  return '<article class="fc"><button type="button" class="thumb" data-prev="' + f.id + '" aria-label="' + esc(f.title) + ' 미리보기"><img loading="lazy" src="img/' + f.id + '.webp" alt=""></button>'
+    + '<div class="body"><span class="no">[' + f.no + ']</span><h3>' + esc(f.title) + '</h3>'
+    + '<div class="badges"><span class="badge">' + WHO[f.who] + '</span><span class="badge' + (f.kind === 'fill' ? ' fill' : f.kind === 'pic' ? ' pic' : '') + '">' + KIND[f.kind] + '</span><span class="badge">' + f.pages + '쪽</span></div>'
+    + '<div class="acts"><button class="btn btn-small" type="button" data-prev="' + f.id + '">미리보기</button><button class="btn btn-small" type="button" data-down="' + f.id + '">받기</button>'
+    + (f.kind === 'fill' ? '<button class="btn btn-small btn-fill" type="button" data-fill="' + f.id + '">채워서 받기</button>' : '') + '</div></div></article>';
+}
+function renderFind(){
+  chipRow($('areaChips'), '영역', AREAS, fArea, v => { fArea = v; renderFind(); });
+  chipRow($('whoChips'), '누가 쓰나', Object.entries(WHO), fWho, v => { fWho = v; renderFind(); });
+  const list = FORMS.filter(match);
+  $('count').textContent = list.length === FORMS.length ? '서식 ' + FORMS.length + '종' : '찾은 서식 ' + list.length + '종 / 전체 ' + FORMS.length + '종';
+  $('grid').innerHTML = list.length ? list.map(fcard).join('') : '<p class="empty">찾는 서식이 없습니다. 다른 낱말로 찾아보세요.</p>';
+}
+function renderSits(){
+  $('sits').innerHTML = SITS.map((s, i) => '<button type="button" data-i="' + i + '" class="' + (i === sitIdx ? 'on' : '') + '">' + esc(s.t) + '</button>').join('');
+  $('sitBox').classList.toggle('hidden', sitIdx < 0);
+  if (sitIdx < 0) return;
+  const s = SITS[sitIdx];
+  const fills = s.s.map(x => x[0]).filter(id => byId(id) && byId(id).kind === 'fill');
+  $('sitNote').innerHTML = fills.length > 1 ? '이 중 자동 입력되는 ' + fills.length + '종은 <button class="btn btn-small btn-fill" type="button" id="sitFill">한꺼번에 채워서 받기</button>' : '';
+  $('steps').innerHTML = s.s.map(([id, why]) => { const f = byId(id); if (!f) return '';
+    return '<li><div class="t"><b>[' + f.no + '] ' + esc(f.title) + '</b><span>' + esc(why) + ' · ' + WHO[f.who] + (f.kind === 'pic' ? ' · 그림 서식' : '') + '</span></div>'
+      + '<button class="btn btn-small" type="button" data-prev="' + id + '">미리보기</button><button class="btn btn-small" type="button" data-down="' + id + '">받기</button>'
+      + (f.kind === 'fill' ? '<button class="btn btn-small btn-fill" type="button" data-fill="' + id + '">채워서 받기</button>' : '') + '</li>'; }).join('');
+  const sf = $('sitFill'); if (sf) sf.onclick = () => openFill(fills);
+}
+$('sits').addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (!b) return; sitIdx = sitIdx === +b.dataset.i ? -1 : +b.dataset.i; renderSits(); });
+$('q').addEventListener('input', e => { fQ = e.target.value.trim(); renderFind(); });
+
+/* 공통 버튼(미리보기·받기·채워서 받기) */
+document.addEventListener('click', e => {
+  const p = e.target.closest('[data-prev]'), d = e.target.closest('[data-down]'), f = e.target.closest('[data-fill]'), r = e.target.closest('[data-rel]');
+  if (p) openPrev(p.dataset.prev);
+  else if (d) download(d.dataset.down);
+  else if (f) openFill([f.dataset.fill]);
+  else if (r) openPrev(r.dataset.rel);
+});
+const fileName = f => '[' + f.no + '] ' + f.title.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, ' ').trim() + '.hwpx';
+function dl(blob, name){ const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000); }
+async function download(id){
+  const f = byId(id);
+  try { const r = await fetch('files/' + id + '.hwpx'); if (!r.ok) throw 0; dl(await r.blob(), fileName(f)); toast('「' + f.title + '」 받았습니다'); }
+  catch (e) { toast('파일을 받지 못했습니다. 인터넷 연결을 확인하세요'); }
+}
+
+/* 미리보기 창 */
+let curPrev = '';
+function openPrev(id){
+  const f = byId(id); if (!f) return; curPrev = id;
+  $('mTitle').textContent = '[' + f.no + '] ' + f.title;
+  $('mInfo').textContent = WHO[f.who] + ' · ' + KIND[f.kind] + ' · ' + (f.pages > 1 ? '전체 ' + f.pages + '쪽 중 첫 쪽' : '1쪽') + ' · 지침 서식편 ' + f.page + '쪽';
+  $('mImg').src = 'img/' + id + '.webp'; $('mImg').alt = f.title + ' 첫 쪽';
+  $('mFill').classList.toggle('hidden', f.kind !== 'fill');
+  const rel = [...new Set(SITS.filter(s => s.s.some(x => x[0] === id)).flatMap(s => s.s.map(x => x[0])))].filter(x => x !== id);
+  $('mRel').innerHTML = rel.length ? '함께 쓰는 서식: ' + rel.map(r => '<button type="button" data-rel="' + r + '">[' + byId(r).no + '] ' + esc(byId(r).title) + '</button>').join(' · ') : '';
+  $('modal').classList.remove('hidden'); $('mBack').classList.remove('hidden'); $('mClose').focus();
+}
+function closePrev(){ $('modal').classList.add('hidden'); $('mBack').classList.add('hidden'); }
+$('mClose').onclick = closePrev; $('mBack').onclick = closePrev;
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('modal').classList.contains('hidden')) closePrev(); });
+$('mDown').onclick = () => download(curPrev);
+$('mFill').onclick = () => { closePrev(); openFill([curPrev]); };
+
+/* ── 탭 ── */
+function setTab(t){
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  $('pFind').classList.toggle('hidden', t !== 'find'); $('pFill').classList.toggle('hidden', t !== 'fill');
+}
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+
+/* ══════════ 자동 입력 ══════════ */
+const FIELDS = {
+  name: ['이름', 'text', 'p'], sex: ['성별', ['', '남', '여'], 'p'], birth: ['생년월일', 'date', 'p'], rrn7: ['주민등록번호 앞 7자리', 'text', 'p', '예: 801010-1'],
+  addr: ['주소', 'text', 'p'], phone: ['연락처', 'tel', 'p'], guar: ['보장구분', ['', '조건부수급자', '일반수급자', '자활특례', '차상위', '기타'], 'p'],
+  unit: ['사업단명', 'text', 'p'], caseNo: ['사례관리번호', 'text', 'p'], start: ['참여 시작일', 'date', 'p'], end: ['참여 끝날(종료일)', 'date', 'p'],
+  org: ['기관 이름', 'text', 'o', '○○지역자활센터'], orgHead: ['센터장 이름', 'text', 'o'], orgTel: ['기관 전화', 'tel', 'o'], sigungu: ['시군구', 'text', 'o', '예: ○○구'], counselor: ['상담자(사례관리사)', 'text', 'o'],
+  writeDate: ['작성일·신청일', 'date', 'x'], gwStart: ['Gateway 시작일', 'date', 'x'], gwEnd: ['Gateway 끝날', 'date', 'x'], wage: ['Gateway 1일 임금(원)', 'text', 'x'], expense: ['1일 실비(원)', 'text', 'x'],
+  consultDate: ['상담일', 'date', 'x'], iapRound: ['IAP 작성 차수', 'text', 'x', '예: 1차'], closeDate: ['종결 결정일', 'date', 'x'],
+  business: ['사업(업무) 내용', 'text', 'x', '예: 청소 사업'], place: ['작업 장소', 'text', 'x'], dailyWage: ['1일 급여(원)', 'text', 'x'], workDays: ['근무 요일', 'text', 'x', '예: 월~금'],
+  workHours: ['근무 시간', 'text', 'x', '예: 09:00~18:00'], breakTime: ['휴게 시간', 'text', 'x', '예: 12:00~13:00'],
+  household: ['세대주 성명(시설명)', 'text', 'x'], relation: ['세대주와의 관계', 'text', 'x', '예: 본인'], content: ['참여(사업) 내용', 'text', 'x'], purpose: ['용도', 'text', 'x', '예: 취업 제출용'], submitTo: ['제출처', 'text', 'x']
+};
+const ORG_KEYS = ['org', 'orgHead', 'orgTel', 'sigungu', 'counselor'];
+const GROUPS = { p: '사람', o: '기관', x: '이 서식에 필요한 것' };
+
+/* 값 만들기 */
+const pd = s => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? [+m[1], +m[2], +m[3]] : null; };
+const dK = s => { const d = pd(s); return d ? d[0] + '년 ' + d[1] + '월 ' + d[2] + '일' : ''; };
+const dDot = s => { const d = pd(s); return d ? d[0] + '. ' + d[1] + '. ' + d[2] + '.' : ''; };
+const per = (a, b) => (a || b) ? (dK(a) || '    년    월    일') + ' ~ ' + (dK(b) || '    년    월    일') : '';
+const won = s => { const n = String(s || '').replace(/[^\d]/g, ''); return n ? Number(n).toLocaleString('ko-KR') : ''; };
+function vals(F){
+  const v = Object.assign({}, F);
+  v.birthK = dK(F.birth); v.birthDot = dDot(F.birth); v.consultDot = dDot(F.consultDate); v.period = per(F.start, F.end); v.gwPeriod = per(F.gwStart, F.gwEnd);
+  v.writeK = dK(F.writeDate); v.startK = dK(F.start); v.endK = dK(F.end); v.consultK = dK(F.consultDate); v.closeK = dK(F.closeDate);
+  v.rrnFull = F.rrn7 ? F.rrn7.replace(/\s/g, '') + '******' : '';
+  v.wageW = won(F.wage); v.expenseW = won(F.expense); v.dailyWageW = won(F.dailyWage);
+  v.year = (pd(F.writeDate) || [new Date().getFullYear()])[0];
+  v.guarPart = F.guar === '차상위' ? '차상위 자활' : /수급자|특례/.test(F.guar || '') ? '수급자' + (F.guar === '자활특례' ? ' (자활특례)' : '') : (F.guar === '기타' ? '기타' : '');
+  return v;
+}
+/* 자리표 글자: 서식마다 ○·◦·O, 가운뎃점(･·)이 섞여 있다 */
+const O2 = '[○◯◦ㅇOＯ]{2}', DT = '[･·]?';
+const SGG = '시' + DT + '군' + DT + '구';
+const R = (src, fl) => new RegExp(src.replace(/OO/g, O2).replace(/SGG/g, SGG), fl);
+/* 서식마다 칸 채우기 정의
+   c: 이 글자인 칸의 오른쪽(below면 아래) 칸에 값 / cell: 이 글자인 칸 자체를 값으로 / cx: 칸 안 글자 바꾸기 / p: 문단 글자 바꾸기(정규식) */
+const SPECS = {
+  'f9': { f: ['name', 'rrn7', 'addr', 'phone', 'org', 'orgHead', 'orgTel', 'gwStart', 'gwEnd'], ops: [
+    { c: '성명', below: 1, v: 'name' }, { cell: '______-_******', v: 'rrnFull' }, { c: '주소', below: 1, v: 'addr' }, { c: '연락처', below: 1, nth: 0, v: 'phone' },
+    { c: '수행기관(지역자활센터)', below: 1, v: 'org' }, { c: '대표자', below: 1, v: 'orgHead' }, { c: '연락처', below: 1, nth: 1, v: 'orgTel' }, { c: 'Gateway과정참여기간', below: 1, v: 'gwPeriod' },
+    { p: R('OO지역자활센터의 Gateway과정에'), r: v => v.org ? v.org + '의 Gateway과정에' : '' } ] },
+  'f10': { f: ['caseNo', 'name', 'sex', 'birth', 'phone', 'addr', 'org', 'orgTel', 'counselor', 'consultDate'], ops: [
+    { c: '사례관리번호', v: 'caseNo' }, { c: '생년월일', v: 'birthK' }, { c: '이름', v: 'name' },
+    { cx: '성별', find: '○남', rep: '●남', if: v => v.sex === '남' }, { cx: '성별', find: '○여', rep: '●여', if: v => v.sex === '여' },
+    { cell: '핸드폰)', v: v => v.phone ? '핸드폰) ' + v.phone : '' }, { c: '주소', v: 'addr' },
+    { c: '상담일', v: 'consultK' }, { c: '상담자', v: 'counselor' }, { c: '상담자소속', v: 'org' }, { c: '상담자전화번호', v: 'orgTel' } ] },
+  'f11': { f: ['name', 'birth', 'org', 'sigungu', 'wage', 'expense', 'gwStart', 'gwEnd', 'writeDate'], ops: [
+    { p: R('OO지역자활센터에서 실시하는'), r: v => v.org ? v.org + '에서 실시하는' : '' },
+    { c: '임금', v: v => v.wageW ? v.wageW + '원' : '' }, { c: '실비', v: v => v.expenseW ? v.expenseW + '원' : '' },
+    { p: /참여기간：.*$/, r: v => v.gwPeriod ? '참여기간： ' + v.gwPeriod : '' },
+    { p: /^\s*년\s+월\s+일\s*$/, r: v => v.writeK },
+    { p: /□ 신청인：.*$/, r: v => (v.name || v.birthK) ? '□ 신청인： ' + (v.name || '') + '        (인)         □ 생년월일： ' + (v.birthK || '') : '' },
+    { p: R('^OOSGG, OO지역자활센터$'), r: v => (v.sigungu || v.org) ? (v.sigungu || '○○시･군･구') + ', ' + (v.org || '○○지역자활센터') : '' } ] },
+  'f11-2': { f: ['name', 'org', 'sigungu', 'writeDate'], ops: [
+    { p: R('OO SGG\(OO지역자활센터\)'), r: v => (v.sigungu || v.org) ? (v.sigungu || 'OO 시･군･구') + '(' + (v.org || '○○지역자활센터') + ')' : '' },
+    { p: /^\s*20OO 년\s+OO 월\s+OO 일\s*$/, r: v => v.writeK },
+    { p: /^본인 성명\s+\(서명 또는 인\)/, r: v => v.name ? '본인 성명   ' + v.name + '        (서명 또는 인)' : '' },
+    { p: R('^OO지역자활센터,$'), r: v => v.org ? v.org + ',' : '' },
+    { p: R('^보건복지부, OO SGG$'), r: v => v.sigungu ? '보건복지부, ' + v.sigungu : '' } ] },
+  'f18': { f: ['name', 'sex', 'birth', 'phone', 'guar', 'unit', 'caseNo', 'iapRound', 'counselor', 'consultDate'], ops: [
+    { c: '참여자이름', v: 'name' }, { c: '성별', v: 'sex' }, { c: '생년월일', v: 'birthDot' }, { c: '연락처', v: 'phone' }, { c: '보장구분', v: 'guar' },
+    { c: '사업단명', v: 'unit' }, { c: '사례관리번호', v: 'caseNo' }, { c: 'IAP작성차수', v: 'iapRound' }, { c: '상담자', v: 'counselor' }, { c: '상담일자', v: 'consultDot' } ] },
+  'f19': { f: ['name', 'sex', 'birth', 'phone', 'guar', 'unit', 'caseNo', 'counselor', 'writeDate'], ops: [
+    { c: '참여자이름', v: 'name' }, { c: '성별', v: 'sex' }, { c: '생년월일', v: 'birthDot' }, { c: '연락처', v: 'phone' }, { c: '보장구분', v: 'guar' },
+    { c: '사업단명', v: 'unit' }, { c: '사례관리번호', v: 'caseNo' },
+    { p: /^\s*년\s+월\s+일\s*$/, r: v => v.writeK },
+    { p: /^참여자 :.*$/, r: v => (v.name || v.counselor) ? '참여자 : ' + (v.name || '       ') + '   (인) /     사례관리자 : ' + (v.counselor || '       ') + '   (인)' : '' } ] },
+  'f20': { f: ['caseNo', 'name', 'counselor', 'consultDate'], ops: [
+    { c: '사례관리번호', v: 'caseNo' }, { c: '참여자이름', v: 'name' }, { c: '상담자', v: 'counselor' }, { c: '상담일자', v: 'consultK' } ] },
+  'f21': { f: ['caseNo', 'guar', 'unit', 'start', 'end', 'writeDate', 'closeDate'], ops: [
+    { c: '사례관리번호', v: 'caseNo' }, { c: '작성일', v: 'writeK' }, { c: '소속사업단명', v: 'unit' }, { c: '참여시작일', v: 'startK' }, { c: '참여종료일', v: 'endK' },
+    { c: '종결결정일', v: 'closeK' },
+    { cin: '□일반수급자', find: '□ 일반수급자', rep: '■ 일반수급자', if: v => v.guar === '일반수급자' },
+    { cin: '□일반수급자', find: '□ 조건부수급자', rep: '■ 조건부수급자', if: v => v.guar === '조건부수급자' },
+    { cin: '□일반수급자', find: '□ 자활특례', rep: '■ 자활특례', if: v => v.guar === '자활특례' } ] },
+  'f22': { f: ['name', 'birth', 'org', 'orgHead', 'sigungu', 'business', 'place', 'dailyWage', 'expense', 'workDays', 'workHours', 'breakTime', 'start', 'end', 'writeDate'], ops: [
+    { p: /^1\. ○○ 시･군･구에서 실시하는 202\s+년/, r: v => (v.sigungu || v.writeDate) ? '1. ' + (v.sigungu || '○○ 시･군･구') + '에서 실시하는 ' + v.year + '년' : '' },
+    { p: /사업\(업무\)내용：.*$/, r: v => v.business ? '사업(업무)내용：“' + v.business + '”' : '' },
+    { p: /작업장소：.*$/, r: v => v.place ? '작업장소：“' + v.place + '”' : '' },
+    { p: /“1일의 급여 명기ˮ/, r: v => v.dailyWageW ? '1일 급여 ' + v.dailyWageW + '원' : '' },
+    { p: /“근무요일 명기ˮ 개근시/, r: v => v.workDays ? v.workDays + ' 개근시' : '' },
+    { p: /실비 ○○○원/, r: v => v.expenseW ? '실비 ' + v.expenseW + '원' : '' },
+    { p: /참여근무기간：.*$/, r: v => v.period ? '참여근무기간：' + v.period : '' },
+    { p: /“근무요일 명기ˮ, 1일 8시간\(”근무시간 명기ˮ\)/, r: v => (v.workDays || v.workHours) ? (v.workDays || '“근무요일 명기ˮ') + ', 1일 8시간(' + (v.workHours || '”근무시간 명기ˮ') + ')' : '' },
+    { p: /“휴게시간\(00:00~00:00\)명기ˮ/, r: v => v.breakTime ? v.breakTime : '' },
+    { p: /^202\s+\. 1\.\s*$/, r: v => v.writeDate ? dDot(v.writeDate) : '' },
+    { p: /^○○시･군･구청장\s+홍 길 동$/, r: v => v.sigungu ? v.sigungu + '청장' : '' },
+    { p: /^신청인\s+김 자 활.*$/, r: v => (v.name || v.birthK) ? '신청인  ' + (v.name || '          ') + '         (서명), 생년월일 (' + (v.birthK || '  년  월  일') + ')' : '' },
+    { p: /^신청대리인.*$/, r: v => (v.org || v.orgHead) ? '신청대리인  ' + (v.org || 'ㅇㅇ지역자활센터') + '      ' + (v.orgHead || '△△△') + ' 센터장           (직인)' : '' } ] },
+  'f23': { f: ['name', 'rrn7', 'addr', 'household', 'relation', 'guar', 'start', 'end', 'content', 'purpose', 'submitTo', 'writeDate'], ops: [
+    { c: '성명', nth: 0, v: 'name' }, { cell: 'OOOOOO‒O', v: 'rrn7' }, { c: '주소(소재지)', v: 'addr' }, { c: '세대주성명(시설명)', v: 'household' }, { c: '세대주와의관계', v: 'relation' },
+    { c: '참여구분', v: 'guarPart' }, { c: '참여기간', v: 'period' }, { c: '사업내용', v: 'content' }, { c: '용도', v: 'purpose' }, { c: '제출처', v: 'submitTo' },
+    { cell: '년월일', nth: 0, v: 'writeK' }, { c: '신청인', v: 'name' }, { c: '대상자와의관계', v: v => v.name ? '본인' : '' } ] },
+  'f23-1': { f: ['name', 'rrn7', 'addr', 'start', 'end', 'content', 'purpose', 'submitTo', 'writeDate'], ops: [
+    { c: '성명', nth: 0, v: 'name' }, { cell: 'OOOOOO‒O', v: 'rrn7' }, { c: '주소(소재지)', v: 'addr' }, { c: '참여기간', v: 'period' }, { c: '참여내용', v: 'content' },
+    { c: '용도', v: 'purpose' }, { c: '제출처', v: 'submitTo' }, { cell: '년월일', nth: 0, v: 'writeK' }, { c: '신청인', v: 'name' }, { c: '대상자와의관계', v: v => v.name ? '본인' : '' } ] }
+};
+const PACKS = [
+  { id: 'gwin', name: 'Gateway 입소', d: '참여신청서·동의서·기본면접기록지·참여 사실 확인서', ids: ['f11', 'f11-2', 'f10', 'f9'] },
+  { id: 'case', name: '사례관리', d: 'IAP·ISP·상담일지 머리 칸', ids: ['f18', 'f19', 'f20'] },
+  { id: 'close', name: '종결·사업단 배치', d: 'Gateway 종결보고서·자활근로 참여신청서', ids: ['f21', 'f22'] },
+  { id: 'cert', name: '증명서', d: '자활근로 참여확인서·자활경력 증명서', ids: ['f23', 'f23-1'] }
+];
+const FILL_IDS = Object.keys(SPECS);
+
+/* hwpx 다루기: zip 풀기·묶기 */
+const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+const crc32 = d => { let c = 0xFFFFFFFF; for (let i = 0; i < d.length; i++) c = CRC[(c ^ d[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+async function pipe(data, stream){ return new Uint8Array(await new Response(new Blob([data]).stream().pipeThrough(stream)).arrayBuffer()); }
+async function unzip(buf){
+  const u = new Uint8Array(buf), dv = new DataView(buf); let e = u.length - 22;
+  while (e >= 0 && dv.getUint32(e, true) !== 0x06054b50) e--;
+  const n = dv.getUint16(e + 10, true); let p = dv.getUint32(e + 16, true); const out = [];
+  for (let i = 0; i < n; i++) {
+    const method = dv.getUint16(p + 10, true), csz = dv.getUint32(p + 20, true), nl = dv.getUint16(p + 28, true), xl = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true), lo = dv.getUint32(p + 42, true);
+    const name = new TextDecoder().decode(u.subarray(p + 46, p + 46 + nl));
+    const ds = lo + 30 + dv.getUint16(lo + 26, true) + dv.getUint16(lo + 28, true);
+    const raw = u.subarray(ds, ds + csz);
+    out.push({ name, data: method === 8 ? await pipe(raw, new DecompressionStream('deflate-raw')) : raw.slice() });
+    p += 46 + nl + xl + cl;
+  }
+  return out;
+}
+async function zipOf(files){
+  const enc = new TextEncoder(), parts = [], cent = []; let off = 0;
+  const le = (v, k) => { const a = new Uint8Array(k); for (let i = 0; i < k; i++) a[i] = (v >>> (8 * i)) & 0xFF; return a; };
+  for (const f of files) {
+    const nm = enc.encode(f.name), c = crc32(f.data);
+    const store = f.store || typeof CompressionStream === 'undefined';
+    const body = store ? f.data : await pipe(f.data, new CompressionStream('deflate-raw'));
+    const m = store ? 0 : 8;
+    const head = [le(0x04034b50, 4), le(20, 2), le(0x0800, 2), le(m, 2), le(0, 2), le(0x21, 2), le(c, 4), le(body.length, 4), le(f.data.length, 4), le(nm.length, 2), le(0, 2), nm];
+    head.forEach(h => parts.push(h)); parts.push(body);
+    cent.push(le(0x02014b50, 4), le(20, 2), le(20, 2), le(0x0800, 2), le(m, 2), le(0, 2), le(0x21, 2), le(c, 4), le(body.length, 4), le(f.data.length, 4), le(nm.length, 2), le(0, 2), le(0, 2), le(0, 2), le(0, 2), le(0, 4), le(off, 4), nm);
+    off += 30 + nm.length + body.length;
+  }
+  const cl = cent.reduce((s, a) => s + a.length, 0);
+  return new Blob([...parts, ...cent, le(0x06054b50, 4), le(0, 2), le(0, 2), le(files.length, 2), le(files.length, 2), le(cl, 4), le(off, 4), le(0, 2)]);
+}
+
+/* 서식 XML 고치기 */
+const HP = 'http://www.hancom.co.kr/hwpml/2011/paragraph';
+const kids = (el, ln) => [...el.children].filter(c => c.localName === ln);
+const ntext = s => s.replace(/[\s･·]/g, '');
+function paraText(p){ return kids(p, 'run').flatMap(r => kids(r, 't')).map(t => t.textContent).join(''); }
+function cellParas(tc){ const sl = kids(tc, 'subList')[0]; return sl ? kids(sl, 'p') : []; }
+function cellText(tc){ return cellParas(tc).map(paraText).join(''); }
+function dropLineseg(p){ kids(p, 'linesegarray').forEach(x => x.remove()); }
+function setParaText(p, text){
+  const ts = kids(p, 'run').flatMap(r => kids(r, 't'));
+  if (ts.length) { ts[0].textContent = text; ts.slice(1).forEach(t => t.remove()); }
+  else {
+    let run = kids(p, 'run')[0];
+    if (!run) { run = p.ownerDocument.createElementNS(HP, 'hp:run'); run.setAttribute('charPrIDRef', '0'); p.insertBefore(run, p.firstChild); }
+    const t = p.ownerDocument.createElementNS(HP, 'hp:t'); t.textContent = text; run.appendChild(t);
+  }
+  dropLineseg(p);
+}
+let BAD = new Set();
+function runOf(tc){ const p = cellParas(tc)[0]; return p ? kids(p, 'run')[0] : null; }
+function setCell(tc, text, label){
+  const ps = cellParas(tc); if (!ps.length) return; setParaText(ps[0], text); ps.slice(1).forEach(p => p.remove());
+  const r = runOf(tc), lr = label && runOf(label);
+  if (r && BAD.has(r.getAttribute('charPrIDRef')) && lr && !BAD.has(lr.getAttribute('charPrIDRef'))) r.setAttribute('charPrIDRef', lr.getAttribute('charPrIDRef'));
+}
+function cellInfo(tc){
+  const a = kids(tc, 'cellAddr')[0], s = kids(tc, 'cellSpan')[0];
+  return { r: +a.getAttribute('rowAddr'), c: +a.getAttribute('colAddr'), rs: +s.getAttribute('rowSpan'), cs: +s.getAttribute('colSpan') };
+}
+function tblCells(tbl){ return kids(tbl, 'tr').flatMap(tr => kids(tr, 'tc')); }
+function neighbor(tc, below){
+  const tbl = tc.parentElement.parentElement, me = cellInfo(tc);
+  return tblCells(tbl).find(x => { const o = cellInfo(x);
+    return below ? (o.r === me.r + me.rs && o.c <= me.c && me.c < o.c + o.cs) : (o.c === me.c + me.cs && o.r <= me.r && me.r < o.r + o.rs); });
+}
+function replaceInPara(p, re, fn){
+  const ts = kids(p, 'run').flatMap(r => kids(r, 't')), full = ts.map(t => t.textContent).join('');
+  const m = full.match(re); if (!m) return false;
+  const rep = fn(m); if (!rep) return false;
+  const a = m.index, b = a + m[0].length; let pos = 0, first = true;
+  for (const t of ts) {
+    const s0 = pos, s1 = pos + t.textContent.length; pos = s1;
+    if (s1 <= a || s0 >= b) continue;
+    const x = t.textContent, pre = x.slice(0, Math.max(0, a - s0)), post = x.slice(Math.max(0, Math.min(x.length, b - s0)));
+    t.textContent = (first ? pre + rep : '') + (s1 >= b ? post : ''); first = false;
+  }
+  dropLineseg(p); return true;
+}
+function applySpec(doc, spec, v){
+  const cells = [...doc.getElementsByTagNameNS(HP, 'tc')];
+  const val = op => typeof op.v === 'function' ? op.v(v) : (v[op.v] || '');
+  const seen = {};
+  for (const op of spec.ops) {
+    if (op.if && !op.if(v)) continue;
+    if (op.c || op.cell || op.cx || op.cin) {
+      const key = ntext(op.c || op.cell || op.cx || op.cin);
+      const hits = cells.filter(tc => op.cin ? ntext(cellText(tc)).startsWith(key) : ntext(cellText(tc)) === key);
+      const tc = hits[op.nth || 0]; if (!tc) { seen[key] = 'x'; continue; }
+      if (op.cell) { const s = val(op); if (s) setCell(tc, s); continue; }
+      if (op.cx || op.cin) { const t = op.cin ? tc : neighbor(tc, false); if (t) cellParas(t).forEach(p => replaceInPara(p, new RegExp(op.find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), () => op.rep)); continue; }
+      const t = neighbor(tc, !!op.below), s = val(op); if (t && s) setCell(t, s, tc);
+    } else if (op.p) {
+      const s = op.r(v); if (!s) continue;
+      for (const p of doc.getElementsByTagNameNS(HP, 'p')) { if (replaceInPara(p, op.p, () => s)) break; }
+    }
+  }
+  return seen;
+}
+const cache = {};
+async function fillForm(id, F){
+  if (!cache[id]) { const r = await fetch('files/' + id + '.hwpx'); if (!r.ok) throw new Error('파일 없음'); cache[id] = await r.arrayBuffer(); }
+  const files = await unzip(cache[id].slice(0));
+  const sec = files.find(f => f.name === 'Contents/section0.xml');
+  const head = new TextDecoder().decode(files.find(f => f.name === 'Contents/header.xml').data);
+  BAD = new Set(); for (const m of head.matchAll(/<hh:charPr id="(\d+)"[^>]*textColor="([^"]+)"[^>]*>([\s\S]*?)<\/hh:charPr>/g)) if (!/^#0{6}$/i.test(m[2]) || /<hh:italic/.test(m[3])) BAD.add(m[1]);
+  const doc = new DOMParser().parseFromString(new TextDecoder().decode(sec.data), 'application/xml');
+  if (doc.getElementsByTagName('parsererror').length) throw new Error('서식 읽기 실패');
+  applySpec(doc, SPECS[id], vals(F));
+  let xml = new XMLSerializer().serializeToString(doc);
+  if (!xml.startsWith('<?xml')) xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>' + xml;
+  sec.data = new TextEncoder().encode(xml);
+  return zipOf(files.map(f => ({ name: f.name, data: f.data, store: f.name === 'mimetype' || f.name.startsWith('BinData/') })));
+}
+
+/* ── 채워서 받기 화면 ── */
+let picked = new Set(['f11', 'f11-2', 'f10', 'f9']);
+const ORG_STORE = 'jahwal.forms.org.v1';
+let F = { writeDate: new Date().toISOString().slice(0, 10) };
+try { const o = JSON.parse(localStorage.getItem(ORG_STORE) || 'null'); if (o) { Object.assign(F, o); $('rememberOrg').checked = true; } } catch (e) {}
+function openFill(ids){ picked = new Set(ids.filter(id => SPECS[id])); setTab('fill'); renderFill(); window.scrollTo(0, 0); }
+function renderFill(){
+  $('packs').innerHTML = PACKS.map(p => '<button type="button" data-pack="' + p.id + '" class="' + (p.ids.length === picked.size && p.ids.every(i => picked.has(i)) ? 'on' : '') + '">' + esc(p.name) + '<span>' + esc(p.d) + '</span></button>').join('');
+  $('picks').innerHTML = FILL_IDS.map(id => { const f = byId(id); return '<label><input type="checkbox" data-pick="' + id + '"' + (picked.has(id) ? ' checked' : '') + '>[' + f.no + '] ' + esc(f.title) + '</label>'; }).join('');
+  const need = new Set(); picked.forEach(id => SPECS[id].f.forEach(k => need.add(k)));
+  const keys = Object.keys(FIELDS).filter(k => need.has(k));
+  const usedBy = k => FILL_IDS.filter(id => picked.has(id) && SPECS[id].f.includes(k)).length;
+  let h = '';
+  ['p', 'o', 'x'].forEach(g => {
+    const ks = keys.filter(k => FIELDS[k][2] === g); if (!ks.length) return;
+    h += '<div class="grp">' + GROUPS[g] + '</div><div class="fields">' + ks.map(k => {
+      const [lab, type, , ph] = FIELDS[k], v = F[k] || '', n = usedBy(k);
+      const em = picked.size > 1 && n > 1 ? '<em>' + n + '개 서식</em>' : '';
+      const ctl = Array.isArray(type) ? '<select class="in" data-k="' + k + '">' + type.map(o => '<option' + (o === v ? ' selected' : '') + ' value="' + esc(o) + '">' + (o || '고르기') + '</option>').join('') + '</select>'
+        : '<input class="in" data-k="' + k + '" type="' + (type === 'date' ? 'date' : type === 'tel' ? 'tel' : 'text') + '" value="' + esc(v) + '"' + (ph ? ' placeholder="' + esc(ph) + '"' : '') + ' autocomplete="off">';
+      return '<label class="field"><span>' + esc(lab) + em + '</span>' + ctl + '</label>';
+    }).join('') + '</div>';
+  });
+  $('fieldsBox').innerHTML = h || '<p class="note">먼저 위에서 서식을 고르세요.</p>';
+  $('selList').innerHTML = [...picked].map(id => '<li>[' + byId(id).no + '] ' + esc(byId(id).title) + '</li>').join('') || '<li>고른 서식이 없습니다</li>';
+  $('btnMake').disabled = !picked.size;
+  $('btnMake').textContent = picked.size > 1 ? '한글 파일 ' + picked.size + '개 묶어 받기' : '한글 파일로 받기';
+}
+$('packs').addEventListener('click', e => { const b = e.target.closest('[data-pack]'); if (!b) return; picked = new Set(PACKS.find(p => p.id === b.dataset.pack).ids); renderFill(); });
+$('picks').addEventListener('change', e => { const id = e.target.dataset.pick; if (!id) return; e.target.checked ? picked.add(id) : picked.delete(id); renderFill(); });
+$('fieldsBox').addEventListener('input', e => { const k = e.target.dataset.k; if (!k) return; F[k] = e.target.value; saveOrg(); });
+$('fieldsBox').addEventListener('change', e => { const k = e.target.dataset.k; if (!k) return; F[k] = e.target.value; saveOrg(); });
+function saveOrg(){
+  try { if ($('rememberOrg').checked) { const o = {}; ORG_KEYS.forEach(k => { if (F[k]) o[k] = F[k]; }); localStorage.setItem(ORG_STORE, JSON.stringify(o)); } else localStorage.removeItem(ORG_STORE); } catch (e) {}
+}
+$('rememberOrg').addEventListener('change', saveOrg);
+const safe = s => String(s || '').replace(/[\\/:*?"<>|]/g, '').trim();
+$('btnMake').addEventListener('click', async () => {
+  if (F.rrn7 && !/^\d{6}-?\d$/.test(F.rrn7.trim())) { toast('주민등록번호는 앞 7자리만(예: 801010-1) 넣어 주세요'); return; }
+  const ids = FILL_IDS.filter(id => picked.has(id)); if (!ids.length) return;
+  $('btnMake').disabled = true; $('makeNote').textContent = '만드는 중…';
+  try {
+    const who = safe(F.name);
+    if (ids.length === 1) {
+      const b = await fillForm(ids[0], F); dl(b, fileName(byId(ids[0])).replace(/\.hwpx$/, (who ? '_' + who : '') + '.hwpx'));
+    } else {
+      const files = [];
+      for (const id of ids) { const b = await fillForm(id, F); files.push({ name: fileName(byId(id)).replace(/\.hwpx$/, (who ? '_' + who : '') + '.hwpx'), data: new Uint8Array(await b.arrayBuffer()), store: true }); }
+      const pk = PACKS.find(p => p.ids.length === ids.length && p.ids.every(i => picked.has(i)));
+      dl(await zipOf(files), (pk ? pk.name.replace(/[\s·]/g, '') : '자활서식') + (who ? '_' + who : '') + '.zip');
+    }
+    $('makeNote').textContent = '받았습니다. 한글에서 열어 확인한 뒤 서명·도장을 받으세요.';
+  } catch (e) { $('makeNote').textContent = '만들지 못했습니다: ' + (e.message || e) + ' (인터넷 연결을 확인하세요)'; }
+  $('btnMake').disabled = false;
+});
+
+/* ── 시작 ── */
+renderFind(); renderSits(); renderFill();
+if (/[#&]fill/.test(location.hash)) setTab('fill');
+window._forms = { FORMS, SPECS, fillForm, unzip, F, setF: o => Object.assign(F, o) };
+})();
+</script>
+</body>
+</html>
