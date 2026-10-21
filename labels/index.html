@@ -351,6 +351,10 @@ function included(p){ return off.has(p.i) ? false : !(p.bad || p.dup) || (p.forc
 function renderList(){
   const nBad = people.filter(p => p.bad).length, nWarn = people.filter(p => p.warn).length, nDup = people.filter(p => p.dup).length, nIn = people.filter(included).length;
   $('sum').innerHTML = '<span>명단 ' + people.length + '명</span><span>라벨 ' + nIn + '명</span>' + (nBad ? '<span class="s-bad">주소 없음 ' + nBad + '</span>' : '') + (nWarn ? '<span class="s-warn">우편번호 없음 ' + nWarn + '</span>' : '') + (nDup ? '<span>같은 사람 ' + nDup + '</span>' : '');
+  /* 다시 그려도 표 스크롤 위치·방금 누른 칸은 그대로 */
+  const wrap = $('list').parentElement, st = wrap.scrollTop, ae = document.activeElement;
+  const act = ae && ae.dataset ? (ae.dataset.p != null ? '[data-p="' + ae.dataset.p + '"]' : ae.dataset.pick != null ? '[data-pick="' + ae.dataset.pick + '"]' : '') : '';
+  setTimeout(() => { wrap.scrollTop = st; if (act) { const el = $('list').querySelector(act); if (el) try { el.focus({ preventScroll: true }); } catch (e) {} } }, 0);
   $('list').innerHTML = '<tr><th></th><th>이름</th><th>우편번호</th><th>주소</th></tr>' + people.map(p =>
     '<tr class="' + (p.bad ? 'bad' : p.dup ? 'dup' : p.warn ? 'warn' : '') + '"><td><input type="checkbox" data-p="' + p.i + '"' + (included(p) ? ' checked' : '') + (p.bad ? ' disabled' : '') + '></td><td>' + esc([p.org, p.name, p.title].filter(Boolean).join(' ')) + '</td><td>' + zipCell(p) + '</td><td>' + esc([p.addr, p.detail].filter(Boolean).join(' ') || '주소 없음') + (p.road && p.road.replace(/\s/g, '') !== p.addr.replace(/\s/g, '') ? '<br><span class="note" style="font-size:12px">→ ' + esc(p.road) + '</span>' : '') + '</td></tr>').join('');
 }
