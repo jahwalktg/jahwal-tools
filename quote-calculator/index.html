@@ -939,7 +939,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   }
   function renderForm(){
     var d=S.doc;
-    $('qTo').value=d.to;$('qToPerson').value=d.toPerson;$('qToTel').value=d.toTel;$('qDate').value=d.date;$('qTitle').value=d.title;$('vatRate').value=d.vatRate;
+    $('qTo').value=d.to;$('qToPerson').value=d.toPerson||'';$('qToTel').value=d.toTel||'';$('qDate').value=d.date;$('qTitle').value=d.title;$('vatRate').value=d.vatRate;
     $('fName').value=S.from.name;$('fBiz').value=S.from.biz;$('fRep').value=S.from.rep;$('fTel').value=S.from.tel;$('fAddr').value=S.from.addr;$('fType').value=S.from.type;$('fNote').value=S.from.note;
     renderStamp();
     var vr=$('vatRow');vr.textContent='';VAT_MODES.forEach(function(m){JT.chip(vr,m[1],d.vatMode===m[0],false,function(){d.vatMode=m[0];save();renderForm();renderItems();renderTotals();});});

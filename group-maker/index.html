@@ -784,7 +784,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   onNum('vCount','count',999);onNum('vGroups','groups',99);onNum('vSize','size',999);
   $('names').addEventListener('input',function(){$('cntNames').textContent=people().length?people().length+'명':'';});
   $('btnShuffle').addEventListener('click',function(){$('calcNote').textContent='';last=divide();render();if(last)$('groups').scrollIntoView({block:'nearest'});});
-  $('btnExample').addEventListener('click',function(){S.src='names';S.mode='groups';S.groups=3;save();$('names').value='홍길동\t카페\n김영희\t카페\n이철수\t청소\n박민수\t청소\n최지우\t청소\n정하나\t세차\n강민호\t세차\n윤서연\t세차\n조현우\t카페\n한지민\t도시락\n오세훈\t도시락\n임수정\t도시락';renderForm();last=divide();render();$('copyNote').textContent='예시(가상 이름) 12명을 3개 조로 나눴습니다.';});
+  $('btnExample').addEventListener('click',function(){S.src='names';S.mode='groups';S.groups=3;save();$('names').value='홍길동\t카페\n김하늘\t카페\n이바다\t청소\n박나무\t청소\n최구름\t청소\n정별\t세차\n강가람\t세차\n윤슬\t세차\n조단비\t카페\n한보름\t도시락\n오솔\t도시락\n임새벽\t도시락';renderForm();last=divide();render();$('copyNote').textContent='예시(가상 이름) 12명을 3개 조로 나눴습니다.';});
   function text(){return last.groups.map(function(g,i){return (i+1)+'조 ('+g.length+'명): '+g.map(function(p){return p.name+(p.team?'('+p.team+')':'');}).join(', ');}).join('\n');}
   $('btnCopy').addEventListener('click',function(){if(!last)return;JT.copyText(text(),$('copyNote'),'조 편성 결과를 복사했습니다.');});
   $('btnCsv').addEventListener('click',function(){if(!last)return;var rows=[['조','이름','소속']];last.groups.forEach(function(g,i){g.forEach(function(p){rows.push([(i+1)+'조',p.name,p.team]);});});$('copyNote').textContent=JT.downloadCsv(rows,'조편성_'+today()+'.csv')?'엑셀 파일(CSV) 내려받기를 요청했습니다.':'이 화면에서는 내려받기가 막혀 있습니다. "결과 복사"를 쓰세요.';});
