@@ -12,7 +12,8 @@
     21: '3dle2cFZehA', 22: 'sHiJ41q93Dk', 23: 'F6Ip4DkHmRg', 24: 'PWrmSzceZx8', 25: 'Ea0ozqSYZqE',
     26: 'p8YX3bZm39s', 27: '5BsT79LDjJE', 28: 'SWowkwG_a0U', 29: 'Sfs-nvWKp5Y', 30: '6GpargX0m9U',
     31: 'zI_8Vmpm-tg', 32: 'hgMVmRI79to', 33: 'stkTREd_6bY', 34: 'ZxKsqFk6wKk', 35: 'KvXl0wsgqqY',
-    36: 'GF58dYqhTcI', 37: 'fVvm6276zi8', 38: 'qFi13sVuMl0', 39: 'yXMu2jj2OY8'
+    36: 'GF58dYqhTcI', 37: 'fVvm6276zi8', 38: 'qFi13sVuMl0', 39: 'yXMu2jj2OY8', 40: 'mo7eEpIMhys',
+    41: 'uWKFY68kw0Q', 42: '8qjfvtA2CvY', 43: '5-TIxQKFiUg', 44: '1E0MTuJGzW8'
   };
   /* 화면(폴더 이름, 첫 화면 카드는 data-id) → [편, 단추에 붙일 짧은 이름, 첫 화면 카드용 더 짧은 이름] — 이름은 한 화면에 영상이 여럿일 때만 */
   var MAP = {
@@ -20,7 +21,7 @@
     'forms': [[4, '서식 찾기'], [5, '채워서 받기']], 'forms-sit': [[4]], 'forms-fill': [[5]],
     'file-tools': [[6]],
     'safety': [[7, '표지 인쇄', '표지'], [8, '게시물·공식 자료', '게시물']], 'safety-pack': [[7]], 'safety-post': [[8]], 'safety-links': [[8]],
-    'cert-print': [[9]], 'list-compare': [[10]], 'mask-privacy': [[11]], 'form-overlay': [[12]], 'attendance': [[13]],
+    'cert-print': [[9]], 'list-compare': [[10]], 'mask-privacy': [[11, '사진·문서', '사진'], [40, '글 가리기', '글']], 'form-overlay': [[12]], 'attendance': [[13]],
     'quote-calculator': [[14]], 'cost-calculator': [[15]], 'margin-calculator': [[16]], 'vat-reverse': [[17]],
     'work-hours': [[18]], 'edu-hours': [[19]], 'eval-score': [[20]], 'social-insurance': [[21]],
     'savings-account': [[22]], 'budget-plan': [[23]], 'budget-check': [[24]], 'startup-wage': [[25]],
@@ -30,7 +31,8 @@
     'ai-howto': [[37]], 'prompt-guide': [[37]], 'prompt-minutes': [[37]], 'prompt-notice': [[37]],
     'prompt-participant': [[37]], 'prompt-survey': [[37]], 'form-prompt': [[37]],
     'meeting-timer': [[38]], 'break-timer': [[38]], 'focus-timer': [[38]], 'break-reminder': [[38]],
-    'ref-guide': [[39]], 'ref-links': [[39]], 'ref-sites': [[39]], 'ref-income': [[39]]
+    'ref-guide': [[39]], 'ref-links': [[39]], 'ref-sites': [[39]], 'ref-income': [[39]],
+    'face-mask': [[41]], 'date-calc': [[42]], 'rates': [[43]]   // 44 = 「내 센터에 맞게 다시 만들기」 창(remake.js), 43은 첫 화면 찾기 칸에도
   };
   function url(n) { return 'https://www.youtube.com/watch?v=' + V[n] + '&list=' + LIST; }
   window.JT_VIDEOS = { list: LIST, playlist: 'https://www.youtube.com/playlist?list=' + LIST, url: url, map: MAP, start: url(1) };
@@ -64,6 +66,8 @@
         var open = c.querySelector('a.open'); var b = box(m.length > 1 ? m : [[m[0][0]]], true);
         if (open) open.insertAdjacentElement('afterend', b); else c.appendChild(b);
       });
+      var fh = document.querySelector('#finder .fd-h');   // 첫 화면 찾기 칸: 도구 찾기·내 도구함 영상
+      if (fh && !fh.parentNode.querySelector('.jt-vid')) fh.insertAdjacentElement('afterend', box([[43, '도구 찾기·내 도구함']]));
       return;
     }
     var seg = location.pathname.split('/').filter(Boolean);

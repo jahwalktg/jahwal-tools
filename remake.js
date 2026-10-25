@@ -114,6 +114,7 @@
   B.appendChild(el('p', 'muted', '이 도구 파일과 주문서를 AI(Claude·ChatGPT·Gemini 등)에 함께 올리면, AI가 우리 센터 규칙으로 고친 파일을 돌려줍니다. 고친 파일은 센터 PC나 공유 폴더에 두고 더블클릭해서 씁니다. 이 사이트는 바뀌지 않고, 이 창은 아무것도 인터넷으로 보내지 않습니다.'));
   var steps = el('ol', 'steps', '<li>아래에서 <b>우리 센터에서 다른 점</b>을 고르고 짧게 적습니다.</li><li><b>「이 도구 파일 받기」</b>와 <b>「주문서 복사」</b>를 누릅니다.</li><li>AI 대화창에 받은 파일을 올리고 주문서를 붙여 넣습니다.</li><li>AI가 돌려준 파일을 <b>.html</b>로 저장해 열고, AI가 알려 준 확인 예시로 맞는지 봅니다.</li>');
   B.appendChild(steps);
+  if (window.JT_VIDEOS) { var vp = el('p', 'jt-vid', '<a href="' + window.JT_VIDEOS.url(44) + '" target="_blank" rel="noopener" title="유튜브에서 사용법 영상 보기 (새 창)">사용법 영상 <small>유튜브</small></a>'); B.appendChild(vp); }
   if (C.note) B.appendChild(el('p', 'warn', esc(C.note)));
   B.appendChild(el('h3', null, '우리 센터 이름 (선택)'));
   var org = el('input', 'org'); org.type = 'text'; org.placeholder = '예: ○○지역자활센터 — 화면 제목·인쇄물에 들어갑니다'; org.value = lsGet(); B.appendChild(org);
