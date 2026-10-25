@@ -747,7 +747,8 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     ['wc','산재보험',0,1.47,'기관 전액. 업종별 요율(0.5%~18.5%)이라 2026 평균 1.47%(출퇴근재해 0.06% 포함)를 넣어 두었음. 사업단 업종 요율로 고치세요']
   ];
   var _L=(R&&R.v('np.limits'))||{low:410000,high:6590000};var NP_LOW=_L.low,NP_HIGH=_L.high;
-  if(R){['np','hi','lt','ei','wc'].forEach(function(k){var x=R.v('ins.'+k);if(!x)return;INS_DEF.forEach(function(d){if(d[0]!==k)return;if(d[2]!==x[0]||d[3]!==x[1]){var tot=Math.round((x[0]+x[1])*10000)/10000;d[4]=d[4].replace(/전체 [\d.]+%/,'전체 '+tot+'%');}d[2]=x[0];d[3]=x[1];});});R.use(['wage.month','ins.np','ins.hi','ins.lt','ins.ei','ins.wc','np.limits']);} /* 국민연금 기준소득월액 하한·상한 — 2026.7.1~2027.6.30 (그 전 2025.7~2026.6은 400,000·6,370,000) */
+  if(R){['np','hi','lt','ei','wc'].forEach(function(k){var x=R.v('ins.'+k);if(!x)return;INS_DEF.forEach(function(d){if(d[0]!==k)return;if(d[2]!==x[0]||d[3]!==x[1]){var tot=Math.round((x[0]+x[1])*10000)/10000;d[4]=d[4].replace(/전체 [\d.]+%/,'전체 '+tot+'%');}d[2]=x[0];d[3]=x[1];});});R.use(['wage.month','ins.np','ins.hi','ins.lt','ins.ei','ins.wc','np.limits']);}
+  var YV=R?((R.info('wage.month')||{year:YEAR}).year):YEAR; /* 값이 몇 년 것인지(지난해 값을 쓰면 그해) */var YRT=YEAR+'년'+(R&&['ins.np','ins.hi','ins.lt','ins.ei','ins.wc'].some(function(k){var i=R.info(k);return i&&i.fallback;})?'(일부 지난해 값)':''); /* 국민연금 기준소득월액 하한·상한 — 2026.7.1~2027.6.30 (그 전 2025.7~2026.6은 400,000·6,370,000) */
 
   function defRates(){var o={};INS_DEF.forEach(function(d){o[d[0]]={on:true,w:d[2],e:d[3]};});return o;}
   function fresh(){return {type:'market',part:false,pay:_M.market,head:11,ins:defRates(),npLow:NP_LOW,npHigh:NP_HIGH};}
@@ -786,8 +787,8 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     JT.chip(pr,'시간제 (표준소득액 50%)',S.part,noPart,function(){S.part=true;S.pay=stdPay();save();renderForm();render();});
     $('vPay').value=S.pay?fmt(S.pay):'';$('vHead').value=S.head?String(S.head):'';
     $('payLabel').innerHTML=S.type==='custom'?'1인 월 보수총액 <small>원, 직접 입력</small>':'1인 월평균 보수액 <small>원, 표준소득액</small>';
-    $('payHelp').textContent=S.type==='custom'?'자활기업 구성원이나 센터 종사자처럼 보수가 정해져 있으면 월 보수총액(비과세 제외)을 넣으세요.':YEAR+'년 지침 표준소득액 '+fmt(stdPay())+'원 (실비 제외). 다른 금액이면 고쳐 쓰고, 유형 칩을 다시 누르면 기본값으로 돌아옵니다.';
-    $('yearNote').textContent=YEAR+'년 요율 기본값';
+    $('payHelp').textContent=S.type==='custom'?'자활기업 구성원이나 센터 종사자처럼 보수가 정해져 있으면 월 보수총액(비과세 제외)을 넣으세요.':YV+'년 지침 표준소득액 '+fmt(stdPay())+'원 (실비 제외). 다른 금액이면 고쳐 쓰고, 유형 칩을 다시 누르면 기본값으로 돌아옵니다.';
+    $('yearNote').textContent=YRT+' 요율 기본값';
     var host=$('insList');host.textContent='';
     INS_DEF.forEach(function(d){
       var id=d[0],r=S.ins[id],box=document.createElement('div');box.className='ins'+(r.on?'':' off');
@@ -839,10 +840,10 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('vPay').addEventListener('input',function(){var v=money($('vPay').value);var bad=$('vPay').value!==''&&(isNaN(v)||v<0);$('vPay').classList.toggle('bad',bad);if(!bad){S.pay=$('vPay').value===''?0:v;save();render();}});
   $('vPay').addEventListener('blur',function(){if(S.pay)$('vPay').value=fmt(S.pay);});
   $('vHead').addEventListener('input',function(){var v=money($('vHead').value);var bad=$('vHead').value!==''&&(isNaN(v)||v<0);$('vHead').classList.toggle('bad',bad);if(!bad){S.head=$('vHead').value===''?0:v;save();render();}});
-  $('btnRates').addEventListener('click',function(){var on={};INS_DEF.forEach(function(d){on[d[0]]=S.ins[d[0]].on;});S.ins=defRates();INS_DEF.forEach(function(d){S.ins[d[0]].on=on[d[0]];});S.npLow=NP_LOW;S.npHigh=NP_HIGH;save();renderForm();render();$('copyNote').textContent=YEAR+'년 기본 요율로 되돌렸습니다. 가입 여부는 그대로입니다.';});
+  $('btnRates').addEventListener('click',function(){var on={};INS_DEF.forEach(function(d){on[d[0]]=S.ins[d[0]].on;});S.ins=defRates();INS_DEF.forEach(function(d){S.ins[d[0]].on=on[d[0]];});S.npLow=NP_LOW;S.npHigh=NP_HIGH;save();renderForm();render();$('copyNote').textContent=YRT+' 기본 요율로 되돌렸습니다. 가입 여부는 그대로입니다.';});
   $('btnExample').addEventListener('click',function(){S=fresh();save();renderForm();render();$('copyNote').textContent='예시로 되돌렸습니다.';});
   function tableText(){var h=['보험','요율','1인 전체','1인 본인 공제','1인 기관 부담','사업단 전체 ('+(S.head||0)+'명)'];return [h].concat(lastRows.map(function(r){return [r[0],r[1],Math.round(r[2]),Math.round(r[3]),Math.round(r[4]),Math.round(r[5])];}));}
-  $('btnCopy').addEventListener('click',function(){var rows=tableText();JT.copyText('[사회보험 예상 '+today()+', 보수액 '+fmt(S.pay)+'원, '+YEAR+'년 요율]\n'+rows.map(function(r){return r.join('\t');}).join('\n'),$('copyNote'),'표를 복사했습니다. 엑셀에 붙여 넣으면 칸이 나뉩니다.');});
+  $('btnCopy').addEventListener('click',function(){var rows=tableText();JT.copyText('[사회보험 예상 '+today()+', 보수액 '+fmt(S.pay)+'원, '+YRT+' 요율]\n'+rows.map(function(r){return r.join('\t');}).join('\n'),$('copyNote'),'표를 복사했습니다. 엑셀에 붙여 넣으면 칸이 나뉩니다.');});
   $('btnCsv').addEventListener('click',function(){$('copyNote').textContent=JT.downloadCsv(tableText(),'사회보험예상_'+today()+'.csv')?'엑셀 파일(CSV) 내려받기를 요청했습니다.':'이 화면에서는 내려받기가 막혀 있습니다. "표 글 복사"를 쓰세요.';});
   $('pos').addEventListener('click',function(){$('tbl').scrollIntoView({block:'start'});});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});

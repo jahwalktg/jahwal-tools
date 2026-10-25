@@ -760,7 +760,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     ['non','비수급자',[[6,1],[6,.5]],'활성화지원금'],
     ['expert','전문인력',[[60,1]],'자활기금·중앙자활자금']
   ];
-  var _S=(R&&R.v('startup'))||{base:1700000,expertMax:2770000};var BASE_DEFAULT=_S.base,EXPERT_MAX=_S.expertMax;R&&R.use(['startup']);
+  var _S=(R&&R.v('startup'))||{base:1700000,expertMax:2770000};var BASE_DEFAULT=_S.base,EXPERT_MAX=_S.expertMax;R&&R.use(['startup']);var YV=R?((R.info('startup')||{year:YEAR}).year):YEAR; /* 값이 몇 년 것인지(지난해 값을 쓰면 그해) */
   var MONTHS=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
   function kindOf(id){return KINDS.filter(function(k){return k[0]===id;})[0];}
   function ym(s){var m=/^(\d{4})-(\d{1,2})$/.exec(String(s||''));if(!m)return null;var y=+m[1],mo=+m[2];if(mo<1||mo>12||y<2000||y>2100)return null;return {y:y,m:mo};}
@@ -809,7 +809,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
       host.appendChild(row);
     });
     $('vBase').value=fmt(S.base);$('vExpertMax').value=fmt(S.expertMax);
-    $('baseHelp').textContent='기준액 '+fmt(S.base)+'원은 어림값입니다(시장진입형 62,080원 × 월 약 22일 + 주차 4~5일 + 실비). 사업단 예산 계산기에서 나온 1인 월 인건비(사회보험 제외)로 바꿔 넣으세요. 전문인력 한도 '+fmt(EXPERT_MAX)+'원은 '+YEAR+'년 지침 값입니다.';
+    $('baseHelp').textContent='기준액 '+fmt(S.base)+'원은 어림값입니다(시장진입형 62,080원 × 월 약 22일 + 주차 4~5일 + 실비). 사업단 예산 계산기에서 나온 1인 월 인건비(사회보험 제외)로 바꿔 넣으세요. 전문인력 한도 '+fmt(EXPERT_MAX)+'원은 '+YV+'년 지침 값입니다.';
   }
   var lastRows=[];
   function render(){

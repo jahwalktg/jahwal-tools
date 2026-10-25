@@ -790,7 +790,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var $=JT.$,today=JT.today,fmt=JT.fmtMoney,money=JT.money;
   var KEY='jahwal-tools.savings-account.v1';
   var setFace=JT.faceSetter(FACES);
-  var R=window.JT_RATES;var YEAR=R?R.year:2026,MONTHS=36;
+  var R=window.JT_RATES;var YEAR=R?R.year:2026,MONTHS=36;var YV=R?((R.info('asset.youthhope')||{year:YEAR}).year):YEAR; /* 값이 몇 년 것인지(지난해 값을 쓰면 그해) */
   /* 2026 자산형성지원 통장사업 안내 4~5쪽, 각 통장 장. [id, 이름, 월 정부지원 기본, 설명, 특징] */
   var ACCTS=[
     ['hope1','희망저축계좌I',300000,'일하는 생계·의료급여 수급 가구. 월 10만원 이상 자율 저축(최대 50만), 정부 월 30만원. 3년 만기 후 6개월 안에 생계·의료 탈수급해야 전액 지급. 못 하면 1회 만기성공금(장려금 누적의 5%)만 일부지급'],
@@ -859,7 +859,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     if(S.acct==='hope2')gh=S.join>=2025?'2025년 이후 가입: 1~12개월 10만원, 13~24개월 20만원, 25~36개월 30만원으로 자동 계산합니다. 다른 금액이면 가입 연도를 2024로 두고 정부지원 칸에 적으세요.':'2022~2024년 가입: 월 10만원. 2025년 이후 가입이면 가입 연도를 고치세요.';
     else if(yh)gh='근로소득장려금 = 청년 소득 × 45%, 월 최대 772,000원(2026년, 3인 가구 생계비 1,714,892원 × 45%). 소득이 10만원씩 늘면 장려금이 4.5만원씩 늘어납니다.';
     else if(S.acct==='youthsave')gh='본인 저축 10만원에 30만원 매칭. 저축액을 바꿔도 매칭은 월 30만원(지침 기준)으로 둡니다.';
-    else gh=YEAR+'년 지침 기본값 '+fmt(a[2])+'원. 통장 칩을 다시 누르면 기본값으로 돌아옵니다.';
+    else gh=YV+'년 지침 기본값 '+fmt(a[2])+'원. 통장 칩을 다시 누르면 기본값으로 돌아옵니다.';
     $('govHelp').textContent=gh;
     var canJ=['hope1','hope2','youth'].indexOf(S.acct)>=0;
     $('extraJahwal').hidden=!canJ;$('btnJahwal').setAttribute('aria-pressed',String(canJ&&S.jahwal));$('profitBox').hidden=!(canJ&&S.jahwal);
@@ -900,7 +900,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     $('status').textContent='만기 '+fmt(r.total);document.title='만기 '+fmt(r.total)+'원 | 자산형성 통장 만기 계산기';
     $('pos').textContent=a[1];$('pos').setAttribute('aria-label',a[1]+'. 누르면 통장 고르기로 이동');
     $('exNote').hidden=!(S.acct==='hope1'&&S.monthly===100000&&S.jahwal&&S.profit===150000&&!S.pause&&!S.miss);
-    lastText='['+a[1]+' 3년 만기 예상, '+today()+', '+YEAR+'년 지침 기준]\n'+(r.hasSave?'월 본인 저축 '+fmt(S.monthly)+'원\n':'청년 월 소득 '+fmt(S.income)+'원\n')+'본인 적립금 '+fmt(r.own)+'원\n정부지원 '+fmt(r.gov)+'원\n'+(r.extraSum?'추가지원 '+fmt(r.extraSum)+'원 ('+parts.join(', ')+')\n':'')+'이자(어림) '+fmt(r.interest)+'원\n만기 예상액 '+fmt(r.total)+'원\n'+cases.map(function(c){return c[0]+': '+fmt(c[1])+'원';}).join('\n')+'\n※ 예상액이며 지급 요건과 실제 금액은 행복e음·은행 기준입니다.';
+    lastText='['+a[1]+' 3년 만기 예상, '+today()+', '+YV+'년 지침 기준]\n'+(r.hasSave?'월 본인 저축 '+fmt(S.monthly)+'원\n':'청년 월 소득 '+fmt(S.income)+'원\n')+'본인 적립금 '+fmt(r.own)+'원\n정부지원 '+fmt(r.gov)+'원\n'+(r.extraSum?'추가지원 '+fmt(r.extraSum)+'원 ('+parts.join(', ')+')\n':'')+'이자(어림) '+fmt(r.interest)+'원\n만기 예상액 '+fmt(r.total)+'원\n'+cases.map(function(c){return c[0]+': '+fmt(c[1])+'원';}).join('\n')+'\n※ 예상액이며 지급 요건과 실제 금액은 행복e음·은행 기준입니다.';
   }
 
   function onNum(id,key,opt){$(id).addEventListener('input',function(){var raw=$(id).value,v=raw===''?0:money(raw);var bad=isNaN(v)||v<0||(opt&&opt.max!=null&&v>opt.max);$(id).classList.toggle('bad',bad);if(!bad){S[key]=v;if(opt&&opt.then)opt.then();save();if(opt&&opt.form)renderForm();render();}});

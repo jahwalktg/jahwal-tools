@@ -753,7 +753,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var TYPES=[['market','시장진입형',_W.market,_B.market],['social','사회서비스형',_W.social,_B.social],['keep','근로유지형',_W.keep,_B.keep]];
   var _X=(R&&R.v('wage.extra'))||{sub:4000,qual:4000,lead:6000,leadPart:3000};
   var SUB=_X.sub,QUAL=_X.qual,LEAD=_X.lead,LEAD_PART=_X.leadPart,INS_RATE=R?Math.round(['np','hi','lt','ei','wc'].reduce(function(a,k){var x=R.v('ins.'+k);return a+(x?x[1]:0);},0)*100)/100:11.44;
-  R&&R.use(['wage.day','wage.extra','biz.ratio','ins.np','ins.hi','ins.lt','ins.ei','ins.wc','holidays']); /* 2026: 국민연금 4.75 + 건강 3.595 + 장기요양 0.4724 + 고용 1.15 + 산재 평균 1.47 */
+  R&&R.use(['wage.day','wage.extra','biz.ratio','ins.np','ins.hi','ins.lt','ins.ei','ins.wc','holidays']);var YV=R?((R.info('wage.day')||{year:YEAR}).year):YEAR; /* 값이 몇 년 것인지(지난해 값을 쓰면 그해) */ /* 2026: 국민연금 4.75 + 건강 3.595 + 장기요양 0.4724 + 고용 1.15 + 산재 평균 1.47 */
   /* 평일에 든 공휴일 수(근로자의 날·대체공휴일 포함). 2026년만 넣어 두고 다른 연도는 0으로 두어 직접 고치게 한다 */
   var HOLIDAYS=(function(){if(!R)return {2026:[1,3,1,0,3,1,1,1,2,2,0,1]};var o={};R.holidayYears().forEach(function(y){o[y]=[0,0,0,0,0,0,0,0,0,0,0,0];});R.holidays().forEach(function(l){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(l);if(!m||!o[+m[1]])return;var d=new Date(+m[1],+m[2]-1,+m[3]),w=d.getDay();if(w>=1&&w<=5)o[+m[1]][+m[2]-1]++;});return o;})() /* 평일(월~금)에 든 공휴일 수 — rates.js 공휴일 목록에서 셈 */ /* 7월: 제헌절 7/17(금) — 2026년부터 공휴일 재지정 */;
   var MONTHS=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
@@ -799,7 +799,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     $('vYear').value=String(S.year);$('vHead').value=S.head?String(S.head):'';$('vQual').value=S.qual?String(S.qual):'';$('vLead').value=S.lead?String(S.lead):'';
     $('vRate').value=fmt(S.rate);$('vSub').value=fmt(S.sub);$('vQualPay').value=fmt(S.qualPay);$('vLeadPay').value=fmt(S.leadPay);
     $('vMonthly').value=String(S.monthly);$('vIns').value=String(S.ins);$('vBiz').value=String(S.biz);
-    $('yearNote').textContent=YEAR+'년 지침 기본값, 고칠 수 있음';
+    $('yearNote').textContent=YV+'년 지침 기본값'+(YV!==YEAR?'('+YEAR+'년 값 확인 전)':'')+', 고칠 수 있음';
     $('rateHelp').textContent='인건비 '+(100-S.biz)+' : 사업비 '+S.biz+'. 지침 기본 비율은 시장진입형 70:30, 사회서비스형 80:20(수익형 초기 6개월 70:30 가능), 근로유지형 95:5, 시간제 80:20, 인턴·도우미형 90:10. 사회보험 요율 기본값 '+INS_RATE+'%는 2026년 기관부담 합계(국민연금 4.75 + 건강 3.595 + 장기요양 0.4724 + 고용 1.15 + 산재 평균 1.47)입니다.';
     renderDays();
   }

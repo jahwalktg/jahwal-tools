@@ -915,7 +915,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRiQ2AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var MEDIAN_STEP=_MD?_MD.step:959198; /* 8인 이상 1인 증가마다 */
   var _SR=(R&&R.v('select.rate'))||{'생계급여':32,'의료급여':40,'주거급여':48,'교육급여':50};var RATES=[['생계급여',_SR['생계급여']],['의료급여',_SR['의료급여']],['주거급여',_SR['주거급여']],['교육급여',_SR['교육급여']]];
   /* 자활사업 유형별 표준소득액(2026 자활사업 안내, 사회보험 기준). 월 자활급여 어림용 */
-  var _M=(R&&R.v('wage.month'))||{market:1614080,social:1399840,keep:778440,marketPart:807040,socialPart:699920};var PRESETS=[['시장진입형 전일제',_M.market],['사회서비스형 전일제',_M.social],['근로유지형',_M.keep],['시간제 (시장진입)',_M.marketPart],['시간제 (사회서비스)',_M.socialPart]];R&&R.use(['median','select.rate','wage.month']);
+  var _M=(R&&R.v('wage.month'))||{market:1614080,social:1399840,keep:778440,marketPart:807040,socialPart:699920};var PRESETS=[['시장진입형 전일제',_M.market],['사회서비스형 전일제',_M.social],['근로유지형',_M.keep],['시간제 (시장진입)',_M.marketPart],['시간제 (사회서비스)',_M.socialPart]];R&&R.use(['median','select.rate','wage.month']);var YV=R?((R.info('median')||{year:YEAR}).year):YEAR; /* 값이 몇 년 것인지(지난해 값을 쓰면 그해) */
   var DEDUCTS=[['basic','자활근로소득공제 30% (기본)'],['young','34세 이하·대학생: 60만 원 + 30%'],['senior','65세 이상·등록장애인·북한이탈주민: 20만 원 + 30%'],['rehab','장애인 직업재활사업: 20만 원 + 50%']];
   var LEGAL_PAGES='2026 국민기초생활보장 사업안내 51~52·56~59·105~106쪽, 2026 자활사업 안내 157쪽';
 
@@ -941,7 +941,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRiQ2AABXRUJQVlA4WAoAAAAQAAAApwAAp
       RATES.forEach(function(r){var td=document.createElement('td');td.className='n';td.textContent=fmt(std(n,r[1]));tr.appendChild(td);});
       t.appendChild(tr);
     }
-    $('tableYear').textContent=YEAR+'년, 월 소득 기준(원)';
+    $('tableYear').textContent=YV+'년, 월 소득 기준(원)';
     $('tableNote').textContent='8인 이상 가구의 급여별 선정기준은 지침대로 7인 기준에 (7인−6인) 차이를 더해 구했습니다(8인 생계급여 3,351,791원). 출처: '+LEGAL_PAGES+'.';
   }
 
@@ -956,7 +956,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRiQ2AABXRUJQVlA4WAoAAAAQAAAApwAAp
     var box=$('mayBox');box.textContent='';
     var ded=Math.round(deducted(income)),cut=income-ded;
     box.appendChild(line('자활급여를 소득으로 보는 금액',fmt(ded)+'원','월 자활급여 '+fmt(income)+'원에서 공제 '+fmt(cut)+'원을 뺀 값. 다른 소득·재산이 없다고 가정한 "소득인정액"'));
-    var memo=['[자활소득과 수급 자격 참고 메모 · '+YEAR+'년 기준, 가정 계산]','가구원 '+hh+'인, 월 자활급여 '+fmt(income)+'원 → 공제 후 '+fmt(ded)+'원으로 봄 ('+DEDUCTS.filter(function(d){return d[0]===deduct;})[0][1]+')'];
+    var memo=['[자활소득과 수급 자격 참고 메모 · '+YV+'년 기준, 가정 계산]','가구원 '+hh+'인, 월 자활급여 '+fmt(income)+'원 → 공제 후 '+fmt(ded)+'원으로 봄 ('+DEDUCTS.filter(function(d){return d[0]===deduct;})[0][1]+')'];
     var worst='ok';
     RATES.forEach(function(r){
       var s=std(hh,r[1]),over=ded>s,txt,sub,cls;
@@ -979,7 +979,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRiQ2AABXRUJQVlA4WAoAAAAQAAAApwAAp
     $('caveat').textContent='이 칸은 "자활급여 말고는 소득도 재산도 없는 '+hh+'인 가구"라는 가정입니다. 실제로는 재산의 소득환산액(주거용 월 1.04%, 그 밖 월 2.08%), 다른 가구원의 소득, 가구 특성별 지출 공제가 모두 들어가므로 결과가 달라집니다. 참여자에게는 "이럴 수 있습니다"로만 말하고 확정은 주민센터에서 받으세요.';
     setFace(worst==='over'?'warn':'done');
     $('guideMsg').textContent=worst==='over'?'기준을 넘는 급여가 있어요. 그래도 단정하지 말고, 의료급여 특례와 주민센터 확인을 같이 안내하세요.':'이 가정에서는 기준 안이에요. 그래도 재산과 가족 소득은 우리가 모르니 주민센터 확인을 권하세요.';
-    $('pos').textContent=YEAR+'년 기준 · '+hh+'인 가구';
+    $('pos').textContent=YV+'년 기준 · '+hh+'인 가구';
   }
 
   $('vIncome').addEventListener('input',function(){var v=money($('vIncome').value);var bad=isNaN(v)||v<0;$('vIncome').classList.toggle('bad',bad);if(!bad){income=v;renderSim();}});

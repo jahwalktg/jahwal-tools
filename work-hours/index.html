@@ -794,7 +794,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var setFace=JT.faceSetter(FACES);
   var R=window.JT_RATES;var YEAR=R?R.year:2026; /* 기준 연도·단가는 ../rates.js (못 읽으면 아래 2026 값) */
   var TYPES=[['market','시장진입형'],['social','사회서비스형'],['keep','근로유지형']];
-  var RATES=(R&&R.v('wage.day'))||{market:62080,social:53840,keep:29940};R&&R.use(['wage.day']); /* 2026 자활사업 안내 75쪽, 실비 제외 기본값 */
+  var RATES=(R&&R.v('wage.day'))||{market:62080,social:53840,keep:29940};R&&R.use(['wage.day']);var YV=R?((R.info('wage.day')||{year:YEAR}).year):YEAR; /* 값이 몇 년 것인지(지난해 값을 쓰면 그해) */ /* 2026 자활사업 안내 75쪽, 실비 제외 기본값 */
   var ROUNDS=[['floor','30분 미만 버림 (기본)'],['ceil','30분 미만 올림'],['round','15분부터 반올림']];
   var BREAKS=[['lunch','점심 1시간 (12:00~13:00)'],['none','휴게 없음'],['custom','직접 입력']];
 
@@ -882,7 +882,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     JT.chip(pr,'전일제',!S.part,false,function(){S.part=false;applyPreset();});
     JT.chip(pr,'시간제 (단가 50%, 1일 4시간)',S.part,S.type==='keep',function(){S.part=true;applyPreset();});
     $('vStart').value=S.start;$('vEnd').value=S.end;$('vRate').value=fmt(S.rate);
-    $('rateHelp').textContent=YEAR+'년 지침 기본값 '+fmt(preset(S.type,S.part).rate)+'원(실비 4,000원 제외). 기술·자격자 추가급여 등이 있으면 더해 적으세요. 유형 칩을 바꾸면 기본값으로 돌아갑니다.';
+    $('rateHelp').textContent=YV+'년 지침 기본값 '+fmt(preset(S.type,S.part).rate)+'원(실비 4,000원 제외). 기술·자격자 추가급여 등이 있으면 더해 적으세요. 유형 칩을 바꾸면 기본값으로 돌아갑니다.';
     var br=$('breakRow');br.textContent='';
     BREAKS.forEach(function(b){JT.chip(br,b[1],S.breakMode===b[0],false,function(){S.breakMode=b[0];if(b[0]==='custom'&&!S.breaks.length)S.breaks.push({from:'12:00',to:'13:00'});save();renderForm();render();});});
     var host=$('breakRows');host.textContent='';host.hidden=S.breakMode!=='custom';$('breakAdd').hidden=S.breakMode!=='custom';
@@ -929,7 +929,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     rows.push(['급여',fmt(S.rate)+'원 ÷ '+std+'시간 × '+(Math.round(r.rec/30)/2).toLocaleString('ko-KR')+'시간 = '+fmt(r.dayPay)+'원 (+실비)']);
     rows.push(['줄어드는 급여',r.cut?fmt(r.cut)+'원':'없음','hl']);
     rows.forEach(function(x){var trr=document.createElement('tr');if(x[2])trr.className=x[2];x.slice(0,2).forEach(function(c){var td=document.createElement('td');td.textContent=c;trr.appendChild(td);});tb.appendChild(trr);});
-    lastText='[근무시간 계산 '+typeName+' '+today()+']\n'+rows.map(function(x){return x[0]+': '+x[1];}).join('\n')+'\n(30분 단위 적용, '+YEAR+'년 지침 단가 기준)';
+    lastText='[근무시간 계산 '+typeName+' '+today()+']\n'+rows.map(function(x){return x[0]+': '+x[1];}).join('\n')+'\n(30분 단위 적용, '+YV+'년 지침 단가 기준)';
     /* 누적 */
     var lim=r.lim;
     function accLine(total,name){
