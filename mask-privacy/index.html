@@ -6,12 +6,12 @@
 <meta name="robots" content="index, follow">
 <title>개인정보 가리기 | 지역자활센터 업무 도구</title>
 <!--meta:start-->
-<meta name="description" content="엑셀·CSV 명단을 올리거나 붙여 넣으면 이름·생년월일·전화·주소 열을 찾아 어떻게 가릴지 확인한 뒤 가린 표를 엑셀·CSV로 내려받거나 복사합니다. 캡처·사진은 가릴 자리를 끌어 검게 칠해 저장합니다. AI에 붙이기 전에 한 번 거치는 문입니다.">
+<meta name="description" content="엑셀·CSV 명단을 올리거나 붙여 넣으면 이름·생년월일·전화·주소 열을 찾아 어떻게 가릴지 확인한 뒤 가린 표를 엑셀·CSV로 내려받거나 복사합니다. 상담 기록·공문 같은 글은 전화·주민번호·계좌를 자동으로, 이름·주소는 눌러서 참여자A처럼 바꿉니다. 캡처·사진은 가릴…">
 <link rel="canonical" href="https://jahwalktg.github.io/jahwal-tools/mask-privacy/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="지역자활센터 업무 도구">
 <meta property="og:title" content="개인정보 가리기 | 지역자활센터 업무 도구">
-<meta property="og:description" content="엑셀·CSV 명단을 올리거나 붙여 넣으면 이름·생년월일·전화·주소 열을 찾아 어떻게 가릴지 확인한 뒤 가린 표를 엑셀·CSV로 내려받거나 복사합니다. 캡처·사진은 가릴 자리를 끌어 검게 칠해 저장합니다. AI에 붙이기 전에 한 번 거치는 문입니다.">
+<meta property="og:description" content="엑셀·CSV 명단을 올리거나 붙여 넣으면 이름·생년월일·전화·주소 열을 찾아 어떻게 가릴지 확인한 뒤 가린 표를 엑셀·CSV로 내려받거나 복사합니다. 상담 기록·공문 같은 글은 전화·주민번호·계좌를 자동으로, 이름·주소는 눌러서 참여자A처럼 바꿉니다. 캡처·사진은 가릴…">
 <meta property="og:url" content="https://jahwalktg.github.io/jahwal-tools/mask-privacy/">
 <meta property="og:image" content="https://jahwalktg.github.io/jahwal-tools/og.png">
 <meta property="og:image:width" content="1200">
@@ -337,6 +337,25 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
 .imgwrap.empty{min-height:160px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;background:var(--bg);color:var(--muted)}
 .hint{font-size:14px;color:var(--muted);margin:6px 0 0}
 .unsupported{margin:8px 0;padding:8px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px}
+/* 글 가리기 */
+.textbox{width:100%;max-width:100%;box-sizing:border-box;min-height:170px;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px;line-height:1.6;resize:vertical}
+.marked{margin-top:8px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:16px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere;min-height:60px}
+.mk{padding:1px 6px;border-radius:6px;cursor:pointer;border:1.5px solid transparent;font-weight:600}
+.mk.on{background:var(--blue-bg);border-color:var(--blue);color:var(--blue)}
+.mk.off{background:var(--amber-bg);border-color:var(--amber-line);border-style:dashed;color:var(--amber)}
+.mk.off::after{content:" ?";font-weight:800}
+.mk.on::after{content:" ✓";font-weight:800}
+.mk.manual{border-style:double}
+.counts{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.counts span{padding:4px 10px;border-radius:999px;background:var(--bg);border:1.5px solid var(--line);font-size:14px;font-weight:600}
+.counts span.zero{opacity:.5}
+.out{margin-top:8px;padding:12px 14px;border:2px solid var(--blue);border-radius:12px;background:var(--surface);font-size:16px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;min-height:60px}
+.out .rep{background:var(--blue-bg);border-radius:5px;padding:0 4px;font-weight:700}
+.legend{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.catrow{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.cat{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-size:15px;font-weight:600;cursor:pointer}
+.cat[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.cat small{font-weight:400;opacity:.85}
 </style>
 </head>
 <body>
@@ -419,6 +438,36 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
         <p class="note" id="imgNote" role="status"></p>
       </div>
 
+      <!-- 글 -->
+      <div id="paneText" hidden>
+        <h3 class="sec-title">1. 글 붙여 넣기 <small>상담 요약·공문 본문·회의 메모처럼 문장으로 된 글</small></h3>
+        <div class="filebox">
+          <textarea class="textbox" id="textIn" placeholder="여기에 글을 붙여 넣으세요. 전화·주민번호·계좌·이메일·차량번호는 자동으로 찾고, 이름·주소는 후보로 표시해 드립니다."></textarea>
+          <div class="acts" style="margin-top:8px"><button class="btn btn-small" id="btnTextExample" type="button">예시 글로 보기</button><button class="btn btn-small" id="btnTextClear" type="button">비우기</button><button class="btn btn-small" id="btnTextSel" type="button">드래그한 글자도 가리기</button></div>
+          <p class="fstat" id="textStat">아직 없음</p>
+        </div>
+        <p class="help">글 안에서 이름이나 주소를 드래그한 뒤 「드래그한 글자도 가리기」를 누르면 자동으로 못 찾은 것도 가릴 수 있습니다.</p>
+
+        <div id="textWrap" hidden>
+          <h3 class="sec-title">2. 찾은 것 확인 <small>파란 ✓는 가림, 노란 점선 ?는 안 가림 — 눌러서 바꿉니다. 이름·주소는 「후보」라 틀린 것이 섞일 수 있어요</small></h3>
+          <p class="lbl">무엇을 가릴까요</p>
+          <div class="catrow" id="catRow"></div>
+          <p class="lbl">어떻게 바꿀까요</p>
+          <div class="chips small" id="textStyleRow"></div>
+          <div class="marked" id="marked" aria-live="polite"></div>
+          <p class="legend">같은 이름은 어디에 나와도 같은 역할명(참여자A)으로 바뀝니다. 후보가 틀렸으면(사람 이름이 아닌데 잡혔으면) 눌러서 끄세요.</p>
+
+          <h3 class="sec-title">3. 가린 결과 <small id="textCount"></small></h3>
+          <div class="counts" id="counts"></div>
+          <div class="out" id="textOut"></div>
+          <div class="controls-sub">
+            <button class="btn" id="btnTextCopy" type="button">가린 글 복사 (AI에 붙이기)</button>
+            <button class="btn btn-small" id="btnTextTxt" type="button">텍스트 파일로 내려받기</button>
+          </div>
+          <p class="note" id="textNote" role="status"></p>
+        </div>
+      </div>
+
       <p class="rule"><strong>왜 가리나요.</strong> 참여자 이름·생년월일·연락처·주소는 개인정보라 AI 서비스나 메신저에 그대로 올리면 안 됩니다. 이름은 가운데 글자를, 생년월일은 연도만, 전화는 가운데 네 자리를 가리면 사람을 알아보기 어려우면서도 명단으로는 쓸 수 있습니다. 가린 결과도 센터 밖으로 보낼 때는 다시 한 번 살펴보세요. 엑셀로 내려받은 파일은 값만 들어가고 서식·수식은 빠집니다.</p>
 
       <div class="guide">
@@ -432,6 +481,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
     <h2 id="usesTitle">이럴 때 좋아요</h2>
     <ul>
       <li><strong>AI에 명단 붙이기 전</strong> 참여자 명단으로 조 편성이나 안내문을 AI에 부탁하고 싶을 때, 가린 표를 복사해 붙이면 실명이 나가지 않습니다.</li>
+      <li><strong>상담 기록·공문을 AI에 다듬어 달라고 하기 전</strong> 「글 가리기」에 붙여 넣으면 전화·주민번호·계좌는 자동으로, 이름·주소는 후보를 눌러 가린 뒤 복사해 쓸 수 있습니다. 같은 사람은 「참여자A」처럼 역할명으로 바뀌어 글의 흐름은 그대로입니다.</li>
       <li><strong>외부 제출 자료</strong> 광역센터·협회에 보내는 참여자 통계 뒷받침 자료에서 이름·연락처를 가리고 보낼 때.</li>
       <li><strong>화면 캡처 공유</strong> 자활정보시스템 화면을 캡처해 동료에게 설명할 때 이름 칸만 검게 칠해 보냅니다.</li>
     </ul>
@@ -798,7 +848,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var $=JT.$;
   var KEY='jahwal-tools.mask-privacy.v1';
   var setFace=JT.faceSetter(FACES);
-  var TABS=[['table','표 가리기 (엑셀·명단)'],['image','그림 가리기 (캡처·사진)']];
+  var TABS=[['table','표 가리기 (엑셀·명단)'],['text','글 가리기 (상담기록·공문)'],['image','그림 가리기 (캡처·사진)']];
   /* 가리는 방식. [키, 이름, 설명] */
   var RULES=[
     ['keep','그대로 두기',''],
@@ -816,9 +866,10 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   ];
   var STYLES=[['black','검게'],['white','하얗게'],['pixel','모자이크']];
 
-  function fresh(){return {tab:'table',header:true,style:'black',rules:{}};}
+  function fresh(){return {tab:'table',header:true,style:'black',rules:{},tstyle:'role',cats:{}};}
   function norm(o){o=o||{};var rules={};if(o.rules&&typeof o.rules==='object')Object.keys(o.rules).slice(0,200).forEach(function(k){if(RULES.some(function(r){return r[0]===o.rules[k];}))rules[String(k).slice(0,60)]=o.rules[k];});
-    return {tab:o.tab==='image'?'image':'table',header:o.header!==false,style:STYLES.some(function(s){return s[0]===o.style;})?o.style:'black',rules:rules};}
+    var cats={};if(o.cats&&typeof o.cats==='object')Object.keys(o.cats).forEach(function(k){cats[k]=!!o.cats[k];});
+    return {tab:o.tab==='image'?'image':(o.tab==='text'?'text':'table'),header:o.header!==false,style:STYLES.some(function(s){return s[0]===o.style;})?o.style:'black',rules:rules,tstyle:o.tstyle==='star'?'star':'role',cats:cats};}
   var DB=JT.store(KEY);
   var S=(function(){var o=DB.read();return o&&o.tab?norm(o):fresh();})();
   function save(){DB.write(S);} /* 표 내용·그림은 저장하지 않는다 */
@@ -978,14 +1029,119 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     catch(e){$('imgNote').textContent='그림을 만들지 못했습니다.';}
   }
 
+  /* ---------- 글 ---------- */
+  /* 종류: [키, 이름, 자동(true)/후보(false), 역할명 치환 글자] — 글자는 같은 값이면 같은 번호 */
+  var CATS=[
+    ['phone','전화번호',true,'전화번호'],
+    ['rrn','주민번호',true,'주민번호'],
+    ['account','계좌번호',true,'계좌번호'],
+    ['email','이메일',true,'이메일'],
+    ['car','차량번호',true,'차량번호'],
+    ['birth','생년월일',true,'생년월일'],
+    ['name','이름 (후보)',true,'참여자'],
+    ['addr','주소 (후보)',true,'주소']
+  ];
+  var TSTYLES=[['role','역할명으로 (참여자A·전화번호①)'],['star','○○○로']];
+  var TEXT='',FOUND=[],DECIDE={},MANUAL=[]; /* FOUND: [{s,e,cat,text}], DECIDE: 같은 글자→켜짐/꺼짐, MANUAL: [{text,cat}] */
+  var NOT_NAME=/^(참여자|대상자|담당자|사업단|센터장|실장|팀장|과장|선생|상담원|지역자활|자활센터|주민센터|구청|복지관|보호자|어르신|본인|가족|자녀|배우자|남편|아내|부모|어머니|아버지|동생|언니|오빠|형님|누나|사례|관리|회의|기록|내용|일시|장소|참석|결과|계획|사유|비고|건강|근로|의지|상담|지원|신청|확인|연락|방문|안내|배치|종결|신규|전환|오늘|내일|어제|이번|지난|다음|요일|오전|오후|월요일|화요일|수요일|목요일|금요일|토요일|일요일)$/;
+  function catOn(k){var c=CATS.filter(function(x){return x[0]===k;})[0];return k in S.cats?!!S.cats[k]:!!(c&&c[2]);}
+  function findAll(text){
+    var out=[];
+    function add(re,cat,group){re.lastIndex=0;var m;while((m=re.exec(text))){var s=m.index,t=m[0];if(group!=null){s=m.index+m[0].indexOf(m[group]);t=m[group];}if(!t)continue;out.push({s:s,e:s+t.length,cat:cat,text:t});if(!re.global)break;}}
+    add(/\d{6}\s*[-–]\s*[1-4](?:\d{6}|\*{6}|\d\*{5})/g,'rrn');
+    add(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g,'email');
+    add(/(?:01[016789]|02|0[3-6][1-5]|070|080|050\d?|1[568]\d{2})[-.\s]?\d{3,4}[-.\s]?\d{4}(?!\d)/g,'phone');
+    add(/(?<![\d-])\d{2,6}-\d{2,6}-\d{2,8}(?:-\d{1,6})?(?![\d-])/g,'account');
+    add(/(?<![\d-])\d{11,14}(?![\d-])/g,'account');
+    add(/(?<![가-힣\d])\d{2,3}[가-힣]\s?\d{4}(?!\d)/g,'car');
+    add(/(?:생년월일|생일|출생|생년)\s*[:：]?\s*((?:19|20)?\d{2}[.\-\/년]\s?\d{1,2}[.\-\/월]\s?\d{1,2}일?|\d{6,8})/g,'birth',1);
+    add(/(?:19|20)\d{2}년생|(?:19|20)\d{2}\.\s?\d{1,2}\.\s?\d{1,2}\.?\s*생/g,'birth');
+    /* 이름 후보: ○○○ 님·씨·참여자 / 성명·이름·참여자 ○○○ */
+    /* 뒤에 조사·문장부호가 오는 것만 (「씨앗」「님프」 같은 낱말 제외) */
+    var P='(?:께서|께|과|와|은|는|이|가|을|를|의|도|에게|한테|이랑|랑|[,.;:!?)\\s]|$)';
+    add(new RegExp('([가-힣]{2,4})(?=\\s?(?:님|씨|어르신|선생님)'+P+')','g'),'name',1);
+    add(new RegExp('([가-힣]{2,4})(?=\\s?(?:참여자|대상자|반장|분|학생|어머님|아버님)'+P+')','g'),'name',1);
+    add(/(?:성명|이름|참여자|대상자|보호자|자녀|배우자|신청인|상담자|내담자|수급자|세대주)\s*[:：]?\s*([가-힣]{2,4})(?![가-힣])/g,'name',1);
+    add(/([가-힣]{2,4})\s?\((?:\d{2}|19\d{2}|20\d{2})[년.\-]/g,'name',1);
+    add(/([가-힣]{2,4})\s?\((?:남|여|[만]?\s?\d{1,2}세)/g,'name',1);
+    /* 주소 후보: 시·도 또는 구·군부터 동·로·길 + 번지, 뒤에 아파트·동·호가 이어지면 함께 */
+    var TAIL='(?:\\s*[가-힣0-9A-Za-z\\-]{1,15}(?:호|층|동|아파트|빌라|빌딩|오피스텔|주택|번지|타워|맨션|상가|단지))*';
+    add(new RegExp('(?:서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충청?북|충청?남|전라?북|전라?남|경상?북|경상?남|제주)(?:특별시|광역시|특별자치시|특별자치도|시|도)?\\s*[가-힣]{1,6}(?:시|군|구)\\s*(?:[가-힣]{1,6}(?:구|군)\\s*)?[가-힣0-9]{1,10}(?:동|읍|면|로|길|가)\\s*[\\d\\-]*(?:번지|번길)?'+TAIL,'g'),'addr');
+    add(new RegExp('(?<![가-힣])[가-힣]{1,6}(?:구|군)\\s+[가-힣0-9]{1,10}(?:동|읍|면|로|길)\\s*\\d[\\d\\-]*(?:번지)?'+TAIL,'g'),'addr');
+    out=out.filter(function(f){if(f.cat==='name'){if(NOT_NAME.test(f.text))return false;if(Array.from(f.text).length<2)return false;}if(f.cat==='addr'&&!/\d/.test(f.text))return false;return true;});
+    /* 겹치면 앞선 것(먼저 찾은 순서·더 긴 것) 유지 */
+    out.sort(function(a,b){return a.s-b.s||(b.e-b.s)-(a.e-a.s);});
+    var res=[],last=-1;out.forEach(function(f){if(f.s>=last){res.push(f);last=f.e;}});
+    /* 직접 고른 글자 */
+    MANUAL.forEach(function(m){if(!m.text)return;var i=0;while((i=text.indexOf(m.text,i))>=0){var s=i,e=i+m.text.length;if(!res.some(function(f){return f.s<e&&f.e>s;}))res.push({s:s,e:e,cat:m.cat,text:m.text,manual:true});i=e;}});
+    res.sort(function(a,b){return a.s-b.s;});
+    return res;
+  }
+  function isOn(f){var auto=CATS.filter(function(c){return c[0]===f.cat;})[0][2];var key=f.cat+'|'+f.text;if(key in DECIDE)return DECIDE[key];return f.manual||auto;}
+  var CIRC='①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳';
+  function replacement(f,idx){
+    var c=CATS.filter(function(x){return x[0]===f.cat;})[0];
+    if(S.tstyle==='star')return f.cat==='name'?'○○○':'(○○○)';
+    if(f.cat==='name')return c[3]+String.fromCharCode(65+(idx%26))+(idx>=26?Math.floor(idx/26):'');
+    return '('+c[3]+(idx<20?CIRC.charAt(idx):idx+1)+')';
+  }
+  function maskedText(){
+    var on=FOUND.filter(function(f){return catOn(f.cat)&&isOn(f);}),seq={},out='',p=0,counts={};
+    on.forEach(function(f){var key=f.cat+'|'+f.text.replace(/\s+/g,'');if(!(key in seq)){seq[key]=Object.keys(seq).filter(function(k){return k.split('|')[0]===f.cat;}).length;}
+      var rep=replacement(f,seq[key]);if(TEXT.charAt(f.s-1)==='('&&TEXT.charAt(f.e)===')')rep=rep.replace(/^\(|\)$/g,''); /* 이미 괄호 안이면 괄호 안 겹침 */
+      counts[f.cat]=(counts[f.cat]||0)+1;out+=TEXT.slice(p,f.s)+rep;p=f.e;});
+    out+=TEXT.slice(p);return {text:out,counts:counts,n:on.length};
+  }
+  function renderText(){
+    TEXT=$('textIn').value;
+    var face,g,st;
+    if(!TEXT.trim()){FOUND=[];$('textWrap').hidden=true;$('textStat').className='fstat';$('textStat').textContent='아직 없음';
+      face='empty';g='상담 요약이나 공문 본문을 붙여 넣으면 전화·주민번호·계좌·이메일·차량번호를 찾아 가리고, 이름·주소 후보를 보여 드려요.';st='글';
+      $('stage').dataset.tone='ready';setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title='개인정보 가리기';$('pos').textContent='글';return;}
+    FOUND=findAll(TEXT);$('textWrap').hidden=false;
+    $('textStat').className='fstat';$('textStat').textContent=Array.from(TEXT).length+'글자 · 찾은 것 '+FOUND.length+'개';
+    /* 종류 단추 */
+    var cr=$('catRow');cr.textContent='';CATS.forEach(function(c){var n=FOUND.filter(function(f){return f.cat===c[0];}).length;var b=document.createElement('button');b.type='button';b.className='cat';b.setAttribute('aria-pressed',catOn(c[0])?'true':'false');b.textContent=c[1]+' ';var sm=document.createElement('small');sm.textContent=n+'개';b.appendChild(sm);b.addEventListener('click',function(){S.cats[c[0]]=!catOn(c[0]);save();renderText();});cr.appendChild(b);});
+    var sr=$('textStyleRow');sr.textContent='';TSTYLES.forEach(function(s){JT.chip(sr,s[1],S.tstyle===s[0],false,function(){S.tstyle=s[0];save();renderText();});});
+    /* 표시 */
+    var host=$('marked');host.textContent='';var p=0;
+    FOUND.forEach(function(f){if(f.s>p)host.appendChild(document.createTextNode(TEXT.slice(p,f.s)));var sp=document.createElement('span');var on=catOn(f.cat)&&isOn(f);sp.className='mk '+(on?'on':'off')+(f.manual?' manual':'');sp.textContent=f.text;sp.title=(CATS.filter(function(c){return c[0]===f.cat;})[0][1])+(on?' — 가림 (눌러서 끄기)':' — 안 가림 (눌러서 켜기)');
+      sp.addEventListener('click',function(){if(!catOn(f.cat)){S.cats[f.cat]=true;save();}DECIDE[f.cat+'|'+f.text]=!isOn(f);renderText();});host.appendChild(sp);p=f.e;});
+    if(p<TEXT.length)host.appendChild(document.createTextNode(TEXT.slice(p)));
+    /* 결과 */
+    var r=maskedText();var cs=$('counts');cs.textContent='';CATS.forEach(function(c){var n=r.counts[c[0]]||0;var s=document.createElement('span');s.className=n?'':'zero';s.textContent=c[1].replace(' (후보)','')+' '+n;cs.appendChild(s);});
+    $('textCount').textContent='가린 곳 '+r.n+'개';
+    var o=$('textOut');o.textContent='';var parts=r.text.split(/(\(?(?:참여자[A-Z]\d*|(?:전화번호|주민번호|계좌번호|이메일|차량번호|생년월일|주소)[①-⑳\d]+)\)?|\(?○○○\)?)/);
+    parts.forEach(function(t,i){if(!t)return;if(i%2){var b=document.createElement('span');b.className='rep';b.textContent=t;o.appendChild(b);}else o.appendChild(document.createTextNode(t));});
+    var cand=FOUND.filter(function(f){return (f.cat==='name'||f.cat==='addr')&&isOn(f)&&catOn(f.cat)&&!f.manual;}).length;
+    if(!r.n){face='warn';g='가릴 것을 찾지 못했어요. 이름·주소를 드래그해서 「드래그한 글자도 가리기」를 눌러 보세요.';st='가린 곳 없음';}
+    else{face='done';g=r.n+'곳을 가렸어요.'+(cand?' 이름·주소 후보 '+cand+'개가 맞는지 한 번 보고(틀리면 눌러서 끄기),':'')+' 결과를 복사해 AI 주문서에 붙이세요.';st='가린 곳 '+r.n;}
+    $('stage').dataset.tone='ready';setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title=st+' | 개인정보 가리기';$('pos').textContent='글 · '+Array.from(TEXT).length+'글자';
+  }
+  function textExample(){
+    $('textIn').value='2026. 9. 17. 상담 기록 (가상 예시)\n\n참여자 가나다(1975년생) 님과 초기상담을 진행함. 연락처 010-1234-5678, 주소 서울특별시 강남구 역삼동 123-4 행복아파트 101동 203호. 주민등록번호 750302-1234567.\n라마바 씨는 2024년부터 클린케어 사업단에서 근무 중이며 자녀 사아자(2010.05.01.)와 함께 거주. 이메일 abc@example.com, 차량 12가 3456 보유.\n급여는 농협 123-4567-8901-23 계좌로 입금. 담당자 의견: 가나다 님은 건강 상태 양호, 다음 상담 10월 2일 10:00.';
+    DECIDE={};MANUAL=[];renderText();
+  }
+  $('textIn').addEventListener('input',function(){clearTimeout(window._tt);window._tt=setTimeout(renderText,350);});
+  $('btnTextExample').addEventListener('click',textExample);
+  $('btnTextClear').addEventListener('click',function(){$('textIn').value='';DECIDE={};MANUAL=[];renderText();});
+  $('btnTextSel').addEventListener('click',function(){var ta=$('textIn'),sel=ta.value.slice(ta.selectionStart,ta.selectionEnd).trim();
+    if(!sel){var ws=String(window.getSelection&&window.getSelection()||'').trim();if(ws&&$('marked').contains(window.getSelection().anchorNode))sel=ws;}
+    if(!sel){$('textNote').textContent='먼저 글 상자나 확인 칸에서 가릴 글자를 드래그해 주세요.';return;}
+    if(Array.from(sel).length>40){$('textNote').textContent='한 번에 40글자까지만 — 이름·주소처럼 짧게 드래그하세요.';return;}
+    var cat=/\d{6}-/.test(sel)?'rrn':/^[\d\-\s]+$/.test(sel)?'phone':/@/.test(sel)?'email':/(시|구|군|동|로|길)\s*\d/.test(sel)?'addr':'name';
+    MANUAL.push({text:sel,cat:cat});DECIDE[cat+'|'+sel]=true;$('textNote').textContent='「'+sel+'」을(를) '+(CATS.filter(function(c){return c[0]===cat;})[0][1].replace(' (후보)',''))+'(으)로 가립니다.';renderText();});
+  $('btnTextCopy').addEventListener('click',function(){if(!TEXT.trim()){$('textNote').textContent='먼저 글을 붙여 넣어 주세요.';return;}var r=maskedText();JT.copyText(r.text,$('textNote'),'가린 글을 복사했습니다 ('+r.n+'곳). AI 주문서에 붙여 넣으세요.');});
+  $('btnTextTxt').addEventListener('click',function(){if(!TEXT.trim()){$('textNote').textContent='먼저 글을 붙여 넣어 주세요.';return;}var r=maskedText();var ok=JT.downloadBlob(new Blob(['﻿'+r.text],{type:'text/plain;charset=utf-8'}),'가린글_'+JT.today()+'.txt');$('textNote').textContent=ok?'텍스트 파일을 내려받았습니다.':'내려받기가 막혔습니다. 복사를 써 보세요.';});
+
   /* ---------- 공통 화면 ---------- */
   function renderForm(){
     var tr=$('tabRow');tr.textContent='';TABS.forEach(function(t){JT.chip(tr,t[1],S.tab===t[0],false,function(){S.tab=t[0];save();renderForm();render();});});
-    $('paneTable').hidden=S.tab!=='table';$('paneImage').hidden=S.tab!=='image';
+    $('paneTable').hidden=S.tab!=='table';$('paneImage').hidden=S.tab!=='image';$('paneText').hidden=S.tab!=='text';
     var sr=$('styleRow');sr.textContent='';STYLES.forEach(function(s){JT.chip(sr,s[1],S.style===s[0],false,function(){S.style=s[0];save();renderForm();redraw();});});
     $('noInflate').hidden=JT.canInflate();
   }
-  function render(){if(S.tab==='image')renderImageGuide();else renderTable();}
+  function render(){if(S.tab==='image')renderImageGuide();else if(S.tab==='text')renderText();else renderTable();}
 
   /* ---------- 이벤트 ---------- */
   $('btnFile').addEventListener('click',function(){$('fileInput').click();});
@@ -1009,7 +1165,11 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
 
   function tick(){JT.showNow(new Date());}
   renderForm();
-  if(location.hash==='#'+encodeURIComponent('예시')||location.hash==='#예시'){S.tab='table';renderForm();example();}else render();
+  var H=decodeURIComponent(location.hash||'');
+  if(H==='#예시'){S.tab='table';renderForm();example();}
+  else if(H==='#글'||H==='#text'){S.tab='text';renderForm();render();}
+  else if(H==='#글예시'){S.tab='text';renderForm();textExample();}
+  else render();
   save();tick();setInterval(tick,1000);
 })();
 </script>
