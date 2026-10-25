@@ -292,6 +292,7 @@ body.big .bar{margin-top:28px;height:24px}
 .tbl td.half{color:var(--muted)}
 @media (max-width:640px){.rows .row{grid-template-columns:1fr 1fr}.rows .row .wide{grid-column:1/-1}}
 </style>
+<script src="../rates.js"></script>
 </head>
 <body>
 <div class="page">
@@ -752,14 +753,14 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var $=JT.$,today=JT.today,fmt=JT.fmtMoney,money=JT.money;
   var KEY='jahwal-tools.startup-wage.v1';
   var setFace=JT.faceSetter(FACES);
-  var YEAR=2026;
+  var R=window.JT_RATES;var YEAR=R?R.year:2026;
   /* 2026 자활사업 안내 128~130쪽. [id, 이름, [[개월 수, 비율]...], 재원] */
   var KINDS=[
     ['benefit','수급자',[[24,1],[36,.5]],'자활근로 인건비'],
     ['non','비수급자',[[6,1],[6,.5]],'활성화지원금'],
     ['expert','전문인력',[[60,1]],'자활기금·중앙자활자금']
   ];
-  var BASE_DEFAULT=1700000,EXPERT_MAX=2770000;
+  var _S=(R&&R.v('startup'))||{base:1700000,expertMax:2770000};var BASE_DEFAULT=_S.base,EXPERT_MAX=_S.expertMax;R&&R.use(['startup']);
   var MONTHS=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
   function kindOf(id){return KINDS.filter(function(k){return k[0]===id;})[0];}
   function ym(s){var m=/^(\d{4})-(\d{1,2})$/.exec(String(s||''));if(!m)return null;var y=+m[1],mo=+m[2];if(mo<1||mo>12||y<2000||y>2100)return null;return {y:y,m:mo};}

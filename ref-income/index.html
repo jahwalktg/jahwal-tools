@@ -368,6 +368,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
 .ref-table tr.hl td{background:var(--blue-bg);font-weight:700}
 .year-note{font-size:13px;color:var(--muted);margin:4px 0 0}
 </style>
+<script src="../rates.js"></script>
 </head>
 <body>
 <div class="page">
@@ -909,12 +910,12 @@ var FACES={"ready":"data:image/webp;base64,UklGRiQ2AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var $=JT.$,fmt=JT.fmtMoney,money=JT.money;
   var setFace=JT.faceSetter(FACES);
   /* ---- 연도 상수. 해가 바뀌면 여기만 고친다 (2026 국민기초생활보장 사업안내 51~52쪽) ---- */
-  var YEAR=2026;
-  var MEDIAN=[2564238,4199292,5359036,6494738,7556719,8555952,9515150]; /* 1~7인 가구 기준 중위소득 */
-  var MEDIAN_STEP=959198; /* 8인 이상 1인 증가마다 */
-  var RATES=[['생계급여',32],['의료급여',40],['주거급여',48],['교육급여',50]];
+  var R=window.JT_RATES;var YEAR=R?R.year:2026;
+  var _MD=R&&R.v('median');var MEDIAN=_MD?_MD.list:[2564238,4199292,5359036,6494738,7556719,8555952,9515150]; /* 1~7인 가구 기준 중위소득 */
+  var MEDIAN_STEP=_MD?_MD.step:959198; /* 8인 이상 1인 증가마다 */
+  var _SR=(R&&R.v('select.rate'))||{'생계급여':32,'의료급여':40,'주거급여':48,'교육급여':50};var RATES=[['생계급여',_SR['생계급여']],['의료급여',_SR['의료급여']],['주거급여',_SR['주거급여']],['교육급여',_SR['교육급여']]];
   /* 자활사업 유형별 표준소득액(2026 자활사업 안내, 사회보험 기준). 월 자활급여 어림용 */
-  var PRESETS=[['시장진입형 전일제',1614080],['사회서비스형 전일제',1399840],['근로유지형',778440],['시간제 (시장진입)',807040],['시간제 (사회서비스)',699920]];
+  var _M=(R&&R.v('wage.month'))||{market:1614080,social:1399840,keep:778440,marketPart:807040,socialPart:699920};var PRESETS=[['시장진입형 전일제',_M.market],['사회서비스형 전일제',_M.social],['근로유지형',_M.keep],['시간제 (시장진입)',_M.marketPart],['시간제 (사회서비스)',_M.socialPart]];R&&R.use(['median','select.rate','wage.month']);
   var DEDUCTS=[['basic','자활근로소득공제 30% (기본)'],['young','34세 이하·대학생: 60만 원 + 30%'],['senior','65세 이상·등록장애인·북한이탈주민: 20만 원 + 30%'],['rehab','장애인 직업재활사업: 20만 원 + 50%']];
   var LEGAL_PAGES='2026 국민기초생활보장 사업안내 51~52·56~59·105~106쪽, 2026 자활사업 안내 157쪽';
 

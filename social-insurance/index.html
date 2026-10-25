@@ -291,6 +291,7 @@ body.big .bar{margin-top:28px;height:24px}
 .tbl tr.off td{color:var(--muted);text-decoration:line-through}
 @media (max-width:480px){.ins{grid-template-columns:1fr 1fr}.ins .chip-btn{grid-column:1/-1}}
 </style>
+<script src="../rates.js"></script>
 </head>
 <body>
 <div class="page">
@@ -732,9 +733,10 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var $=JT.$,today=JT.today,fmt=JT.fmtMoney,money=JT.money;
   var KEY='jahwal-tools.social-insurance.v1';
   var setFace=JT.faceSetter(FACES);
-  var YEAR=2026;
+  var R=window.JT_RATES;var YEAR=R?R.year:2026;
   /* 2026 자활사업 안내 75쪽 표준소득액(1일 단가 × 26일, 실비 제외). 화면에서 고칠 수 있다 */
-  var TYPES=[['market','시장진입형',1614080,807040],['social','사회서비스형',1399840,699920],['keep','근로유지형',778440,0],['custom','직접 입력',0,0]];
+  var _M=(R&&R.v('wage.month'))||{market:1614080,social:1399840,keep:778440,marketPart:807040,socialPart:699920};
+  var TYPES=[['market','시장진입형',_M.market,_M.marketPart],['social','사회서비스형',_M.social,_M.socialPart],['keep','근로유지형',_M.keep,0],['custom','직접 입력',0,0]];
   /* 2026 요율(보수액 대비 %). 국민연금·건강·장기요양·고용(실업급여)은 반씩, 고용안정·산재는 기관만.
      [id, 이름, 본인 %, 기관 %, 설명] */
   var INS_DEF=[
@@ -744,10 +746,11 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     ['ei','고용보험',0.9,1.15,'실업급여 0.9%씩 + 고용안정·직업능력개발 0.25%(150인 미만 기관)는 기관만'],
     ['wc','산재보험',0,1.47,'기관 전액. 업종별 요율(0.5%~18.5%)이라 2026 평균 1.47%(출퇴근재해 0.06% 포함)를 넣어 두었음. 사업단 업종 요율로 고치세요']
   ];
-  var NP_LOW=410000,NP_HIGH=6590000; /* 국민연금 기준소득월액 하한·상한 — 2026.7.1~2027.6.30 (그 전 2025.7~2026.6은 400,000·6,370,000) */
+  var _L=(R&&R.v('np.limits'))||{low:410000,high:6590000};var NP_LOW=_L.low,NP_HIGH=_L.high;
+  if(R){['np','hi','lt','ei','wc'].forEach(function(k){var x=R.v('ins.'+k);if(!x)return;INS_DEF.forEach(function(d){if(d[0]!==k)return;if(d[2]!==x[0]||d[3]!==x[1]){var tot=Math.round((x[0]+x[1])*10000)/10000;d[4]=d[4].replace(/전체 [\d.]+%/,'전체 '+tot+'%');}d[2]=x[0];d[3]=x[1];});});R.use(['wage.month','ins.np','ins.hi','ins.lt','ins.ei','ins.wc','np.limits']);} /* 국민연금 기준소득월액 하한·상한 — 2026.7.1~2027.6.30 (그 전 2025.7~2026.6은 400,000·6,370,000) */
 
   function defRates(){var o={};INS_DEF.forEach(function(d){o[d[0]]={on:true,w:d[2],e:d[3]};});return o;}
-  function fresh(){return {type:'market',part:false,pay:1614080,head:11,ins:defRates(),npLow:NP_LOW,npHigh:NP_HIGH};}
+  function fresh(){return {type:'market',part:false,pay:_M.market,head:11,ins:defRates(),npLow:NP_LOW,npHigh:NP_HIGH};}
   function norm(o){
     o=o||{};var f=fresh(),ins=defRates();
     if(o.ins)INS_DEF.forEach(function(d){var x=o.ins[d[0]];if(x){ins[d[0]]={on:x.on!==false,w:isFinite(+x.w)&&+x.w>=0?+x.w:d[2],e:isFinite(+x.e)&&+x.e>=0?+x.e:d[3]};}});

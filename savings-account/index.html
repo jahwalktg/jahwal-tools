@@ -321,6 +321,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
 .explain tr.hl td{font-weight:800;color:var(--blue)}
 .explain tr.bad td:last-child{color:var(--red)}
 </style>
+<script src="../rates.js"></script>
 </head>
 <body>
 <div class="page">
@@ -789,7 +790,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var $=JT.$,today=JT.today,fmt=JT.fmtMoney,money=JT.money;
   var KEY='jahwal-tools.savings-account.v1';
   var setFace=JT.faceSetter(FACES);
-  var YEAR=2026,MONTHS=36;
+  var R=window.JT_RATES;var YEAR=R?R.year:2026,MONTHS=36;
   /* 2026 자산형성지원 통장사업 안내 4~5쪽, 각 통장 장. [id, 이름, 월 정부지원 기본, 설명, 특징] */
   var ACCTS=[
     ['hope1','희망저축계좌I',300000,'일하는 생계·의료급여 수급 가구. 월 10만원 이상 자율 저축(최대 50만), 정부 월 30만원. 3년 만기 후 6개월 안에 생계·의료 탈수급해야 전액 지급. 못 하면 1회 만기성공금(장려금 누적의 5%)만 일부지급'],
@@ -799,7 +800,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     ['youthsave','청년저축계좌',300000,'주거·교육급여 수급·차상위 청년. 월 10만원 저축에 1:3 매칭(월 30만원). 근로 지속 + 국가공인자격증 취득 + 교육 3회 이수가 지급 요건. 추가지원 없음']
   ];
   var PROFITS=[[150000,'최대 15만원'],[100000,'10만원'],[50000,'5만원'],[0,'없음']];
-  var JAHWAL_BONUS=200000,BENEFIT=100000,PRIVATE_MAX=20000,YOUTHHOPE_RATE=0.45,YOUTHHOPE_MAX=772000,HOPE2_STEPS=[100000,200000,300000];
+  var JAHWAL_BONUS=200000,BENEFIT=100000,PRIVATE_MAX=20000,YOUTHHOPE_RATE=((R&&R.v('asset.youthhope'))||{rate:0.45}).rate,YOUTHHOPE_MAX=((R&&R.v('asset.youthhope'))||{max:772000}).max,HOPE2_STEPS=[100000,200000,300000];
 
   function acct(id){return ACCTS.filter(function(a){return a[0]===id;})[0];}
   function fresh(){return {acct:'hope1',monthly:100000,gov:300000,govEdited:false,income:1000000,join:YEAR,pause:0,miss:0,rate:2,jahwal:true,profit:150000,benefit:false,priv:true};}
@@ -918,6 +919,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   renderForm();render();save();if(PREV_YEAR)JT.yearNote($('copyNote'),PREV_YEAR,YEAR);tick();setInterval(tick,1000);
 })();
 </script>
+<script>window.JT_RATES&&JT_RATES.use(['asset.youthhope']);</script>
 <script src="../videos.js"></script>
 </body>
 </html>

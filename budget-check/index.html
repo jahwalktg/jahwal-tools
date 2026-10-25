@@ -288,6 +288,7 @@ body.big .bar{margin-top:28px;height:24px}
 .r-line .v.small{font-size:16px;white-space:normal;text-align:right}
 .tbl.in td:first-child,.tbl.in th:first-child{white-space:nowrap} /* 좁은 폭에서 "10월"이 글자별로 쪼개지지 않게 */
 </style>
+<script src="../rates.js"></script>
 </head>
 <body>
 <div class="page">
@@ -748,8 +749,9 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var $=JT.$,today=JT.today,fmt=JT.fmtMoney,money=JT.money;
   var KEY='jahwal-tools.budget-check.v1';
   var setFace=JT.faceSetter(FACES);
-  var YEAR=2026;
+  var R=window.JT_RATES;var YEAR=R?R.year:2026;
   var TYPES=[['market','시장진입형',30],['social','사회서비스형',20],['intern','인턴·도우미형',10],['keep','근로유지형',5],['part','시간제',20],['gw','Gateway',30]];
+  if(R){var _B=R.v('biz.ratio');if(_B)TYPES.forEach(function(t){if(_B[t[0]]!=null)t[2]=_B[t[0]];});R.use(['biz.ratio']);}
   var MONTHS=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
   function typeOf(id){return TYPES.filter(function(t){return t[0]===id;})[0];}
   function fresh(){var rows=[];for(var i=0;i<12;i++)rows.push({labor:0,biz:0});

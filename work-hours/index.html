@@ -321,6 +321,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
 .explain td:first-child{color:var(--muted)}
 .explain tr.hl td{font-weight:800;color:var(--blue)}
 </style>
+<script src="../rates.js"></script>
 </head>
 <body>
 <div class="page">
@@ -791,9 +792,9 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var $=JT.$,today=JT.today,fmt=JT.fmtMoney,money=JT.money;
   var KEY='jahwal-tools.work-hours.v1';
   var setFace=JT.faceSetter(FACES);
-  var YEAR=2026; /* 아래 단가의 기준 연도. 화면에 표시하고, 값은 사용자가 고친다 */
+  var R=window.JT_RATES;var YEAR=R?R.year:2026; /* 기준 연도·단가는 ../rates.js (못 읽으면 아래 2026 값) */
   var TYPES=[['market','시장진입형'],['social','사회서비스형'],['keep','근로유지형']];
-  var RATES={market:62080,social:53840,keep:29940}; /* 2026 자활사업 안내 75쪽, 실비 제외 기본값 */
+  var RATES=(R&&R.v('wage.day'))||{market:62080,social:53840,keep:29940};R&&R.use(['wage.day']); /* 2026 자활사업 안내 75쪽, 실비 제외 기본값 */
   var ROUNDS=[['floor','30분 미만 버림 (기본)'],['ceil','30분 미만 올림'],['round','15분부터 반올림']];
   var BREAKS=[['lunch','점심 1시간 (12:00~13:00)'],['none','휴게 없음'],['custom','직접 입력']];
 

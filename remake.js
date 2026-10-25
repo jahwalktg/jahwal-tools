@@ -198,11 +198,13 @@
     var page = location.href.split('#')[0].split('?')[0];
     Promise.all([
       fetch(page, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.text(); }),
-      fetch('../drop.js', { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; })
+      fetch('../drop.js', { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; }),
+      fetch('../rates.js', { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; })
     ]).then(function (res) {
-      var h = res[0], drop = res[1];
+      var h = res[0], drop = res[1], rates = res[2];
       h = h.replace(/data:image\/[a-z+]+;base64,[A-Za-z0-9+\/=]{2000,}/g, TINY);
       h = h.replace(/<script src="\.\.\/drop\.js"><\/script>/, drop ? '<script>\n' + drop.replace(/<\/script/gi, '<\\/script') + '\n</script>' : '');
+      h = h.replace(/<script src="\.\.\/rates\.js"><\/script>/, rates ? '<script>\n' + rates.replace(/<\/script/gi, '<\\/script') + '\n</script>' : '');
       h = h.replace(/<script src="\.\.\/(videos|remake)\.js"><\/script>\s*/g, '');
       h = h.replace(/(href|src)="(\.\.\/[^"#]*)/g, function (m, a, p) { return a + '="' + abs(p); });
       h = h.replace(/<html([^>]*)>/i, '<html$1>\n<!-- 원본: ' + page.replace(/^https?:\/\/[^/]+\//, SITE) + ' · 받은 날 ' + new Date().toISOString().slice(0, 10) + ' · 「내 센터에 맞게 다시 만들기」용 사본(캐릭터 그림은 빈 그림으로 바꿈) -->');
