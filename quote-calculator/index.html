@@ -223,6 +223,11 @@ body.big .bar{margin-top:28px;height:24px}
 .r-line .v{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 .r-line.big{background:var(--blue-bg);border-color:var(--blue)}
 .r-line.big .v{font-size:clamp(28px,5vw,40px);color:var(--blue)}
+.r-line .v .edited{font-size:13px;font-weight:700;color:var(--orange,#b45309);margin-right:6px;vertical-align:middle}
+.fixbox{display:grid;gap:8px}.fixbox summary{cursor:pointer;font-weight:700;color:var(--blue);min-height:40px;display:flex;align-items:center}
+.fixrow{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}.fixrow .field{max-width:180px}
+.fixhint{margin:0;padding:10px 14px;border:1.5px dashed var(--blue);border-radius:12px;background:var(--blue-bg);font-size:15px}
+.fixhint button{margin-left:6px}
 .r-line.bad .v{color:var(--red)}
 .r-line.warn{background:var(--amber-bg);border-color:var(--amber-line)}
 .r-line .copy{min-height:36px;padding:0 10px;font-size:14px;margin-left:8px}
@@ -395,6 +400,19 @@ body.big .bar{margin-top:28px;height:24px}
         <div class="r-line" id="rTruncLine" hidden><span class="k">끝자리 정리</span><span class="v" id="rTrunc"></span></div>
         <div class="r-line big"><span class="k">합계 <small id="rTotalK">부가세 포함</small></span><span class="v" id="rTotal"></span></div>
         <p class="help" id="rHangul"></p>
+        <div class="fixbox" id="fixBox">
+          <p class="fixhint" id="fixHint" hidden></p>
+          <details id="fixDet">
+            <summary>공급가·부가세 원 단위 고치기</summary>
+            <p class="help">세금계산서·청구 금액에 맞춰 끝자리만 고칠 때 씁니다. 고친 금액은 인쇄·복사에 그대로 들어갑니다.</p>
+            <div class="fixrow">
+              <label class="field"><span>공급가 (원)</span><input class="num-in" id="fixSupply" type="text" inputmode="numeric" autocomplete="off"></label>
+              <label class="field"><span>부가세 (원)</span><input class="num-in" id="fixVat" type="text" inputmode="numeric" autocomplete="off"></label>
+              <button class="btn btn-small" id="fixAuto" type="button">자동 계산으로 되돌리기</button>
+            </div>
+            <p class="note" id="fixNote"></p>
+          </details>
+        </div>
       </div>
       <p class="note" id="warnNote" role="status"></p>
 
@@ -844,11 +862,12 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     ]};
   }
   function normItem(x){return {id:x.id||uid(),name:String(x.name||'').slice(0,40),spec:String(x.spec||'').slice(0,30),qty:isFinite(+x.qty)?+x.qty:0,price:isFinite(+x.price)?+x.price:0};}
+  function ovNum(v){return v===null||v===undefined||v===''||!isFinite(+v)?null:Math.round(+v);}
   function normDoc(d){
     d=d||{};var r=isFinite(+d.vatRate)?+d.vatRate:10;
     return {to:String(d.to||'').slice(0,40),toPerson:String(d.toPerson||'').slice(0,30),toTel:String(d.toTel||'').slice(0,30),date:/^\d{4}-\d{2}-\d{2}$/.test(d.date||'')?d.date:isoToday(),title:String(d.title||'').slice(0,40),
       vatMode:['excl','incl','none'].indexOf(d.vatMode)>=0?d.vatMode:'excl',vatRate:(r>=0&&r<=100)?r:10,
-      trunc:[1,10,100,1000,10000].indexOf(+d.trunc)>=0?+d.trunc:1,items:(Array.isArray(d.items)?d.items:[]).slice(0,MAX_ITEMS).map(normItem)};
+      trunc:[1,10,100,1000,10000].indexOf(+d.trunc)>=0?+d.trunc:1,supplyOv:ovNum(d.supplyOv),vatOv:ovNum(d.vatOv),items:(Array.isArray(d.items)?d.items:[]).slice(0,MAX_ITEMS).map(normItem)};
   }
   /* 공급하는 자. stamp는 직인 data URI (브라우저 안에만 저장, 400KB 한도) */
   function normFrom(f){f=f||{};var st=String(f.stamp||'');if(!/^data:image\/(png|jpeg|webp);base64,/.test(st)||st.length>400000)st='';
@@ -875,10 +894,14 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
       var sup=doc.vatMode==='incl'&&rate>0?Math.round(amt/(1+rate)):amt;
       return {it:it,amt:amt,sup:sup};
     });
-    lines.forEach(function(l){supply+=l.sup;});
+    var amtSum=0;lines.forEach(function(l){supply+=l.sup;amtSum+=l.amt;});
     vat=rate>0?Math.floor(supply*rate):0;
+    var autoSupply=supply,autoVat=vat;
+    if(doc.supplyOv!=null)supply=doc.supplyOv;
+    if(doc.vatOv!=null&&rate>0)vat=doc.vatOv;
     var raw=supply+vat,total=JT.roundTo(raw,doc.trunc,'floor'),cut=raw-total;
-    return {lines:lines,supply:supply,vat:vat,raw:raw,total:total,cut:cut,rate:rate};
+    return {lines:lines,supply:supply,vat:vat,raw:raw,total:total,cut:cut,rate:rate,autoSupply:autoSupply,autoVat:autoVat,amtSum:amtSum,
+      edited:doc.supplyOv!=null||(doc.vatOv!=null&&rate>0)};
   }
   function hasExample(){var d=S.doc;return /\(예시\)/.test(d.to+d.title+(d.toPerson||'')+S.from.name+S.from.note+d.items.map(function(i){return i.name;}).join(''));}
 
@@ -913,9 +936,11 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
 
   function renderTotals(){
     var c=calc(S.doc),d=S.doc;
-    $('rSupply').textContent=fmt(c.supply)+'원';
+    var tag='<span class="edited">직접 고침</span>';
+    $('rSupply').innerHTML=(d.supplyOv!=null?tag:'')+fmt(c.supply)+'원';
     $('rVatK').textContent=d.vatMode==='none'?'부가세 (없음)':'부가세 '+d.vatRate+'%';
-    $('rVat').textContent=fmt(c.vat)+'원';
+    $('rVat').innerHTML=(d.vatOv!=null&&c.rate>0?tag:'')+fmt(c.vat)+'원';
+    renderFix(c);
     $('rTruncLine').hidden=!c.cut;$('rTrunc').textContent='-'+fmt(c.cut)+'원';
     $('rTotal').textContent=fmt(c.total)+'원';
     $('rTotalK').textContent=d.vatMode==='none'?'':'부가세 포함';
@@ -936,6 +961,34 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     $('status').textContent=fmt(c.total)+'원';
     document.title=fmt(c.total)+'원 | 견적서 계산기';
     renderSheet(c);
+  }
+  /* 원 단위 고치기: 부가세 포함 단가면 「단가 합계」와 공급가+부가세가 1~2원 어긋날 수 있음 */
+  function renderFix(c){
+    var d=S.doc,fs=$('fixSupply'),fv=$('fixVat');
+    if(document.activeElement!==fs)fs.value=fmt(c.supply);
+    if(document.activeElement!==fv)fv.value=fmt(c.vat);
+    fv.disabled=c.rate===0;
+    var notes=[];
+    if(d.supplyOv!=null)notes.push('공급가 자동 계산 '+fmt(c.autoSupply)+'원 → '+fmt(c.supply)+'원');
+    if(d.vatOv!=null&&c.rate>0)notes.push('부가세 자동 계산 '+fmt(c.autoVat)+'원 → '+fmt(c.vat)+'원');
+    if(c.edited)notes.push('품목을 바꾸면 고친 금액이 맞는지 다시 보세요.');
+    $('fixNote').textContent=notes.join(' · ');
+    if(c.edited)$('fixDet').open=true;
+    var h=$('fixHint'),gap=c.amtSum-(c.supply+c.vat);
+    if(d.vatMode==='incl'&&c.rate>0&&gap!==0&&Math.abs(gap)<=Math.max(10,d.items.length*2)){
+      h.hidden=false;
+      h.innerHTML='부가세 포함 단가 합계는 <b>'+fmt(c.amtSum)+'원</b>인데, 공급가+부가세는 '+fmt(c.supply+c.vat)+'원입니다('+(gap>0?gap+'원 모자람':(-gap)+'원 넘음')+').'
+        +'<button class="btn btn-small" type="button" data-fit="vat">부가세를 '+fmt(c.vat+gap)+'원으로</button>'
+        +'<button class="btn btn-small" type="button" data-fit="supply">공급가를 '+fmt(c.supply+gap)+'원으로</button>';
+    }else{h.hidden=true;h.textContent='';}
+  }
+  function setOv(k,v){S.doc[k]=v;save();renderTotals();}
+  function onFixInput(k,el,autoK){
+    var v=money(el.value);
+    if(el.value.trim()===''||isNaN(v)){el.classList.toggle('bad',el.value.trim()!=='');return;}
+    el.classList.remove('bad');
+    var c=calc(normDoc(Object.assign({},S.doc,{supplyOv:null,vatOv:null})));
+    setOv(k,Math.round(v)===c[autoK]?null:Math.round(v));
   }
   function renderForm(){
     var d=S.doc;
@@ -1060,6 +1113,12 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     S.hist.unshift({id:uid(),savedAt:today(),doc:normDoc(JSON.parse(JSON.stringify(S.doc)))});S.hist=S.hist.slice(0,MAX_HIST);save();renderHist();renderTotals();
     $('listNote').textContent='지난 견적에 저장했습니다. 오른쪽에서 불러올 수 있습니다.';
   });
+  $('fixSupply').addEventListener('input',function(){onFixInput('supplyOv',this,'autoSupply');});
+  $('fixVat').addEventListener('input',function(){onFixInput('vatOv',this,'autoVat');});
+  ['fixSupply','fixVat'].forEach(function(id){$(id).addEventListener('blur',function(){renderTotals();});});
+  $('fixAuto').addEventListener('click',function(){S.doc.supplyOv=null;S.doc.vatOv=null;save();renderTotals();$('fixNote').textContent='자동 계산으로 되돌렸습니다.';});
+  $('fixHint').addEventListener('click',function(e){var b=e.target.closest('[data-fit]');if(!b)return;var c=calc(S.doc),gap=c.amtSum-(c.supply+c.vat);
+    if(b.dataset.fit==='vat')setOv('vatOv',c.vat+gap);else setOv('supplyOv',c.supply+gap);});
   $('btnNew').addEventListener('click',function(){snapshot();S.doc=normDoc({date:isoToday(),vatMode:S.doc.vatMode,vatRate:S.doc.vatRate,trunc:S.doc.trunc,items:[{},{},{}]});save();renderForm();renderItems();renderTotals();$('listNote').textContent='새 견적입니다. 우리 쪽 정보와 비고는 그대로 둡니다.';$('qTo').focus();});
   $('btnExample').addEventListener('click',function(){snapshot();S.doc=exampleDoc();save();renderForm();renderItems();renderTotals();$('listNote').textContent='예시 견적으로 되돌렸습니다.';});
   $('btnClearHist').addEventListener('click',JT.armTwice($('btnClearHist'),'지난 견적 모두 지우기','한 번 더 누르면 지웁니다',function(){S.hist=[];save();renderHist();renderTotals();$('listNote').textContent='지난 견적을 모두 지웠습니다.';}));
