@@ -11,6 +11,7 @@
     'date-calc': '나이 만나이 생년월일 연령 기간 일수 개월수 평일수 공휴일 디데이 몇일 몇개월 계약기간 참여기간 60세 65세 34세 청년 기한계산',
     'edu-hours': '교육시간 직무교육 소양교육 이수 성과평가 교육이수 부족시간',
     'eval-score': '성과평가 평가점수 지표 실적 배점 총점 평가준비',
+    'eval-check': '성과평가 증빙 서류 점검 체크리스트 자활정보시스템 입력 메뉴 불인정 평가준비 인수인계',
     'social-insurance': '4대보험 사회보험 국민연금 건강보험 고용보험 산재 보험료 공제 기관부담',
     'savings-account': '희망저축 청년내일저축 자산형성 통장 만기 적립 청년희망키움 청년저축',
     'budget-plan': '예산 사업계획 인건비 사업비 총사업비 내년예산 월별예산 근무일',
@@ -70,7 +71,7 @@
     ['edu', '교육·행사', ['attendance', 'cert-print', 'file-tools', 'labels', 'group-maker', 'random-pick', 'survey-tally', 'break-timer', 'greeting', 'map']],
     ['promo', '홍보', ['press', 'newsletter', 'greeting', 'face-mask', 'map', 'qr', 'mask-privacy']],
     ['admin', '행정·총무', ['leave-tracker', 'deadline-board', 'repeat-checklist', 'prompt-notice', 'prompt-minutes', 'meeting-timer', 'show-vote', 'labels', 'excel', 'shortcuts']],
-    ['eval', '평가·실적', ['eval-score', 'edu-hours', 'survey-tally', 'prompt-survey', 'list-compare', 'rates']],
+    ['eval', '평가·실적', ['eval-score', 'eval-check', 'edu-hours', 'survey-tally', 'prompt-survey', 'list-compare', 'rates']],
     ['safe', '안전', ['safety', 'safety-pack', 'safety-post', 'safety-links']]
   ];
   var QUICK = ['월차·지각 계산', '견적서', '만 나이', '명단 대조', '수료증 나누기', '주소 라벨', '서식', '4대보험', '연하장', '안전표지'];
