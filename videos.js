@@ -42,7 +42,7 @@
     '.jt-vid a:hover{border-color:#E0322B}' +
     '.jt-vid a::before{content:"";width:0;height:0;border-left:9px solid #E0322B;border-top:6px solid transparent;border-bottom:6px solid transparent}' +
     '.jt-vid a small{font-weight:500;font-size:12px;color:var(--muted,#5A6478)}' +
-    '.card .jt-vid{margin:0;flex-wrap:nowrap}.card .jt-vid a{min-height:34px;padding:0 10px;font-size:13px;white-space:nowrap}' +
+    '.card{min-width:0}.card .jt-vid{margin:0;flex-wrap:wrap}.card .jt-vid a{min-height:34px;padding:0 10px;font-size:13px;white-space:nowrap}' +
     '@media print{.jt-vid{display:none!important}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
