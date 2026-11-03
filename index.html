@@ -982,7 +982,7 @@ body.fb-on{overflow:hidden}
   renderAll();
 })();
 </script>
-<!-- 새 소식 팝업: NOTICE.id를 바꾸면 한 번씩 다시 뜬다. 닫으면 이 브라우저에 본 id만 기억 (jahwal-tools.notice). 주소 끝 ?notice 면 항상 뜸 -->
+<!-- 처음 오신 분 안내 팝업: 들어올 때마다 뜨고, 「일주일 동안 보지 않기」를 누르면 이 브라우저에서 7일 동안 안 뜸 (jahwal-tools.notice.hide = 다시 보일 시각). 주소 끝 ?notice 면 항상 뜸 -->
 <style>
 .nt-back{position:fixed;inset:0;background:rgba(10,20,45,.5);z-index:60}
 .nt-box{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:61;width:min(460px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;background:var(--surface);color:var(--text);border:1.5px solid var(--line);border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.3);padding:22px 20px 18px}
@@ -1001,42 +1001,50 @@ body.fb-on{overflow:hidden}
 .nt-btns{display:flex;gap:8px;flex-wrap:wrap}
 .nt-btns .btn{flex:1 1 140px}
 .nt-x{position:absolute;right:10px;top:10px;width:40px;height:40px;border:0;background:none;font-size:22px;color:var(--muted);border-radius:10px}
+.nt-warn{list-style:none;margin:0 0 14px;padding:10px 12px;border-radius:12px;background:var(--amber-bg);border:1.5px solid var(--amber-line);display:grid;gap:6px;font-size:14px;line-height:1.55}
+.nt-warn b{color:var(--amber)}
+.nt-groups{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px;padding:0;list-style:none}
+.nt-groups a{display:inline-block;padding:5px 10px;border:1.5px solid var(--line);border-radius:999px;background:var(--bg);color:inherit;text-decoration:none;font-size:14px}
+.nt-groups a:hover{border-color:var(--blue)}
+.nt-week{flex:1 1 100%!important;background:none!important;border:0!important;color:var(--muted);text-decoration:underline;text-underline-offset:3px;min-height:36px!important;font-size:14px!important}
 </style>
 <div class="nt-back" id="ntBack" hidden></div>
 <div class="nt-box" id="ntBox" role="dialog" aria-modal="true" aria-labelledby="ntTitle" hidden>
   <button class="nt-x" type="button" data-nt-close aria-label="닫기">×</button>
-  <span class="nt-tag">새 소식</span>
-  <h2 id="ntTitle">도구마다 「▶ 사용법 영상」이 생겼어요</h2>
-  <p>모든 도구 제목 아래와 첫 화면 카드에 단추가 있습니다. 누르면 유튜브에서 1~2분짜리 사용법 영상이 새 창으로 열립니다. 모두 44편입니다.</p>
+  <span class="nt-tag">처음 오셨나요?</span>
+  <h2 id="ntTitle">쓰기 전에 「시작하기 전에」 영상부터 봐 주세요</h2>
+  <p>자활센터 실무자가 매달 반복하는 일을 줄이려고 만든 무료 도구 모음입니다. 1분 30초짜리 영상에 도구 소개와 주의할 점을 담았습니다.</p>
   <ul class="nt-list">
-    <li><a href="https://www.youtube.com/watch?v=yYLwfGYMItE&amp;list=PLd5eK_bDlbRI" target="_blank" rel="noopener"><b>처음이면 「시작하기 전에」</b><span>도구 소개, 개인정보, 참고용이라는 점 — 1분 30초</span></a></li>
-    <li><a href="https://www.youtube.com/playlist?list=PLd5eK_bDlbRI" target="_blank" rel="noopener"><b>사용법 영상 모음 (재생목록)</b><span>QR코드·라벨·서식·PDF·안전 표지·계산기·홍보 도구까지 순서대로</span></a></li>
+    <li><a href="https://www.youtube.com/watch?v=yYLwfGYMItE&amp;list=PLd5eK_bDlbRI" target="_blank" rel="noopener"><b>▶ 시작하기 전에 (1분 30초)</b><span>도구 소개, 개인정보, 참고용이라는 점</span></a></li>
   </ul>
-  <p class="nt-sub">지난 소식</p>
-  <ul class="nt-list nt-small">
-    <li><a href="./safety/index.html"><b>안전 관리 — 안전 표지·게시물 만들기</b><span>법정 안전보건표지 43종, 사업단별 꾸러미, 점검 대비 게시물</span></a></li>
-    <li><a href="#office" data-nt-close><b>사무 도우미</b><span>엑셀 함수 도우미 · 단축키 안내 · QR코드 만들기</span></a></li>
+  <ul class="nt-warn">
+    <li><b>개인정보</b> 참여자 실명·주민번호·연락처는 어느 도구에도 적지 마세요. 입력한 내용은 이 PC 브라우저 안에서만 쓰이고 인터넷으로 보내지 않습니다.</li>
+    <li><b>참고용</b> 지침·법령을 대신하지 않습니다. 현장에 적용하기 전에 그해 지침과 원문을 꼭 확인해 주세요.</li>
   </ul>
-  <div class="nt-btns"><a class="btn btn-small" href="https://www.youtube.com/playlist?list=PLd5eK_bDlbRI" target="_blank" rel="noopener" data-nt-close style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:var(--blue);border-color:var(--blue);color:var(--btn-text)">▶ 사용법 영상 모음</a><button class="btn btn-small" type="button" data-nt-close>닫기</button></div>
+  <p class="nt-sub">이런 도구가 있어요</p>
+  <ul class="nt-groups">
+    <li><a href="#calc" data-nt-close>자활계산기</a></li><li><a href="#forms" data-nt-close>자활서식활용기</a></li><li><a href="#docs" data-nt-close>문서·명단</a></li><li><a href="#promo" data-nt-close>홍보</a></li><li><a href="#office" data-nt-close>사무 도우미</a></li><li><a href="#safety" data-nt-close>안전 관리</a></li><li><a href="#ai" data-nt-close>AI 주문서</a></li>
+  </ul>
+  <p style="font-size:14px">도구마다 제목 아래 「▶ 사용법 영상」 단추가 있어요(모두 45편). 아래 「쓰기 전에 꼭 읽어 주세요」에 자세한 안내가 있습니다.</p>
+  <div class="nt-btns"><a class="btn btn-small" href="#aboutTitle" data-nt-close style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text)">쓰기 전에 꼭 읽어 주세요</a><button class="btn btn-small" type="button" data-nt-close style="background:var(--blue);border-color:var(--blue);color:var(--btn-text)">닫기</button><button class="btn nt-week" type="button" data-nt-week>일주일 동안 보지 않기</button></div>
 </div>
 <script>
 (function(){
   'use strict';
-  var NOTICE={id:'2026-10-videos',until:'2026-12-31'};
-  var KEY='jahwal-tools.notice',box=document.getElementById('ntBox'),back=document.getElementById('ntBack');
+  var KEY='jahwal-tools.notice.hide',WEEK=7*24*60*60*1000,box=document.getElementById('ntBox'),back=document.getElementById('ntBack');
   if(!box)return;
   var force=/[?&]notice\b/.test(location.search);
-  var seen='';try{seen=localStorage.getItem(KEY)||'';}catch(e){}
-  var today=new Date().toISOString().slice(0,10);
-  if(!force&&(seen===NOTICE.id||today>NOTICE.until))return;
+  var until=0;try{until=+(localStorage.getItem(KEY)||0);}catch(e){}
+  if(!force&&until>Date.now())return;
   var last=null;
-  function close(){box.hidden=true;back.hidden=true;try{localStorage.setItem(KEY,NOTICE.id);}catch(e){}if(last&&last.focus)last.focus();}
+  function close(){box.hidden=true;back.hidden=true;if(last&&last.focus)last.focus();}
   function show(){last=document.activeElement;box.hidden=false;back.hidden=false;var b=box.querySelector('.nt-x');if(b)b.focus();}
   box.querySelectorAll('[data-nt-close]').forEach(function(b){b.addEventListener('click',function(e){
     close();
-    if(b.getAttribute('href')==='#promo'){e.preventDefault();var t=document.getElementById('promo');if(t)t.scrollIntoView({block:'start'});}
+    var h=b.getAttribute('href')||'';
+    if(h.charAt(0)==='#'&&h.length>1){var t=document.getElementById(h.slice(1));if(t){e.preventDefault();if(window.jtOpenGroup)try{window.jtOpenGroup(h.slice(1));}catch(x){}t.scrollIntoView({block:'start'});}}
   });});
-  box.querySelectorAll('.nt-list a').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem(KEY,NOTICE.id);}catch(e){}});});
+  box.querySelector('[data-nt-week]').addEventListener('click',function(){try{localStorage.setItem(KEY,String(Date.now()+WEEK));}catch(e){}close();});
   back.addEventListener('click',close);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!box.hidden)close();});
   setTimeout(show,400);
