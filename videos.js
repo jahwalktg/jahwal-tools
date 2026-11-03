@@ -13,7 +13,7 @@
     26: 'p8YX3bZm39s', 27: '5BsT79LDjJE', 28: 'SWowkwG_a0U', 29: 'Sfs-nvWKp5Y', 30: '6GpargX0m9U',
     31: 'zI_8Vmpm-tg', 32: 'hgMVmRI79to', 33: 'stkTREd_6bY', 34: 'ZxKsqFk6wKk', 35: 'KvXl0wsgqqY',
     36: 'GF58dYqhTcI', 37: 'fVvm6276zi8', 38: 'qFi13sVuMl0', 39: 'yXMu2jj2OY8', 40: 'mo7eEpIMhys',
-    41: 'uWKFY68kw0Q', 42: '8qjfvtA2CvY', 43: '5-TIxQKFiUg', 44: '1E0MTuJGzW8'
+    41: 'uWKFY68kw0Q', 42: '8qjfvtA2CvY', 43: '5-TIxQKFiUg', 44: '1E0MTuJGzW8', 45: 'BBIu_--n2TU'
   };
   /* 화면(폴더 이름, 첫 화면 카드는 data-id) → [편, 단추에 붙일 짧은 이름, 첫 화면 카드용 더 짧은 이름] — 이름은 한 화면에 영상이 여럿일 때만 */
   var MAP = {
@@ -23,7 +23,7 @@
     'safety': [[7, '표지 인쇄', '표지'], [8, '게시물·공식 자료', '게시물']], 'safety-pack': [[7]], 'safety-post': [[8]], 'safety-links': [[8]],
     'cert-print': [[9]], 'list-compare': [[10]], 'mask-privacy': [[11, '사진·문서', '사진'], [40, '글 가리기', '글']], 'form-overlay': [[12]], 'attendance': [[13]],
     'quote-calculator': [[14]], 'cost-calculator': [[15]], 'margin-calculator': [[16]], 'vat-reverse': [[17]],
-    'work-hours': [[18]], 'edu-hours': [[19]], 'eval-score': [[20]], 'social-insurance': [[21]],
+    'work-hours': [[18]], 'edu-hours': [[19]], 'eval-score': [[20]], 'eval-check': [[45]], 'social-insurance': [[21]],
     'savings-account': [[22]], 'budget-plan': [[23]], 'budget-check': [[24]], 'startup-wage': [[25]],
     'press': [[26]], 'newsletter': [[27]], 'greeting': [[28]], 'map': [[29]], 'prompt-directions': [[29]],
     'excel': [[30]], 'shortcuts': [[31]], 'repeat-checklist': [[32]], 'deadline-board': [[33]], 'leave-tracker': [[34]],
