@@ -11,6 +11,7 @@
     'date-calc': '나이 만나이 생년월일 연령 기간 일수 개월수 평일수 공휴일 디데이 몇일 몇개월 계약기간 참여기간 60세 65세 34세 청년 기한계산',
     'edu-hours': '교육시간 직무교육 소양교육 이수 성과평가 교육이수 부족시간',
     'eval-score': '성과평가 평가점수 지표 실적 배점 총점 평가준비',
+    'participant-guide': '참여자 안내 쉬운말 급여명세서 주차 월차 실비 자립성과금 QR 나눠주기 길잡이',
     'eval-check': '성과평가 증빙 서류 점검 체크리스트 자활정보시스템 입력 메뉴 불인정 평가준비 인수인계',
     'social-insurance': '4대보험 사회보험 국민연금 건강보험 고용보험 산재 보험료 공제 기관부담',
     'savings-account': '희망저축 청년내일저축 자산형성 통장 만기 적립 청년희망키움 청년저축',
@@ -67,7 +68,7 @@
   var ROLES = [
     ['acct', '회계·예산', ['quote-calculator', 'vat-reverse', 'cost-calculator', 'margin-calculator', 'budget-plan', 'budget-check', 'social-insurance', 'startup-wage', 'deadline-board', 'rates', 'excel']],
     ['unit', '사업단 운영(팀장)', ['work-hours', 'budget-plan', 'budget-check', 'quote-calculator', 'cost-calculator', 'social-insurance', 'safety-pack', 'repeat-checklist', 'date-calc', 'attendance']],
-    ['case', '참여자·사례관리', ['forms-sit', 'forms-fill', 'date-calc', 'ref-income', 'savings-account', 'work-hours', 'prompt-participant', 'mask-privacy', 'list-compare', 'edu-hours']],
+    ['case', '참여자·사례관리', ['forms-sit', 'forms-fill', 'date-calc', 'ref-income', 'savings-account', 'work-hours', 'prompt-participant', 'participant-guide', 'mask-privacy', 'list-compare', 'edu-hours']],
     ['edu', '교육·행사', ['attendance', 'cert-print', 'file-tools', 'labels', 'group-maker', 'random-pick', 'survey-tally', 'break-timer', 'greeting', 'map']],
     ['promo', '홍보', ['press', 'newsletter', 'greeting', 'face-mask', 'map', 'qr', 'mask-privacy']],
     ['admin', '행정·총무', ['leave-tracker', 'deadline-board', 'repeat-checklist', 'prompt-notice', 'prompt-minutes', 'meeting-timer', 'show-vote', 'labels', 'excel', 'shortcuts']],
