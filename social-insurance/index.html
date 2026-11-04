@@ -6,12 +6,12 @@
 <meta name="robots" content="index, follow">
 <title>사회보험 예상 계산기 | 지역자활센터 업무 도구</title>
 <!--meta:start-->
-<meta name="description" content="사업단 유형을 고르면 지침의 월평균 보수액(표준소득액)으로 4대보험 예상액을 보험별 전체 금액·본인 공제·기관 부담으로 나눠 보여 주고, 인원을 넣으면 사업단 전체 예상액이 나옵니다. 요율은 2026년 기준이며 고칠 수 있습니다.">
+<meta name="description" content="사업단 유형을 고르면 지침의 월평균 보수액(표준소득액)으로 4대보험 예상액을 보험별 전체 금액·본인 공제·기관 부담으로 나눠 보여 주고, 인원을 넣으면 사업단 전체 예상액이 나옵니다. 참여자의 수급 자격을 고르면 그 사람에게 맞는 보험으로 저절로 바뀝니다. 요율은 20…">
 <link rel="canonical" href="https://jahwalktg.github.io/jahwal-tools/social-insurance/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="지역자활센터 업무 도구">
 <meta property="og:title" content="사회보험 예상 계산기 | 지역자활센터 업무 도구">
-<meta property="og:description" content="사업단 유형을 고르면 지침의 월평균 보수액(표준소득액)으로 4대보험 예상액을 보험별 전체 금액·본인 공제·기관 부담으로 나눠 보여 주고, 인원을 넣으면 사업단 전체 예상액이 나옵니다. 요율은 2026년 기준이며 고칠 수 있습니다.">
+<meta property="og:description" content="사업단 유형을 고르면 지침의 월평균 보수액(표준소득액)으로 4대보험 예상액을 보험별 전체 금액·본인 공제·기관 부담으로 나눠 보여 주고, 인원을 넣으면 사업단 전체 예상액이 나옵니다. 참여자의 수급 자격을 고르면 그 사람에게 맞는 보험으로 저절로 바뀝니다. 요율은 20…">
 <meta property="og:url" content="https://jahwalktg.github.io/jahwal-tools/social-insurance/">
 <meta property="og:image" content="https://jahwalktg.github.io/jahwal-tools/og.png">
 <meta property="og:image:width" content="1200">
@@ -332,12 +332,17 @@ body.big .bar{margin-top:28px;height:24px}
       </div>
       <p class="help" id="payHelp"></p>
 
-      <h3 class="sec-title">2. 가입할 보험과 요율 <small id="yearNote"></small></h3>
+      <h3 class="sec-title">2. 참여자 수급 자격 <small>한 사람을 볼 때 고르면 가입 보험이 저절로 맞춰집니다</small></h3>
+      <div class="chips small" id="whoRow"></div>
+      <div class="chips small" id="whoSub" style="margin-top:8px"></div>
+      <p class="help" id="whoHelp"></p>
+
+      <h3 class="sec-title">3. 가입할 보험과 요율 <small id="yearNote"></small></h3>
       <p class="help">보험 이름을 누르면 끄고 켤 수 있습니다. 요율은 보수액에 대한 % 이고 칸에서 고칠 수 있습니다.</p>
       <div class="ins-list" id="insList"></div>
       <p class="help" id="insHelp"></p>
 
-      <h3 class="sec-title">3. 예상 보험료</h3>
+      <h3 class="sec-title">4. 예상 보험료</h3>
       <div class="tbl-wrap"><table class="tbl" id="tbl"><thead><tr><th>보험</th><th>1인 전체</th><th>1인 본인 공제</th><th>1인 기관 부담</th><th id="thAll">사업단 전체</th></tr></thead><tbody id="tbody"></tbody></table></div>
       <div class="result">
         <div class="r-line"><span class="k">1인 본인 공제 합계 <small>월</small></span><span class="v" id="rOne"></span></div>
@@ -367,7 +372,7 @@ body.big .bar{margin-top:28px;height:24px}
     <h2 id="usesTitle">이럴 때 좋아요</h2>
     <ul>
       <li><strong>사업단 예산 짜기</strong> 내년 사업단 인원이 정해졌을 때 기관 부담 사회보험료가 얼마나 들지. 유형과 인원만 넣으면 월·연 예상액이 나와 인건비 범위 안에서 계획합니다.</li>
-      <li><strong>참여자 안내</strong> "급여에서 보험료가 얼마나 빠지나요?"라는 물음에 1인 본인 공제 줄을 보여 줍니다. 생계·의료급여 수급자는 건강보험을 꺼서 다시 보여 줍니다. 생계급여 수급자는 고용보험 본인 몫도 없습니다(실업급여 미적용).</li>
+      <li><strong>참여자 안내</strong> "급여에서 보험료가 얼마나 빠지나요?"라는 물음에 1인 본인 공제 줄을 보여 줍니다. 수급 자격을 고르면 그 사람에게 맞는 금액을 바로 보여 줍니다. 옆 사람과 빠지는 돈이 왜 다른지 자격을 바꿔 가며 설명할 수 있습니다.</li>
       <li><strong>자활기업·센터 종사자</strong> "직접 입력"으로 보수액을 넣으면 같은 요율로 계산됩니다. 한시적 인건비 지원의 "기업 부담 4대보험 포함" 금액을 어림잡을 때.</li>
     </ul>
   </section>
@@ -751,17 +756,38 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var YV=R?((R.info('wage.month')||{year:YEAR}).year):YEAR; /* 값이 몇 년 것인지(지난해 값을 쓰면 그해) */var YRT=YEAR+'년'+(R&&['ins.np','ins.hi','ins.lt','ins.ei','ins.wc'].some(function(k){var i=R.info(k);return i&&i.fallback;})?'(일부 지난해 값)':''); /* 국민연금 기준소득월액 하한·상한 — 2026.7.1~2027.6.30 (그 전 2025.7~2026.6은 400,000·6,370,000) */
 
   function defRates(){var o={};INS_DEF.forEach(function(d){o[d[0]]={on:true,w:d[2],e:d[3]};});return o;}
-  function fresh(){return {type:'market',part:false,pay:_M.market,head:11,ins:defRates(),npLow:NP_LOW,npHigh:NP_HIGH};}
+  function fresh(){return {type:'market',part:false,pay:_M.market,head:11,ins:defRates(),npLow:NP_LOW,npHigh:NP_HIGH,who:'manual',age60:false,npOut:false};}
+  /* 수급 자격별 가입 (근로복지공단 실무편람 2024 p.25, 고용보험법 제113조의2, 국민연금법 제8조, 국민건강보험법 제5조, 자활사업 안내 p.63) */
+  var WHOS=[['manual','직접 정하기 (사업단 예산·종사자)'],['lg','생계급여 수급자'],['md','의료급여 수급자·자활특례'],['hw','주거·교육급여만'],['ch','차상위'],['gw','Gateway']];
+  var WHO_HELP={
+    manual:'사업단 전체 예산이나 종사자는 여기서 네 가지 보험을 직접 정하세요. 참여자 한 사람은 위에서 자격을 고르면 됩니다.',
+    lg:'건강보험은 의료급여라 가입하지 않습니다. 고용보험은 실업급여가 적용되지 않아 본인 몫이 없고(부과구분 58-21), 기관은 고용안정·직업능력개발 몫만 냅니다. 국민연금은 18~59세 가입이 원칙이고 본인이 원하면 적용제외를 신청할 수 있습니다.',
+    md:'건강보험은 의료급여라 가입하지 않습니다. 고용보험은 실업급여가 적용됩니다(부과구분 54-22). 국민연금은 18~59세 가입이 원칙이고 본인이 원하면 적용제외를 신청할 수 있습니다.',
+    hw:'네 가지 보험에 모두 가입합니다. 고용보험은 실업급여가 적용됩니다(부과구분 54-22). 국민연금 적용제외는 생계·의료급여 수급자만 신청할 수 있습니다.',
+    ch:'네 가지 보험에 모두 가입합니다. 고용보험은 실업급여가 적용됩니다(부과구분 54-22). 국민연금 적용제외 대상이 아닙니다.',
+    gw:'Gateway 과정 급여는 훈련수당 성격이라 4대보험 가입 대상이 아닙니다(자활사업 안내 p.63).'};
+  function setDefEi(){INS_DEF.forEach(function(d){if(d[0]==='ei'){S.ins.ei.w=d[2];S.ins.ei.e=d[3];}});}
+  /* 자격에 맞춰 보험 켜고 끄기. 직접 정하기를 고르면 모두 켠 기본값으로 */
+  function applyWho(){
+    var w=S.who;setDefEi();
+    ['np','hi','lt','ei','wc'].forEach(function(k){S.ins[k].on=true;});
+    if(w==='manual')return;
+    if(w==='gw'){['np','hi','lt','ei','wc'].forEach(function(k){S.ins[k].on=false;});return;}
+    if(w==='lg'||w==='md'){S.ins.hi.on=false;S.ins.lt.on=false;}
+    if(w==='lg'){S.ins.ei.e=Math.max(0,Math.round((S.ins.ei.e-S.ins.ei.w)*1000)/1000);S.ins.ei.w=0;}
+    if(S.age60||((w==='lg'||w==='md')&&S.npOut))S.ins.np.on=false;
+  }
   function norm(o){
     o=o||{};var f=fresh(),ins=defRates();
     if(o.ins)INS_DEF.forEach(function(d){var x=o.ins[d[0]];if(x){ins[d[0]]={on:x.on!==false,w:isFinite(+x.w)&&+x.w>=0?+x.w:d[2],e:isFinite(+x.e)&&+x.e>=0?+x.e:d[3]};}});
     var type=TYPES.some(function(t){return t[0]===o.type;})?o.type:'market';
     return {type:type,part:!!o.part&&type!=='keep'&&type!=='custom',pay:isFinite(+o.pay)&&+o.pay>=0?+o.pay:f.pay,head:isFinite(+o.head)&&+o.head>=0?+o.head:0,ins:ins,
-      npLow:isFinite(+o.npLow)?+o.npLow:NP_LOW,npHigh:isFinite(+o.npHigh)?+o.npHigh:NP_HIGH};
+      npLow:isFinite(+o.npLow)?+o.npLow:NP_LOW,npHigh:isFinite(+o.npHigh)?+o.npHigh:NP_HIGH,who:WHOS.some(function(x){return x[0]===o.who;})?o.who:'manual',age60:!!o.age60,npOut:!!o.npOut};
   }
   var DB=JT.store(KEY);
   var S=(function(){var o=DB.read();var s=o&&o.type?norm(o):fresh();s.basisYear=o&&o.basisYear;return s;})();
   var PREV_YEAR=JT.basisYear(S,YEAR,function(s){var on={};INS_DEF.forEach(function(d){on[d[0]]=s.ins[d[0]].on;});s.ins=defRates();INS_DEF.forEach(function(d){s.ins[d[0]].on=on[d[0]];});s.npLow=NP_LOW;s.npHigh=NP_HIGH;if(s.type!=='custom'){var t=TYPES.filter(function(x){return x[0]===s.type;})[0];s.pay=s.part?t[3]:t[2];}});
+  if(S.who!=='manual')applyWho();
   function save(){DB.write(S);}
   function stdPay(){var t=TYPES.filter(function(x){return x[0]===S.type;})[0];return S.part?t[3]:t[2];}
   function f10(n){return Math.floor(n/10)*10;}
@@ -788,6 +814,14 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     $('vPay').value=S.pay?fmt(S.pay):'';$('vHead').value=S.head?String(S.head):'';
     $('payLabel').innerHTML=S.type==='custom'?'1인 월 보수총액 <small>원, 직접 입력</small>':'1인 월평균 보수액 <small>원, 표준소득액</small>';
     $('payHelp').textContent=S.type==='custom'?'자활기업 구성원이나 센터 종사자처럼 보수가 정해져 있으면 월 보수총액(비과세 제외)을 넣으세요.':YV+'년 지침 표준소득액 '+fmt(stdPay())+'원 (실비 제외). 다른 금액이면 고쳐 쓰고, 유형 칩을 다시 누르면 기본값으로 돌아옵니다.';
+    var wr=$('whoRow');wr.textContent='';
+    WHOS.forEach(function(x){JT.chip(wr,x[1],S.who===x[0],false,function(){S.who=x[0];if(x[0]!=='lg'&&x[0]!=='md')S.npOut=false;applyWho();save();renderForm();render();});});
+    var ws=$('whoSub');ws.textContent='';var pick=S.who!=='manual'&&S.who!=='gw';ws.hidden=!pick;
+    if(pick){
+      JT.chip(ws,'60세 이상 (국민연금 안 함)',S.age60,false,function(){S.age60=!S.age60;applyWho();save();renderForm();render();});
+      if(S.who==='lg'||S.who==='md')JT.chip(ws,'국민연금 적용제외 (본인 희망)',S.npOut,S.age60,function(){S.npOut=!S.npOut;applyWho();save();renderForm();render();});
+    }
+    $('whoHelp').textContent=WHO_HELP[S.who];
     $('yearNote').textContent=YRT+' 요율 기본값';
     var host=$('insList');host.textContent='';
     INS_DEF.forEach(function(d){
@@ -824,6 +858,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     if(S.pay&&S.pay<S.npLow&&S.ins.np.on)warn.push('보수액이 국민연금 하한보다 적어 하한 '+fmt(S.npLow)+'원으로 계산했습니다.');
     if(S.pay>S.npHigh&&S.ins.np.on)warn.push('보수액이 국민연금 상한을 넘어 상한 '+fmt(S.npHigh)+'원으로 계산했습니다.');
     if(S.ins.lt.on&&!S.ins.hi.on)warn.push('건강보험을 껐으니 장기요양보험도 계산하지 않았습니다.');
+    if(S.who!=='manual'&&head>1)warn.push('사업단 전체 금액은 '+head+'명이 모두 같은 자격이라고 본 값입니다. 실제 예산은 자격별로 나눠 보거나 「직접 정하기」로 보세요.');
     $('calcNote').textContent=warn.join(' ');
     var face,g;
     if(!S.pay){face='empty';g='보수액을 넣거나 사업단 유형을 고르면 보험별 예상액이 나옵니다.';}
@@ -840,10 +875,10 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('vPay').addEventListener('input',function(){var v=money($('vPay').value);var bad=$('vPay').value!==''&&(isNaN(v)||v<0);$('vPay').classList.toggle('bad',bad);if(!bad){S.pay=$('vPay').value===''?0:v;save();render();}});
   $('vPay').addEventListener('blur',function(){if(S.pay)$('vPay').value=fmt(S.pay);});
   $('vHead').addEventListener('input',function(){var v=money($('vHead').value);var bad=$('vHead').value!==''&&(isNaN(v)||v<0);$('vHead').classList.toggle('bad',bad);if(!bad){S.head=$('vHead').value===''?0:v;save();render();}});
-  $('btnRates').addEventListener('click',function(){var on={};INS_DEF.forEach(function(d){on[d[0]]=S.ins[d[0]].on;});S.ins=defRates();INS_DEF.forEach(function(d){S.ins[d[0]].on=on[d[0]];});S.npLow=NP_LOW;S.npHigh=NP_HIGH;save();renderForm();render();$('copyNote').textContent=YRT+' 기본 요율로 되돌렸습니다. 가입 여부는 그대로입니다.';});
+  $('btnRates').addEventListener('click',function(){var on={};INS_DEF.forEach(function(d){on[d[0]]=S.ins[d[0]].on;});S.ins=defRates();INS_DEF.forEach(function(d){S.ins[d[0]].on=on[d[0]];});S.npLow=NP_LOW;S.npHigh=NP_HIGH;if(S.who!=='manual')applyWho();save();renderForm();render();$('copyNote').textContent=YRT+' 기본 요율로 되돌렸습니다. 가입 여부는 그대로입니다.';});
   $('btnExample').addEventListener('click',function(){S=fresh();save();renderForm();render();$('copyNote').textContent='예시로 되돌렸습니다.';});
   function tableText(){var h=['보험','요율','1인 전체','1인 본인 공제','1인 기관 부담','사업단 전체 ('+(S.head||0)+'명)'];return [h].concat(lastRows.map(function(r){return [r[0],r[1],Math.round(r[2]),Math.round(r[3]),Math.round(r[4]),Math.round(r[5])];}));}
-  $('btnCopy').addEventListener('click',function(){var rows=tableText();JT.copyText('[사회보험 예상 '+today()+', 보수액 '+fmt(S.pay)+'원, '+YRT+' 요율]\n'+rows.map(function(r){return r.join('\t');}).join('\n'),$('copyNote'),'표를 복사했습니다. 엑셀에 붙여 넣으면 칸이 나뉩니다.');});
+  $('btnCopy').addEventListener('click',function(){var rows=tableText();JT.copyText('[사회보험 예상 '+today()+', 보수액 '+fmt(S.pay)+'원, '+YRT+' 요율'+(S.who==='manual'?'':', '+WHOS.filter(function(x){return x[0]===S.who;})[0][1])+']\n'+rows.map(function(r){return r.join('\t');}).join('\n'),$('copyNote'),'표를 복사했습니다. 엑셀에 붙여 넣으면 칸이 나뉩니다.');});
   $('btnCsv').addEventListener('click',function(){$('copyNote').textContent=JT.downloadCsv(tableText(),'사회보험예상_'+today()+'.csv')?'엑셀 파일(CSV) 내려받기를 요청했습니다.':'이 화면에서는 내려받기가 막혀 있습니다. "표 글 복사"를 쓰세요.';});
   $('pos').addEventListener('click',function(){$('tbl').scrollIntoView({block:'start'});});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
