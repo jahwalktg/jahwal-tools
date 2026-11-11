@@ -351,7 +351,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
         <label class="field"><span>받는 곳 / 대상 <small>공문 수신, 안내문 대상</small></span><input class="text-in sm" id="vTo" type="text" maxlength="60" placeholder="예: 각 사업단 / 전체 참여자"></label>
       </div>
       <div class="frow">
-        <label class="field"><span>언제·어디서·무엇을 <small>날짜, 장소, 준비물 등</small></span><input class="text-in sm" id="vWhen" type="text" maxlength="100" placeholder="예: 2026-10-21(화) 14:00~16:00, 센터 강당, 필기구 지참"></label>
+        <label class="field"><span>언제·어디서·무엇을 <small>날짜, 장소, 준비물 등</small></span><input class="text-in sm" id="vWhen" type="text" maxlength="100" placeholder="예: 2026-10-21(수) 14:00~16:00, 센터 강당, 필기구 지참"></label>
         <label class="field"><span>문의 <small>부서·전화, 이름은 직책으로</small></span><input class="text-in sm" id="vContact" type="text" maxlength="60" placeholder="예: 자활사업팀 02-000-0000"></label>
       </div>
       <label class="lbl" for="vBody">요지 <small>세 줄쯤, 하고 싶은 말을 그냥 적으세요</small></label>
@@ -783,7 +783,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('btnClear').addEventListener('click',function(){S=fresh();save();[['vTitle','title'],['vTo','to'],['vWhen','when'],['vContact','contact'],['vBody','body']].forEach(function(k){$(k[0]).value='';});render();});
   $('pos').addEventListener('click',function(){$('vTitle').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.title='2026년 하반기 참여자 안전교육 실시 안내';S.to='각 사업단 / 전체 참여자';S.when='2026-10-21(화) 14:00~16:00, 센터 강당, 필기구 지참';S.contact='자활사업팀 02-000-0000';S.body='하반기 안전교육을 합니다. 전원 참석이고, 불참하면 사전에 담당자에게 알려야 합니다. 교육 시간은 근무로 인정됩니다.';['vTitle','vTo','vWhen','vContact','vBody'].forEach(function(id,i){$(id).value=S[['title','to','when','contact','body'][i]];});}
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.title='2026년 하반기 참여자 안전교육 실시 안내';S.to='각 사업단 / 전체 참여자';S.when='2026-10-21(수) 14:00~16:00, 센터 강당, 필기구 지참';S.contact='자활사업팀 02-000-0000';S.body='하반기 안전교육을 합니다. 전원 참석이고, 불참하면 사전에 담당자에게 알려야 합니다. 교육 시간은 근무로 인정됩니다.';['vTitle','vTo','vWhen','vContact','vBody'].forEach(function(id,i){$(id).value=S[['title','to','when','contact','body'][i]];});}
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
