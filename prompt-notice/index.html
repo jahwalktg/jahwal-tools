@@ -783,11 +783,23 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('btnClear').addEventListener('click',function(){S=fresh();save();[['vTitle','title'],['vTo','to'],['vWhen','when'],['vContact','contact'],['vBody','body']].forEach(function(k){$(k[0]).value='';});render();});
   $('pos').addEventListener('click',function(){$('vTitle').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.title='2026년 하반기 참여자 안전교육 실시 안내';S.to='각 사업단 / 전체 참여자';S.when='2026-10-21(수) 14:00~16:00, 센터 강당, 필기구 지참';S.contact='자활사업팀 02-000-0000';S.body='하반기 안전교육을 합니다. 전원 참석이고, 불참하면 사전에 담당자에게 알려야 합니다. 교육 시간은 근무로 인정됩니다.';['vTitle','vTo','vWhen','vContact','vBody'].forEach(function(id,i){$(id).value=S[['title','to','when','contact','body'][i]];});}
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 안내) */
+  function sample(){
+    S.kind='both';S.tone='firm';
+    S.title='2026년 겨울철 참여자 안전교육 실시 안내';
+    S.to='각 사업단 / 전체 참여자';
+    S.when='2026-12-02(수) 14:00~15:30, ○○지역자활센터 강당, 필기구 지참';
+    S.contact='자활사업팀 (센터 대표전화 내선 2번)';
+    S.body='겨울철 안전교육(미끄럼·화재·난방기 사용)을 합니다. 전원 참석이고, 못 오면 미리 사업단 담당에게 알려 주세요. 교육 시간은 근무로 인정됩니다. 못 온 분은 12월 9일(수)에 한 번 더 합니다.';
+    ['vTitle','vTo','vWhen','vContact','vBody'].forEach(function(id,i){$(id).value=S[['title','to','when','contact','body'][i]];});
+  }
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 안내 하나(겨울철 안전교육)',go:'#prompt',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

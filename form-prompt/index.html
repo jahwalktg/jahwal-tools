@@ -864,10 +864,19 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vName').focus();$('vName').scrollIntoView({block:'center'});});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vName').value=S.name;$('vUse').value=S.use;$('vFields').value=S.fields;
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 양식) */
+  function sample(){
+    S.name='사업단 물품 검수조서';S.use='사업단 재료를 사고 받았을 때 수량과 상태를 확인하는 서류';
+    S.fields='사업단명, 품목, 규격, 수량, 단가, 금액, 합계, 검수일, 검수자, 확인자';S.pid=false;S.ai='gemini';
+    $('vName').value=S.name;$('vUse').value=S.use;$('vFields').value=S.fields;
+  }
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 양식 하나(사업단 물품 검수조서)',go:'#prompt1',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

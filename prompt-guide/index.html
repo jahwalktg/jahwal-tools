@@ -797,11 +797,19 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vDoc').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vDoc').value=S.docName;
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')$('vQ').value=EXS[0];
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 상황) */
+  function sample(){
+    S.doc='jahwal';S.docName=DOCS[0][1];S.ai='gemini';
+    $('vDoc').value=S.docName;
+    $('vQ').value='12월 동절기에 한 주 동안 지각·조퇴를 합쳐 9시간 한 참여자는 그 주 주차수당을 받을 수 있나요? 동절기에도 평소와 같은 기준인지, 근거 쪽수와 함께 알고 싶습니다.';
+  }
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 질문 하나(동절기 주차수당)',go:'#prompt',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

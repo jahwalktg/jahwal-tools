@@ -787,11 +787,15 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('topicRow').scrollIntoView({block:'start'});});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vExtra').value=S.extra;
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){$('vSrc').value='[근무시간 계산 시장진입형 2026-10-6]\n사업단 근무시간: 09:00 ~ 18:00 (휴게 1시간 제외 8시간)\n출근: 09:40 — 지각 40분\n퇴근: 14:30 — 조퇴 3시간 30분\n실제 근무: 3시간 50분\n30분 단위 (30분 미만 버림): 3시간 30분\n빠진 시간: 4시간 30분\n급여: 62,080원 ÷ 8시간 × 3.5시간 = 27,160원 (+실비)\n줄어드는 급여: 34,920원\n(30분 단위 적용, 2026년 지침 단가 기준)';}
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 계산) */
+  function sample(){S.topic='hours';S.form='chat';S.extra='궁금한 점은 사업단 담당에게 편하게 물어보세요';$('vExtra').value=S.extra;$('vSrc').value='[근무시간 계산 시장진입형 2026-11-18]\n사업단 근무시간: 09:00 ~ 18:00 (휴게 1시간 제외 8시간)\n출근: 09:40 — 지각 40분\n퇴근: 14:30 — 조퇴 3시간 30분\n실제 근무: 3시간 50분\n30분 단위 (30분 미만 버림): 3시간 30분\n빠진 시간: 4시간 30분\n급여: 62,080원 ÷ 8시간 × 3.5시간 = 27,160원 (+실비)\n줄어드는 급여: 34,920원\n(30분 단위 적용, 2026년 지침 단가 기준)';}
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 근무시간 풀이 하나(지각·조퇴한 날)',go:'#prompt',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

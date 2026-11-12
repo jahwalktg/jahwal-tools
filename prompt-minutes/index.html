@@ -787,11 +787,20 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vName').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vName').value=S.name;$('vWhen').value=S.when;$('vCols').value=S.cols;
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){$('vName').value='10월 직원회의';S.name='10월 직원회의';$('vSrc').value='[회의 타이머 기록]\n1. 사업계획 수정안 검토 — 18분\n2. 카페 사업단 운영시간 — 12분 (3분 초과)\n3. 송년회 준비 — 7분\n\n[표결]\n1. 2026년 사업계획(안) 승인 — 찬성 7, 반대 1, 기권 1 → 가결\n\n[메모]\n- 사업계획은 기획팀이 10/20까지 수정안\n- 운영시간 11~19시 의견 다수, 참여자 의견 수렴 후 결정\n- 송년회 12/18(금) 후보, 장소는 총무팀 알아보기';}
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 회의) */
+  function sample(){
+    S.name='11월 직원회의';S.when='2026-11-24(화) 14:00, 센터 회의실';
+    S.cols='회의명, 일시, 장소, 참석, 안건, 논의 내용, 결정 사항, 할 일(담당·기한), 다음 회의';S.style='bullet';
+    $('vName').value=S.name;$('vWhen').value=S.when;$('vCols').value=S.cols;
+    $('vSrc').value='[회의 타이머 기록 2026-11-24]\n1. 동절기 근무시간 안내 — 12분\n2. 2027년 사업단 운영계획(안) 검토 — 20분 (5분 초과)\n3. 연말 참여자 한마당 준비 — 9분\n\n[표결]\n1. 2027년 사업단 운영계획(안) 승인 — 찬성 7, 반대 1, 기권 1 → 가결\n\n[메모]\n- 참석: 센터장, 실장, 자활사업팀 4명, 사례관리팀 2명, 총무팀 1명\n- 동절기 근무시간 안내문은 사업단마다 담당이 11/28까지 게시\n- 운영계획(안) 중 카페 사업단 매출 목표는 다시 확인 → 실장이 11/27까지\n- 참여자 한마당 12/19(토) 11시, 센터 강당. 장보기는 총무팀, 프로그램은 자활사업팀\n- 참여자 의견은 사업단 회의에서 12/10까지 모으기\n- 다음 회의 12/22(화) 14:00';
+  }
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 직원회의 기록 하나',go:'#prompt',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

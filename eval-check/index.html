@@ -913,6 +913,20 @@ $('fileInput').onchange=function(){var f=this.files&&this.files[0];if(!f)return;
 $('btnApplyTxt').onclick=function(){applyData($('fileText').value);};
 $('btnClear').onclick=function(){if(!confirm(S.year+'년 점검 표시와 메모를 모두 지울까요?'))return;S.years[S.year]={st:{},memo:{}};write();sync();};
 
+/* 가상 예시 (2026-11-12): 고른 해의 줄마다 있음·없음·해당 없음을 섞어 표시하고, 빠진 것이 있는 지표에 메모 */
+window.JT_SAMPLE={what:'가상 센터의 점검 표시와 메모',ask:false,go:'#sum',fill:function(){
+  var y=Y(),had=Object.keys(y.st).length||Object.keys(y.memo).some(function(k){return (y.memo[k]||'').trim();});
+  if(had&&!confirm(S.year+'년 점검 표시와 메모 대신 가상 예시를 넣을까요?\n(지금 표시는 지워집니다. 필요하면 먼저 「파일로 저장」하세요)'))return false;
+  var who=['이바다','박구름','최노을'],nm=0;
+  S.center='○○지역자활센터';S.who='팀장 김하늘';y=S.years[S.year]={st:{},memo:{}};openSet={};
+  IND.forEach(function(ind){
+    var hasNo=false;
+    items(ind).forEach(function(it,j){var r=(ind.no*5+j*3)%11;if(r<=6)y.st[it.k]='y';else if(r===7){y.st[it.k]='n';hasNo=true;}else if(r===8)y.st[it.k]='x';});
+    if(hasNo){y.memo[ind.no]='가상 예시: 빠진 것은 '+who[nm%3]+' 담당, 12월 '+(5+nm%4*3)+'일까지 받기';openSet[ind.no]=true;nm++;}
+  });
+  view='all';write();sync();
+}};
+
 try{var d=new Date();$('nowDate').textContent=(d.getMonth()+1)+'월 '+d.getDate()+'일('+'일월화수목금토'.charAt(d.getDay())+')';}catch(e){}
 if(/#ind(\d+)/.test(location.hash)){openSet[+RegExp.$1]=true;}
 sync();
@@ -920,5 +934,6 @@ if(/^#printtest/.test(location.hash))buildPrint(location.hash==='#printtest-no')
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

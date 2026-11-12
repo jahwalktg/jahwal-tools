@@ -464,6 +464,16 @@ th{background:var(--bg);font-size:14px}
   }
   var pasteT;$('lsPaste').addEventListener('input',function(){clearTimeout(pasteT);pasteT=setTimeout(function(){var t=$('lsPaste').value;setTable(t.split(/\r?\n/).map(function(l){return l.split(/\t/);}));},300);});
   $('lsExample').addEventListener('click',function(){$('lsPaste').value=['성명\t생년월일\t사업단','김하늘\t1958.03.14\t○○청소','이바다\t911207-2\t○○카페','박구름\t19900615\t○○카페','최들판\t1966-11-02\t○○가공','정새벽\t030405-3\t○○편의점','한별\t1961.10.30\t○○청소','오솔\t모름\t○○가공'].join('\n');setTable($('lsPaste').value.split('\n').map(function(l){return l.split('\t');}));});
+
+  /* 가상 예시 (2026-11-12, sample.js) — 네 칸 모두 */
+  window.JT_SAMPLE={what:'가상 생년월일·기간·날짜·명단 7명',fill:function(){
+    function put(id,v){var e=$(id);e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));}
+    put('birth','1958.03.14');
+    put('spS','2026-12-01');put('spE','2027-02-28');
+    put('adBase','2026-11-12');put('adUnit','b');put('adN','7');put('adDir','1');
+    $('lsExample').click();
+  }};
+
   $('lsClear').addEventListener('click',function(){$('lsPaste').value='';setTable([]);});
   ['input','change'].forEach(function(ev){['lsBase','lsRule','lsMin','lsMax'].forEach(function(id){$(id).addEventListener(ev,renderList);});});
   window._dc={setTable:setTable,parseBirth:parseBirth,ageOn:ageOn,visibleRows:visibleRows};
@@ -486,6 +496,7 @@ th{background:var(--bg);font-size:14px}
 </script>
 <script src="../drop.js"></script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 <script src="../remake.js"></script>
 </body>
 </html>
