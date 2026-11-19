@@ -32,6 +32,7 @@
     'form-overlay': '양식 덧쓰기 입력칸 종이양식 인쇄위치 틀',
     'mask-privacy': '개인정보 가리기 마스킹 비식별 이름가리기 주민번호 전화번호 상담기록 ai에넣기전',
     'cert-print': '수료증 상장 명찰 이름표 명패 일괄인쇄 교육수료',
+    'wizard': '양식채우기 양식에옮기기 명단합치기 비상연락망 주소록 서식채우기 메일머지 개인별카드 확인서 대장정리 엑셀합치기 한글양식 변신 마법사 옮겨적기 한사람한장',
     'labels': '라벨 주소라벨 우편 발송 스티커 우편번호 봉투 연하장발송',
     'file-tools': 'pdf나누기 pdf합치기 수료증나누기 사진합치기 용량줄이기 파일이름 10mb 스캔',
     'attendance': '출석부 출석 서명 교육출석 출석집계 자필서명',
@@ -71,7 +72,7 @@
     ['case', '참여자·사례관리', ['forms-sit', 'forms-fill', 'date-calc', 'ref-income', 'savings-account', 'work-hours', 'prompt-participant', 'participant-guide', 'mask-privacy', 'list-compare', 'edu-hours']],
     ['edu', '교육·행사', ['attendance', 'cert-print', 'file-tools', 'labels', 'group-maker', 'random-pick', 'survey-tally', 'break-timer', 'greeting', 'map']],
     ['promo', '홍보', ['press', 'newsletter', 'greeting', 'face-mask', 'map', 'qr', 'mask-privacy']],
-    ['admin', '행정·총무', ['leave-tracker', 'deadline-board', 'repeat-checklist', 'prompt-notice', 'prompt-minutes', 'meeting-timer', 'show-vote', 'labels', 'excel', 'shortcuts']],
+    ['admin', '행정·총무', ['leave-tracker', 'deadline-board', 'repeat-checklist', 'prompt-notice', 'prompt-minutes', 'meeting-timer', 'show-vote', 'labels', 'excel', 'shortcuts', 'wizard']],
     ['eval', '평가·실적', ['eval-score', 'eval-check', 'edu-hours', 'survey-tally', 'prompt-survey', 'list-compare', 'rates']],
     ['safe', '안전', ['safety', 'safety-pack', 'safety-post', 'safety-links']]
   ];
